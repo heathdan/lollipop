@@ -17,7 +17,7 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
     @FindBy(xpath = ".//h4[text()='Create Custom Role']")
     private WebElement createRoleModalHeader;
 
-    @FindBy(xpath = ".//h4[text()='Create Custom Role']/parent::div/parent::div//input")
+    @FindBy(xpath = ".//h4[text()='Create Custom Role']/parent::div/parent::div//input[1]")
     private WebElement nameTextField;
 
     @FindBy(xpath = ".//option[text()='Please choose one']")

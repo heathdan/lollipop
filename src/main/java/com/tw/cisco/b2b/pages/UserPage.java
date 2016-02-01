@@ -14,10 +14,10 @@ public class UserPage extends BasePage<UserPage> {
     @FindBy(className = "icon-caret-down")
     private WebElement filter ;
 
-    @FindBy(xpath = "//a[@class='sorter-toggle'][@data-icon-before='sort-descending']")
+    @FindBy(xpath = ".//a[@class='sorter-toggle'][@data-icon-before='sort-descending']")
     private WebElement sortDescending ;
 
-    @FindBy(xpath = "//a[@class='sorter-toggle'][@data-icon-before='sort-ascending']")
+    @FindBy(xpath = ".//a[@class='sorter-toggle'][@data-icon-before='sort-ascending']")
     private WebElement sortAscending ;
 
     @FindBy(id = "qa_automation_User Name")
@@ -32,10 +32,10 @@ public class UserPage extends BasePage<UserPage> {
     @FindBy(id="peopleSearchBox")
     private WebElement searchField;
 
-    @FindBy(xpath = "//button[@data-original-title='Bulk Assign Expertise']")
+    @FindBy(xpath = ".//button[@data-original-title='Bulk Assign Expertise']")
     private WebElement bulkAssignExpertise;
 
-    @FindBy(xpath = "//button[@data-original-title='Bulk Create Users']")
+    @FindBy(xpath = ".//button[@data-original-title='Bulk Create Users']")
     private WebElement bulkCreateUsers;
 
     @FindBy(id = "fromDate")
@@ -44,43 +44,43 @@ public class UserPage extends BasePage<UserPage> {
     @FindBy(id = "toDate")
     private WebElement toTextField;
 
-    @FindBy(xpath = "//button[contains(text(),'Filter')]")
+    @FindBy(xpath = ".//button[contains(text(),'Filter')]")
     private WebElement calendarFilter;
 
-    @FindBy(xpath = "//button[contains(text(),'Clear')]")
+    @FindBy(xpath = ".//button[contains(text(),'Clear')]")
     private WebElement calendarClear;
 
-    @FindBy(xpath = "//button[contains(@class,'icon-x-thin')]")
+    @FindBy(xpath = ".//button[contains(@class,'icon-x-thin')]")
     private WebElement deactivateUser;
 
-    @FindBy(xpath = "//button[contains(@class,'icon-checkmark-rounded')]")
+    @FindBy(xpath = ".//button[contains(@class,'icon-checkmark-rounded')]")
     private WebElement activateUser;
 
-    @FindBy(xpath = "//h5[text()='Status']")
+    @FindBy(xpath = ".//h5[text()='Status']")
     private  WebElement userName;
 
-    @FindBy(xpath = "/div[@class='item-wrap container']//div/p[0]")
+    @FindBy(xpath = ".//div[@class='item-wrap container']//div/p[0]")
     private WebElement userEmail;
 
-    @FindBy(xpath = "/div[@class='item-wrap container']//div/p[1]")
+    @FindBy(xpath = ".//div[@class='item-wrap container']//div/p[1]")
     private WebElement fullName;
 
-    @FindBy(xpath = "/div[@class='item-wrap container']//div/p[2]")
+    @FindBy(xpath = "/./div[@class='item-wrap container']//div/p[2]")
     private WebElement lastLoginDate;
 
-    @FindBy(xpath = "/div[@class='item-wrap container']//div/p[3]")
+    @FindBy(xpath = "/./div[@class='item-wrap container']//div/p[3]")
     private WebElement dateCreated;
 
-    @FindBy(xpath = "/div[@class='item-wrap container']//div/p[4]")
+    @FindBy(xpath = ".//div[@class='item-wrap container']//div/p[4]")
     private WebElement dateModified;
 
-    @FindBy(xpath = "/div[@class='item-wrap container']//div/p[5]")
+    @FindBy(xpath = ".//div[@class='item-wrap container']//div/p[5]")
     private WebElement userStatus;
 
-    @FindBy(xpath = "//ul[@class='pagination']/li/a[text()='← Previous']")
+    @FindBy(xpath = ".//ul[@class='pagination']/li/a[text()='← Previous']")
     private WebElement paginationPrevious;
 
-    @FindBy(xpath ="//ul[@class='pagination']//a[text()='Next →']")
+    @FindBy(xpath =".//ul[@class='pagination']//a[text()='Next →']")
     private WebElement paginationNext;
 
     public UserPage(WebDriver driver) {
