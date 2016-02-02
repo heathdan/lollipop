@@ -26,8 +26,12 @@ public class AssignExpertisePopupPage extends BasePage<AssignExpertisePopupPage>
     @FindBys(@FindBy(xpath =  ".//div[@id='selfTaggedExpertise']//i[@class='icon-remove red']"))
     private List<WebElement> RemoveSelfTaggedExpertiseList ;
 
-    @FindBys(@FindBy(xpath = "//div[@class='tt-suggestion']\""))
+    @FindBys(@FindBy(xpath = "//div[@class='tt-suggestion']"))
     private List<WebElement> ExpertiseSuggestList ;
+
+    @FindBy(xpath = "//input[@placeholder='Start typing to choose an Area of Expertise...' and @class='tt-query']")
+    private WebElement ExpertiseTextField;
+
 
     public AssignExpertisePopupPage(WebDriver driver) {
         super(driver);
