@@ -119,7 +119,7 @@ public class LeftNav extends BasePage<LeftNav> {
     public LeftNav(WebDriver driver) {
         super(driver);
         instantiatePage(this);
-        waitForPageToLoad(getPageLoadCondition());
+        //waitForPageToLoad(getPageLoadCondition());
     }
 
     @Override

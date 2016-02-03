@@ -43,14 +43,14 @@ public class CredentialsPage extends BasePage<CredentialsPage> {
         }
     }
 
-    protected HomePage enterCredentials(String passwrd) {
+    public HomePage enterCredentials(String passwrd) {
         password.sendKeys(passwrd);
         signIn.click();
         implicitWaitMethod();
         return new HomePage(driver);
     }
 
-    protected CredentialsPage verifyEnvironment(){
+    public CredentialsPage verifyEnvironment(){
         Assert.assertEquals(environment.getText(), ENVIRONMENT);
         return this;
     }

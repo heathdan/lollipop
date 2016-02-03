@@ -62,7 +62,7 @@ public class HeaderNav extends BasePage<HeaderNav> {
         return ExpectedConditions.visibilityOf(topNavSearch);
     }
 
-    protected LoginPage CKlogout() {
+    public LoginPage CKlogout() {
         waitForSpinnerToStop();
         topNavMyProfile.click();
         logOut.click();
