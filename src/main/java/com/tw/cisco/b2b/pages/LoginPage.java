@@ -45,9 +45,12 @@ public class LoginPage extends BasePage<LoginPage> {
         }
     }
 
-    /*public void enterEmail() {
-        getEmailInput().sendKeys("nairaswathy_t2@mailinator.com");
-    }*/
+    public CredentialsPage enterEmail(String userName) {
+        email.sendKeys(userName);
+        nextButton.click();
+        implicitWaitMethod();
+        return new CredentialsPage(driver);
+    }
 
     /*********************GET/SET METHODS***************************/
     public WebElement getEmailInput() {

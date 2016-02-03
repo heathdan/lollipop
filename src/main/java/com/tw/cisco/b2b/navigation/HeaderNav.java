@@ -1,18 +1,27 @@
 package com.tw.cisco.b2b.navigation;
 
 import com.tw.cisco.b2b.pages.BasePage;
+import com.tw.cisco.b2b.pages.LoginPage;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * Created by aswathyn on 20/01/16.
  */
 public class HeaderNav extends BasePage<HeaderNav> {
+
+    private FluentWait<WebDriver> waitForSpinnerAppear,waitForSpinnerDisappear;
     @FindBy(css="#navbar")
     private WebElement topNavBar;
 
@@ -50,8 +59,40 @@ public class HeaderNav extends BasePage<HeaderNav> {
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
-        return ExpectedConditions.visibilityOf(this.getTopNavSearch());
+        return ExpectedConditions.visibilityOf(this.topNavSearch);
     }
+
+    protected LoginPage CKlogout() {
+        waitForSpinnerToStop();
+        topNavMyProfile.click();
+        logOut.click();
+        implicitWaitMethod();
+        return new LoginPage(driver);
+    }
+
+    public void waitForSpinnerToStop() {
+        waitForSpinnerAppear= new WebDriverWait(driver, SPINNER_TO_APPEAR_TIMEOUT)
+                .ignoring(NoSuchElementException.class)
+                .ignoring(TimeoutException.class)
+                .pollingEvery(SPINNER_POLLING_RATE, TimeUnit.MILLISECONDS);
+
+        waitForSpinnerDisappear = new WebDriverWait(driver, SPINNER_TO_DISAPPEAR_TIMEOUT)
+                .ignoring(NoSuchElementException.class)
+                .ignoring(TimeoutException.class)
+                .pollingEvery(SPINNER_POLLING_RATE, TimeUnit.MILLISECONDS);
+
+        try {
+            System.out.println("wait for spinner to appear");
+            if (waitForSpinnerAppear.until(ExpectedConditions.visibilityOf(this.spinner)) != null) {
+                System.out.println("wait for spinner to disappear");
+                waitForSpinnerDisappear.until(ExpectedConditions
+                        .invisibilityOfElementLocated(this.spinnerLocator));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
 
     /***********************GET/SET METHODS*********************/
     public WebElement getLogOut(){

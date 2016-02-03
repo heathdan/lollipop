@@ -35,7 +35,7 @@ public class CredentialsPage extends BasePage<CredentialsPage> {
     }
 
     @Override
-    public void instantiatePage(CredentialsPage page) {
+    protected void instantiatePage(CredentialsPage page) {
         try {
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
@@ -43,7 +43,14 @@ public class CredentialsPage extends BasePage<CredentialsPage> {
         }
     }
 
-    public CredentialsPage verifyEnvironment(){
+    protected HomePage enterCredentials(String passwrd) {
+        password.sendKeys(passwrd);
+        signIn.click();
+        implicitWaitMethod();
+        return new HomePage(driver);
+    }
+
+    protected CredentialsPage verifyEnvironment(){
         Assert.assertEquals(this.getEnvironment().getText(), ENVIRONMENT);
         return this;
     }

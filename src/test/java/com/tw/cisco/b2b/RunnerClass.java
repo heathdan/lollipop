@@ -31,7 +31,6 @@ public class RunnerClass {
                 driver.navigate().to(URL);
                 driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
                 driver.manage().window().maximize();
-                loginPage = new LoginPage(driver);
         }
 
         @AfterClass

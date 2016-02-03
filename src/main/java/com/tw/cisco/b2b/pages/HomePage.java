@@ -27,6 +27,8 @@ public class HomePage extends BasePage<HomePage> {
         super(driver);
         instantiatePage(this);
         waitForPageToLoad(getPageLoadCondition());
+        headerNav = new HeaderNav(driver);
+        leftNav = new LeftNav(driver);
     }
 
     @Override
