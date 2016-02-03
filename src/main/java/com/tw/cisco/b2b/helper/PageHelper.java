@@ -5,6 +5,6 @@ package com.tw.cisco.b2b.helper;
  */
 public class PageHelper {
 
-    WebDriver driver;
+
 
 }
