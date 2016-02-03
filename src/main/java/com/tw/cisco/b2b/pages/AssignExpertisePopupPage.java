@@ -17,7 +17,7 @@ public class AssignExpertisePopupPage extends BasePage<AssignExpertisePopupPage>
     @FindBys(@FindBy(xpath = ".//div[contains(text(),'Admin Assigned Expertise')]//span[@class='item-tag-text']"))
     private List<WebElement> adminAssignedExpertiseList;
 
-    @FindBys(@FindBy(xpath ="//div[contains(text(),'Admin Assigned Expertise')]//i[@class='icon-remove red']"))
+    @FindBys(@FindBy(xpath =".//div[contains(text(),'Admin Assigned Expertise')]//i[@class='icon-remove red']"))
     private List<WebElement> unAssignExpertiseList;
 
     @FindBys(@FindBy(xpath =  ".//div[@id='selfTaggedExpertise']//span[@class='item-tag-text']"))
@@ -31,6 +31,13 @@ public class AssignExpertisePopupPage extends BasePage<AssignExpertisePopupPage>
 
     @FindBy(xpath = ".//input[@placeholder='Start typing to choose an Area of Expertise...' and @class='tt-query']")
     private WebElement ExpertiseTextField;
+
+    @FindBy(xpath = ".//div[@id='assignExpertise']//button[text()='Save']")
+    private WebElement SaveExpertiseButton ;
+
+    @FindBy(xpath = ".//div[@class='modal-create-header']//i")
+    private WebElement CloseExpertisePopupIcon ;
+
 
 
     public AssignExpertisePopupPage(WebDriver driver) {
