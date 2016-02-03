@@ -25,6 +25,7 @@ public class RunnerClass {
 
         WebDriver driver;
         LoginPage loginPage;
+
         @BeforeClass
         public void start() throws Exception {
                 driver = new FirefoxDriver();

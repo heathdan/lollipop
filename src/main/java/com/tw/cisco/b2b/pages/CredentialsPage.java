@@ -31,7 +31,7 @@ public class CredentialsPage extends BasePage<CredentialsPage> {
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
-        return ExpectedConditions.visibilityOf(this.getEnvironment());
+        return ExpectedConditions.visibilityOf(environment);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class CredentialsPage extends BasePage<CredentialsPage> {
     }
 
     protected CredentialsPage verifyEnvironment(){
-        Assert.assertEquals(this.getEnvironment().getText(), ENVIRONMENT);
+        Assert.assertEquals(environment.getText(), ENVIRONMENT);
         return this;
     }
 

@@ -33,7 +33,7 @@ public class HomePage extends BasePage<HomePage> {
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
-        return ExpectedConditions.visibilityOf(this.getLandingPage());
+        return ExpectedConditions.visibilityOf(landingPage);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class HomePage extends BasePage<HomePage> {
         return leftNav;
     }
 
-    public void setLeftNavHelper(LeftNav leftNavHelper) {
-        this.leftNav = leftNavHelper;
+    public void setLeftNav(LeftNav leftNav) {
+        this.leftNav = leftNav;
     }
 }

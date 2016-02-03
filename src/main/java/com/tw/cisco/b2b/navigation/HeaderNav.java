@@ -59,7 +59,7 @@ public class HeaderNav extends BasePage<HeaderNav> {
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
-        return ExpectedConditions.visibilityOf(this.topNavSearch);
+        return ExpectedConditions.visibilityOf(topNavSearch);
     }
 
     protected LoginPage CKlogout() {
@@ -83,10 +83,10 @@ public class HeaderNav extends BasePage<HeaderNav> {
 
         try {
             System.out.println("wait for spinner to appear");
-            if (waitForSpinnerAppear.until(ExpectedConditions.visibilityOf(this.spinner)) != null) {
+            if (waitForSpinnerAppear.until(ExpectedConditions.visibilityOf(spinner)) != null) {
                 System.out.println("wait for spinner to disappear");
                 waitForSpinnerDisappear.until(ExpectedConditions
-                        .invisibilityOfElementLocated(this.spinnerLocator));
+                        .invisibilityOfElementLocated(spinnerLocator));
             }
         } catch (Exception e) {
             System.out.println(e);
