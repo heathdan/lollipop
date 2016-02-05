@@ -5,11 +5,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 /**
  * Created by aswathyn on 22/01/16.
  */
 public class UserPage extends BasePage<UserPage> {
+
+    @FindBy(className ="admin-table-content")
+    private WebElement userTable;
 
     @FindBy(className = "icon-caret-down")
     private WebElement filter ;
@@ -100,7 +104,7 @@ public class UserPage extends BasePage<UserPage> {
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
-        return null;
+        return ExpectedConditions.visibilityOf(userTable);
     }
 
     /***********************GET/SET METHODS*********************/

@@ -5,11 +5,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 /**
  * Created by aswathyn on 22/01/16.
  */
 public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
+
+    @FindBy(xpath = "//h4[text()='Create Custom Role']/parent::div/parent::div")
+    private WebElement CreateRoleHeader;
 
     @FindBy(xpath = ".//h4[text()='Create Custom Role']/parent::div/parent::div")
     private WebElement createRoleModal;
@@ -62,7 +66,7 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
-        return null;
+        return ExpectedConditions.visibilityOf(CreateRoleHeader);
     }
 
     /***********************GET/SET METHODS*********************/

@@ -6,6 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
@@ -13,6 +14,9 @@ import java.util.List;
  * Created by aswathyn on 22/01/16.
  */
 public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
+
+    @FindBy(className ="admin-table-content")
+    private WebElement rolesTable;
 
     @FindBy(className = "icon-caret-down")
     private WebElement filter ;
@@ -93,7 +97,7 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
-        return null;
+        return ExpectedConditions.visibilityOf(rolesTable);
     }
 
     /***********************GET/SET METHODS*********************/

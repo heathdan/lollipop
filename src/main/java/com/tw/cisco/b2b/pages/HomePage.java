@@ -1,7 +1,6 @@
 package com.tw.cisco.b2b.pages;
 
 import com.tw.cisco.b2b.navigation.HeaderNav;
-import com.tw.cisco.b2b.navigation.LeftNav;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,7 +17,7 @@ public class HomePage extends BasePage<HomePage> {
     private HeaderNav headerNav;
     private LeftNav leftNav;
 
-    @FindBy(xpath=".//div[@class='page-content dashboard-workspace default-landing navbar-fixed skin-4']")
+    @FindBy(className="widget-body-inner")
     private WebElement landingPage;
 
     public static final String HOME_PAGE_TITLE="Cisco";

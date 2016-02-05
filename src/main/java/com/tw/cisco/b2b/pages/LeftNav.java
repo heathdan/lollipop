@@ -1,11 +1,14 @@
-package com.tw.cisco.b2b.navigation;
+package com.tw.cisco.b2b.pages;
 
-import com.tw.cisco.b2b.pages.BasePage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -14,7 +17,9 @@ import java.util.List;
  */
 public class LeftNav extends BasePage<LeftNav> {
 
-    @FindBy(xpath=".//li[@class='active']/button/span[@class='menu-text']")
+
+
+    @FindBys(@FindBy(xpath=".//li[@class='active']/button/span[@class='menu-text']"))
     private List<WebElement> leftNavPanel;
 
     @FindBy(xpath = ".//span[text()=' Workspace']")
@@ -110,11 +115,23 @@ public class LeftNav extends BasePage<LeftNav> {
     @FindBy(xpath = ".//span[text()='Mobile']")
     private WebElement mobile;
 
-    @FindBy(xpath = "//span[text()='Collaborate']")
+    @FindBy(xpath = ".//span[text()='Collaborate']")
     private WebElement collaborate1;
 
-    @FindBy(xpath = "//span[text()='Reporting']")
+    @FindBy(xpath = ".//span[text()='Reporting']")
     private WebElement reporting;
+
+    @FindBy(xpath = ".//ul[@id='adminTab']//a[text()='Users']")
+    private WebElement usersTab;
+
+    @FindBy(xpath = ".//ul[@id='adminTab']//a[text()='Roles and Permissions']")
+    private WebElement rolesNPermissionTab;
+
+    @FindBy(xpath = ".//ul[@id='adminTab']//a[text()='Pending Registrations']")
+    private WebElement pendingRegTab;
+
+    @FindBy(xpath = ".//ul[@id='adminTab']//a[text()='Define Expertise']")
+    private WebElement defineExpertiseTab;
 
     public LeftNav(WebDriver driver) {
         super(driver);
@@ -124,7 +141,7 @@ public class LeftNav extends BasePage<LeftNav> {
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
-        return null;
+        return ExpectedConditions.visibilityOfAllElements(leftNavPanel);
     }
 
     @Override
@@ -136,6 +153,26 @@ public class LeftNav extends BasePage<LeftNav> {
         }
     }
 
+    public UserPage navUsersTab(){
+        admin.click();
+        user.click();
+        usersTab.click();
+        return new UserPage(driver);
+    }
+
+    public DefineExpertisePage navDefineExpertiseTab(){
+        admin.click();
+        user.click();
+        defineExpertiseTab.click();
+        return new DefineExpertisePage(driver);
+    }
+
+    public RolesAndPermissionPage NavRolesTab(){
+        admin.click();
+        user.click();
+        rolesNPermissionTab.click();
+        return new RolesAndPermissionPage(driver);
+    }
     /***********************GET/SET METHODS*********************/
 
     public List<WebElement> getLeftNavPanel() {

@@ -33,6 +33,7 @@ public class LoginPage extends BasePage<LoginPage> {
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
+
         return ExpectedConditions.titleIs(getPageTitle());
     }
 
