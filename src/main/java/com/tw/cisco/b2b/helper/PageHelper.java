@@ -19,7 +19,11 @@ public class PageHelper {
     public void ckLogin(String userName, String passwrd) {
         loginPage = new LoginPage(driver);
         homePage=loginPage.enterEmail(userName).enterCredentials(passwrd);
-        homePage.getHeaderNav().CKlogout();
+
+    }
+
+    public void ckLogout() {
+        new HomePage(driver).getHeaderNav().CKlogout();
     }
 
 }
