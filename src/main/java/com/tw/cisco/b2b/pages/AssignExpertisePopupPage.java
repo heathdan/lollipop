@@ -6,13 +6,19 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * Created by aswathyn on 01/02/16.
  */
 public class AssignExpertisePopupPage extends BasePage<AssignExpertisePopupPage> {
+
+    @FindBy(xpath = ".//div[@class='modal-create-header']")
+    private WebElement expertisePopupWait ;
 
     @FindBys(@FindBy(xpath = ".//div[contains(text(),'Admin Assigned Expertise')]//span[@class='item-tag-text']"))
     private List<WebElement> adminAssignedExpertiseList;
@@ -57,6 +63,19 @@ public class AssignExpertisePopupPage extends BasePage<AssignExpertisePopupPage>
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
-        return null;
+        return ExpectedConditions.visibilityOf(expertisePopupWait);
+    }
+
+    public UserPage expertiseOperation() throws InterruptedException {
+
+        ExpertiseTextField.sendKeys("API");
+        Thread.sleep(2000);
+        Iterator<WebElement> itr = ExpertiseSuggestList.iterator();
+        while(itr.hasNext()) {
+            System.out.println(itr.next().getText());
+        }
+        CloseExpertisePopupIcon.click();
+        return new UserPage(driver);
+
     }
 }

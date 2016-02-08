@@ -22,6 +22,10 @@ public class LeftNav extends BasePage<LeftNav> {
     @FindBys(@FindBy(xpath=".//li[@class='active']/button/span[@class='menu-text']"))
     private List<WebElement> leftNavPanel;
 
+
+    @FindBy(className = "navbar-brand")
+    private WebElement HomeIcon;
+
     @FindBy(xpath = ".//span[text()=' Workspace']")
     private WebElement workspace;
 
@@ -172,6 +176,11 @@ public class LeftNav extends BasePage<LeftNav> {
         user.click();
         rolesNPermissionTab.click();
         return new RolesAndPermissionPage(driver);
+    }
+
+    public HomePage NavHome(){
+        HomeIcon.click();
+        return new HomePage(driver);
     }
     /***********************GET/SET METHODS*********************/
 

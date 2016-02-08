@@ -3,9 +3,15 @@ package com.tw.cisco.b2b.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.SystemClock;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by aswathyn on 22/01/16.
@@ -30,7 +36,7 @@ public class UserPage extends BasePage<UserPage> {
     @FindBy(id = "qa_automation_Full Name")
     private WebElement filterByFullName ;
 
-    @FindBy(id = "icon-search")
+    @FindBy(xpath = ".//i[@class='icon-search']")
     private WebElement searchIcon ;
 
     @FindBy(id="peopleSearchBox")
@@ -61,25 +67,31 @@ public class UserPage extends BasePage<UserPage> {
     private WebElement activateUser;
 
     @FindBy(xpath = ".//h5[text()='Status']")
-    private  WebElement userName;
+    private  WebElement status;
 
-    @FindBy(xpath = ".//div[@class='item-wrap container']//div/p[0]")
+    @FindBy(xpath = ".//p[@class='item-email'and text()='mahone_7@mailinator.com']")
+    private WebElement waitforsearch;
+
+    @FindBy(xpath = ".//p[@class='item-email']")
     private WebElement userEmail;
 
-    @FindBy(xpath = ".//div[@class='item-wrap container']//div/p[1]")
+    @FindBy(xpath = "(.//div[@class='item-wrap container']//p)[2]")
     private WebElement fullName;
 
-    @FindBy(xpath = "/./div[@class='item-wrap container']//div/p[2]")
+    @FindBy(xpath = "(.//div[@class='item-wrap container']//p)[3]")
     private WebElement lastLoginDate;
 
-    @FindBy(xpath = "/./div[@class='item-wrap container']//div/p[3]")
+    @FindBy(xpath = "(.//div[@class='item-wrap container']//p)[4]")
     private WebElement dateCreated;
 
-    @FindBy(xpath = ".//div[@class='item-wrap container']//div/p[4]")
+    @FindBy(xpath = "(.//div[@class='item-wrap container']//p)[5]")
     private WebElement dateModified;
 
-    @FindBy(xpath = ".//div[@class='item-wrap container']//div/p[5]")
+    @FindBy(xpath = "(.//div[@class='item-wrap container']//p)[6]")
     private WebElement userStatus;
+
+    @FindBy(xpath = ".//button[@data-original-title='Assign Expertise']")
+    private WebElement assignExpertisePopupicon ;
 
     @FindBy(xpath = ".//ul[@class='pagination']/li/a[text()='← Previous']")
     private WebElement paginationPrevious;
@@ -106,6 +118,33 @@ public class UserPage extends BasePage<UserPage> {
     protected ExpectedCondition getPageLoadCondition() {
         return ExpectedConditions.visibilityOf(userTable);
     }
+
+    public UserPage searchUser(String emailID){
+        searchField.sendKeys(emailID);
+        searchIcon.click();
+        WebElement b = new WebDriverWait(driver,15).until(ExpectedConditions.visibilityOf(waitforsearch));
+        return new UserPage(driver);
+
+    }
+
+    public AssignExpertisePopupPage clickAssignExpertise(){
+        assignExpertisePopupicon.click();
+        return new AssignExpertisePopupPage(driver);
+    }
+
+    public UserPage  getUserDetails(){
+
+        System.out.println("chandra" + " " + userEmail.getText());
+        System.out.println("Full Name" + " " +fullName.getText());
+        System.out.println("Date Modified" + " " +dateModified.getText());
+        System.out.println("Date Created" + " " +dateCreated.getText());
+        System.out.println("LastLoggedIn" + " " +lastLoginDate.getText());
+        System.out.println("Status" + " " +userStatus.getText());
+        return new UserPage(driver);
+
+    }
+
+
 
     /***********************GET/SET METHODS*********************/
 
@@ -167,10 +206,6 @@ public class UserPage extends BasePage<UserPage> {
 
     public WebElement getActivateUser() {
         return activateUser;
-    }
-
-    public WebElement getUserName() {
-        return userName;
     }
 
     public WebElement getUserEmail() {
