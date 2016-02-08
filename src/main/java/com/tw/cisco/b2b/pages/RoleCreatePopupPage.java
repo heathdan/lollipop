@@ -1,19 +1,24 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.navigation.TabbedNav;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.util.List;
 
 /**
  * Created by aswathyn on 22/01/16.
  */
 public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
 
+
     @FindBy(xpath = "//h4[text()='Create Custom Role']/parent::div/parent::div")
-    private WebElement CreateRoleHeader;
+    private WebElement createRoleHeader;
 
     @FindBy(xpath = ".//h4[text()='Create Custom Role']/parent::div/parent::div")
     private WebElement createRoleModal;
@@ -42,12 +47,19 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
     @FindBy(xpath = ".//button[text()='Add Role']")
     private WebElement saveRoleCreation;
 
-    @FindBy(className = "role-create-success")
-    private WebElement successRolePopUp;
+    @FindBys(@FindBy(xpath=".//select[@id='roleSelector']//option"))
+    private List<WebElement> inheritRolesList;
+
+    @FindBy(xpath=".//div[@id='addRole']//h4[text()='Create Custom Role']")
+    private WebElement roleSuccessPopupHeader;
+
+   /* @FindBy(className = "role-create-success")
+    private WebElement successRolePopUp;*/
 
     @FindBy(xpath = ".//div[contains(@class,'role-create-success')]/button")
     private WebElement roleSuccessPopUp;
 
+    private TabbedNav tabNav;
 
     public RoleCreatePopupPage(WebDriver driver) {
         super(driver);
@@ -66,52 +78,24 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
-        return ExpectedConditions.visibilityOf(CreateRoleHeader);
+        return ExpectedConditions.visibilityOf(createRoleHeader);
+    }
+
+    protected void createNewRole(String roleName) {
+
+
+    }
+
+    public RolesAndPermissionPage createNewInheritRole(String roleName, String inheritRoleName) {
+        nameTextField.sendKeys(roleName);
+        System.out.println("ROLE" + nameTextField.getText());
+        rolesDropdown.click();
+        selectSystemAdmin.click();
+        saveRoleCreation.click();
+        waitForElement(ExpectedConditions.visibilityOf(roleSuccessPopupHeader));
+        roleSuccessPopUp.click();
+        return new RolesAndPermissionPage(driver);
     }
 
     /***********************GET/SET METHODS*********************/
-
-    public WebElement getCreateRoleModal() {
-        return createRoleModal;
-    }
-
-    public WebElement getCreateRoleModalHeader() {
-        return createRoleModalHeader;
-    }
-
-    public WebElement getNameTextField() {
-        return nameTextField;
-    }
-
-    public WebElement getRolesDropdown() {
-        return rolesDropdown;
-    }
-
-    public WebElement getSelectLearner() {
-        return selectLearner;
-    }
-
-    public WebElement getSelectCatalogAdmin() {
-        return selectCatalogAdmin;
-    }
-
-    public WebElement getSelectSystemAdmin() {
-        return selectSystemAdmin;
-    }
-
-    public WebElement getCancelRoleCreation() {
-        return cancelRoleCreation;
-    }
-
-    public WebElement getSaveRoleCreation() {
-        return saveRoleCreation;
-    }
-
-    public WebElement getSuccessRolePopUp() {
-        return successRolePopUp;
-    }
-
-    public WebElement getRoleSuccessPopUp() {
-        return roleSuccessPopUp;
-    }
 }

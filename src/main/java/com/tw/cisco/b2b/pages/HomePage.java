@@ -51,10 +51,6 @@ public class HomePage extends BasePage<HomePage> {
 
     /***********************GET/SET METHODS*********************/
 
-    public WebElement getLandingPage() {
-        return landingPage;
-    }
-
     public HeaderNav getHeaderNav() {
         return headerNav;
     }

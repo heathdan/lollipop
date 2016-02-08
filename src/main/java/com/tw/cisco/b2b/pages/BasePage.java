@@ -14,6 +14,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -27,16 +28,17 @@ public abstract class BasePage<P extends BasePage>{
 
     public static String gridHubUrl = null;
 
-  /*  static {
-        gridHubUrl = CommonHelper.getGridHubUrl();
-    }
-  */
+    /*  static {
+          gridHubUrl = CommonHelper.getGridHubUrl();
+      }
+    */
     protected WebDriver driver;
+    protected WebDriverWait waitTime;
+    private static final String PAGE_TITLE="";
+    protected static final long ELEMENT_WAIT=10;
     protected static final long IMPLICIT_WAIT=20;
     protected static final int PAGE_LOAD_TIMEOUT = 30;
     protected static final int POLLING_RATE = 2;
-    private static final String PAGE_TITLE="";
-
     protected static final int SPINNER_TO_APPEAR_TIMEOUT=5;
     protected static final int SPINNER_TO_DISAPPEAR_TIMEOUT=30;
     protected static final int SPINNER_POLLING_RATE=50;
@@ -57,6 +59,10 @@ public abstract class BasePage<P extends BasePage>{
         driver.manage().timeouts().implicitlyWait(IMPLICIT_WAIT, TimeUnit.SECONDS);
     }
 
+    /**
+     * Method to wait for page to get loaded
+     * @param expectedCondition
+     */
     protected void waitForPageToLoad(ExpectedCondition expectedCondition) {
         Wait wait = new FluentWait(driver)
                 .withTimeout(PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS)
@@ -89,6 +95,22 @@ public abstract class BasePage<P extends BasePage>{
      */
     protected abstract void instantiatePage(P page);
 
+    /**
+     * Method for waiting for element to be visible
+     *
+     */
+    protected void waitForElement(ExpectedCondition expectedCondition) {
+        waitTime= new WebDriverWait(driver,ELEMENT_WAIT);
+        waitTime.until(expectedCondition);
+    }
+
+    /**
+     *
+     * @param driverType
+     * @param browserVersion
+     * @param platform
+     * @return
+     */
     public static WebDriver geDriver(Driver driverType, String browserVersion, String platform){
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
 

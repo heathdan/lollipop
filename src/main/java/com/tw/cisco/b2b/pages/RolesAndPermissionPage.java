@@ -1,5 +1,7 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.navigation.HeaderNav;
+import com.tw.cisco.b2b.navigation.TabbedNav;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,31 +17,35 @@ import java.util.List;
  */
 public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
 
-    @FindBy(className ="admin-table-content")
+    private HeaderNav headerNav;
+    private LeftNav leftNav;
+    private TabbedNav tabNav;
+
+    @FindBy(className = "admin-table-content")
     private WebElement rolesTable;
 
     @FindBy(className = "icon-caret-down")
-    private WebElement filter ;
+    private WebElement filter;
 
     @FindBy(xpath = "//a[@class='sorter-toggle'][@data-icon-before='sort-descending']")
-    private WebElement sortDescending ;
+    private WebElement sortDescending;
 
     @FindBy(xpath = "//a[@class='sorter-toggle'][@data-icon-before='sort-ascending']")
-    private WebElement sortAscending ;
+    private WebElement sortAscending;
 
     @FindBy(id = "qa_automation_Name")
-    private WebElement filterByName ;
+    private WebElement filterByName;
 
     @FindBy(id = "qa_automation_Date Created")
-    private WebElement filterByDateCreated ;
+    private WebElement filterByDateCreated;
 
     @FindBy(id = "qa_automation_Date Modified")
-    private WebElement filterByDateModified ;
+    private WebElement filterByDateModified;
 
     @FindBy(id = "qa_automation_Last Activated / Deactivated")
-    private WebElement filterByLastStatusChange ;
+    private WebElement filterByLastStatusChange;
 
-    @FindBy(className = "btn upload-btn")
+    @FindBy(xpath = ".//button[@class='btn upload-btn']")
     private WebElement createRole;
 
     @FindBys(@FindBy(xpath = "//p[contains(@class,'item-name')]"))
@@ -47,7 +53,7 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
 
     /* //span[text()='Status']/parent::div */
 
-    @FindBys(@FindBy(xpath="//p[contains(@class,'item-name')]/parent::div/parent::div//span[text()='Status']/parent::div"))
+    @FindBys(@FindBy(xpath = "//p[contains(@class,'item-name')]/parent::div/parent::div//span[text()='Status']/parent::div"))
     private List<WebElement> statusList;
 
     @FindBy(xpath = "//p[contains(@class,'item-name') and text()='Learner']/parent::div/parent::div//span[text()='Status']/parent::div")
@@ -77,20 +83,23 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
     @FindBy(xpath = "//ul[@class='pagination']/li/a[text()='← Previous']")
     private WebElement paginationPrevious;
 
-    @FindBy(xpath ="//ul[@class='pagination']//a[text()='Next →']")
+    @FindBy(xpath = "//ul[@class='pagination']//a[text()='Next →']")
     private WebElement paginationNext;
 
     public RolesAndPermissionPage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
         waitForPageToLoad(getPageLoadCondition());
+        leftNav = new LeftNav(driver);
+        headerNav = new HeaderNav(driver);
+        tabNav = new TabbedNav(driver);
     }
 
     @Override
     protected void instantiatePage(RolesAndPermissionPage page) {
         try {
             PageFactory.initElements(driver, page);
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -100,85 +109,34 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
         return ExpectedConditions.visibilityOf(rolesTable);
     }
 
-    /***********************GET/SET METHODS*********************/
-
-    public WebElement getFilter() {
-        return filter;
+    public RoleCreatePopupPage clickRoleCreation() {
+        createRole.click();
+        return new RoleCreatePopupPage(driver);
     }
 
-    public WebElement getSortDescending() {
-        return sortDescending;
+    /*********************GET/SET METHODS*********************/
+
+    public LeftNav getLeftNav() {
+        return leftNav;
     }
 
-    public WebElement getSortAscending() {
-        return sortAscending;
+    public void setLeftNav(LeftNav leftNav) {
+        this.leftNav = leftNav;
     }
 
-    public WebElement getFilterByName() {
-        return filterByName;
+    public HeaderNav getHeaderNav() {
+        return headerNav;
     }
 
-    public WebElement getFilterByDateCreated() {
-        return filterByDateCreated;
+    public void setHeaderNav(HeaderNav headerNav) {
+        this.headerNav = headerNav;
     }
 
-    public WebElement getFilterByDateModified() {
-        return filterByDateModified;
+    public TabbedNav getTabNav() {
+        return tabNav;
     }
 
-    public WebElement getFilterByLastStatusChange() {
-        return filterByLastStatusChange;
-    }
-
-    public WebElement getCreateRole() {
-        return createRole;
-    }
-
-    public List<WebElement> getRolesList() {
-        return rolesList;
-    }
-
-    public List<WebElement> getStatusList() {
-        return statusList;
-    }
-
-    public WebElement getLearnerStatus() {
-        return learnerStatus;
-    }
-
-    public WebElement getLearnerViewRole() {
-        return learnerViewRole;
-    }
-
-    public List<WebElement> getDeactivateRoleList() {
-        return deactivateRoleList;
-    }
-
-    public List<WebElement> getEditRoleList() {
-        return editRoleList;
-    }
-
-    public List<WebElement> getDeleteRoleList() {
-        return deleteRoleList;
-    }
-
-    public WebElement getCustomEditRole() {
-        return customEditRole;
-    }
-
-    public WebElement getCustomDeActivateRole() {
-        return customDeActivateRole;
-    }
-
-    public WebElement getCustomDeleteRole() {
-        return customDeleteRole;
-    }
-
-    public WebElement getPaginationPrevious() {
-        return paginationPrevious;
-    }
-
-    public WebElement getPaginationNext() {
-        return paginationNext;
+    public void setTabNav(TabbedNav tabNav) {
+        this.tabNav = tabNav;
     }
 }

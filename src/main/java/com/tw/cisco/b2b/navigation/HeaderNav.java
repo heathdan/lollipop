@@ -95,31 +95,4 @@ public class HeaderNav extends BasePage<HeaderNav> {
 
 
     /***********************GET/SET METHODS*********************/
-    public WebElement getLogOut(){
-        return logOut;
-    }
-
-    public WebElement getTopNavBar(){
-        return topNavBar;
-    }
-
-    public WebElement getTopNavSearch() {
-        return topNavSearch;
-    }
-
-    public WebElement getTopNavMyProfile() {
-        return topNavMyProfile;
-    }
-
-    public WebElement getMyProfile() {
-        return myProfile;
-    }
-
-    public WebElement getSpinner(){
-        return spinner;
-    }
-
-    public By getSpinnerLocator() {
-        return spinnerLocator;
-    }
 }

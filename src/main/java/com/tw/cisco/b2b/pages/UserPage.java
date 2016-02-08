@@ -3,15 +3,10 @@ package com.tw.cisco.b2b.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.SystemClock;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by aswathyn on 22/01/16.
@@ -144,99 +139,6 @@ public class UserPage extends BasePage<UserPage> {
 
     }
 
-
-
     /***********************GET/SET METHODS*********************/
 
-    public WebElement getFilter() {
-        return filter;
-    }
-
-    public WebElement getSortDescending() {
-        return sortDescending;
-    }
-
-    public WebElement getSortAscending() {
-        return sortAscending;
-    }
-
-    public WebElement getFilterByUserName() {
-        return filterByUserName;
-    }
-
-    public WebElement getFilterByFullName() {
-        return filterByFullName;
-    }
-
-    public WebElement getSearchIcon() {
-        return searchIcon;
-    }
-
-    public WebElement getSearchField() {
-        return searchField;
-    }
-
-    public WebElement getBulkAssignExpertise() {
-        return bulkAssignExpertise;
-    }
-
-    public WebElement getBulkCreateUsers() {
-        return bulkCreateUsers;
-    }
-
-    public WebElement getFromTextField() {
-        return fromTextField;
-    }
-
-    public WebElement getToTextField() {
-        return toTextField;
-    }
-
-    public WebElement getCalendarFilter() {
-        return calendarFilter;
-    }
-
-    public WebElement getCalendarClear() {
-        return calendarClear;
-    }
-
-    public WebElement getDeactivateUser() {
-        return deactivateUser;
-    }
-
-    public WebElement getActivateUser() {
-        return activateUser;
-    }
-
-    public WebElement getUserEmail() {
-        return userEmail;
-    }
-
-    public WebElement getFullName() {
-        return fullName;
-    }
-
-    public WebElement getLastLoginDate() {
-        return lastLoginDate;
-    }
-
-    public WebElement getDateCreated() {
-        return dateCreated;
-    }
-
-    public WebElement getDateModified() {
-        return dateModified;
-    }
-
-    public WebElement getUserStatus() {
-        return userStatus;
-    }
-
-    public WebElement getPaginationPrevious() {
-        return paginationPrevious;
-    }
-
-    public WebElement getPaginationNext() {
-        return paginationNext;
-    }
 }

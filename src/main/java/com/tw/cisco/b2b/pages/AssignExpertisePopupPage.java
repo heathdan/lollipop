@@ -7,7 +7,6 @@ import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.Iterator;
 import java.util.List;
@@ -30,19 +29,19 @@ public class AssignExpertisePopupPage extends BasePage<AssignExpertisePopupPage>
     private List<WebElement> selfTaggedExpertiseList ;
 
     @FindBys(@FindBy(xpath =  ".//div[@id='selfTaggedExpertise']//i[@class='icon-remove red']"))
-    private List<WebElement> RemoveSelfTaggedExpertiseList ;
+    private List<WebElement> removeSelfTaggedExpertiseList ;
 
     @FindBys(@FindBy(xpath = ".//div[@class='tt-suggestion']"))
-    private List<WebElement> ExpertiseSuggestList ;
+    private List<WebElement> expertiseSuggestList ;
 
     @FindBy(xpath = ".//input[@placeholder='Start typing to choose an Area of Expertise...' and @class='tt-query']")
-    private WebElement ExpertiseTextField;
+    private WebElement expertiseTextField;
 
     @FindBy(xpath = ".//div[@id='assignExpertise']//button[text()='Save']")
-    private WebElement SaveExpertiseButton ;
+    private WebElement saveExpertiseButton ;
 
     @FindBy(xpath = ".//div[@class='modal-create-header']//i")
-    private WebElement CloseExpertisePopupIcon ;
+    private WebElement closeExpertisePopupIcon ;
 
 
 
@@ -68,13 +67,13 @@ public class AssignExpertisePopupPage extends BasePage<AssignExpertisePopupPage>
 
     public UserPage expertiseOperation() throws InterruptedException {
 
-        ExpertiseTextField.sendKeys("API");
+        expertiseTextField.sendKeys("API");
         Thread.sleep(2000);
-        Iterator<WebElement> itr = ExpertiseSuggestList.iterator();
+        Iterator<WebElement> itr = expertiseSuggestList.iterator();
         while(itr.hasNext()) {
             System.out.println(itr.next().getText());
         }
-        CloseExpertisePopupIcon.click();
+        closeExpertisePopupIcon.click();
         return new UserPage(driver);
 
     }

@@ -56,15 +56,4 @@ public class CredentialsPage extends BasePage<CredentialsPage> {
 
     /*********************GET/SET METHODS***************************/
 
-    public WebElement getPassword() {
-        return password;
-    }
-
-    public WebElement getSignIn() {
-        return signIn;
-    }
-
-    public WebElement getEnvironment() {
-        return environment;
-    }
 }
