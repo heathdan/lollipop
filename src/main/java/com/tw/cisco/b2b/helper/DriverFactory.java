@@ -1,8 +1,9 @@
 package com.tw.cisco.b2b.helper;
 
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.awt.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -12,7 +13,6 @@ public class DriverFactory {
 
     protected static WebDriver driver;
     protected static final String URL= "https://t2-qa.xkit.co/";
-    //protected static PageHelper helper;
 
     public DriverFactory() {
         initialize();
@@ -44,7 +44,10 @@ public class DriverFactory {
     private void waitAndMaximize() {
         try {
             driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-            driver.manage().window().maximize();
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
+            int Width = (int) toolkit.getScreenSize().getWidth();
+            int Height = (int)toolkit.getScreenSize().getHeight();
+            driver.manage().window().setSize(new org.openqa.selenium.Dimension(Width,Height));
         } catch (Exception e){
             System.out.println("Browser handle not available");
         }

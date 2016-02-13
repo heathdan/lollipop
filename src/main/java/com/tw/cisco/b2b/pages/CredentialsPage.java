@@ -20,6 +20,9 @@ public class CredentialsPage extends BasePage<CredentialsPage> {
     @FindBy(css=".product-info-inner>p")
     private WebElement environment;
 
+    @FindBy(xpath = "//div[@class='brandingLoginForm']")
+    private WebElement loginForm;
+
     public static final String ENVIRONMENT= "CLKS T2-QA Environment";
 
     public CredentialsPage(WebDriver driver) {
@@ -30,7 +33,7 @@ public class CredentialsPage extends BasePage<CredentialsPage> {
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
-        return ExpectedConditions.visibilityOf(environment);
+        return ExpectedConditions.visibilityOf(loginForm);
     }
 
     @Override

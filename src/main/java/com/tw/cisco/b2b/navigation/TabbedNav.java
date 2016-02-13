@@ -18,6 +18,12 @@ public class TabbedNav extends BasePage<TabbedNav> {
 
     private LeftNav leftNav;
 
+    public enum TabName {
+        USERS,
+        ROLESPERMISSIONS,
+        DEFINEEXPERTISE;
+    }
+
     @FindBy(xpath=".//ul[@id='adminTab']//a[text()='Users']")
     private WebElement userTab;
 
@@ -53,11 +59,11 @@ public class TabbedNav extends BasePage<TabbedNav> {
         }
     }
 
-    public BasePage navToTab(String tabName) {
+    public BasePage navToTab(TabName tabName) {
         BasePage page = null;
         System.out.println(tabName);
         switch(tabName) {
-            case "Users":
+            case USERS:
                 userTab.click();
                 page = new UserPage(driver);
                 break;
@@ -67,16 +73,21 @@ public class TabbedNav extends BasePage<TabbedNav> {
                         page= new PendingRegPage(driver);
                         break;
     */
-            case "Roles and Permissions":
+            case ROLESPERMISSIONS:
                 rolesNPermissionTab.click();
                 page = new RolesAndPermissionPage(driver);
                 break;
 
-            case "Define Expertise":
+            case DEFINEEXPERTISE:
                 defineExpertiseTab.click();
                 page = new DefineExpertisePage(driver);
                 break;
-              /*  case "Licensing":
+
+            /*case PENDINGREGISTRATIONS:
+                pendingRegTab.click();
+                page = new DefineExpertisePage(driver);
+                break;
+                case "Licensing":
                         status = page.getWorkspace().isDisplayed();
                         break;
                     case "Site Management":
