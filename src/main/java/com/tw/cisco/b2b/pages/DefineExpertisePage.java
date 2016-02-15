@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
  */
 public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
 
-    @FindBy(className = "admin-table-content")
+    @FindBy(className = "admin-tab-expertise")
     private WebElement expertiseTable;
 
     @FindBy(xpath = "//input[@placeholder='Type an area of expertise']")

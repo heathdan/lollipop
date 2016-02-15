@@ -21,7 +21,7 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
     private LeftNav leftNav;
     private TabbedNav tabNav;
 
-    @FindBy(className = "admin-table-content")
+    @FindBy(className = "admin-tab-roles")
     private WebElement rolesTable;
 
     @FindBy(className = "icon-caret-down")
@@ -86,6 +86,12 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
     @FindBy(xpath = "//ul[@class='pagination']//a[text()='Next →']")
     private WebElement paginationNext;
 
+    @FindBy(xpath = "//li[@class='align-center']/input")
+    private WebElement paginateFrom;
+
+    @FindBy(xpath = "//li[@class='align-center']")
+    private WebElement paginateUntil;
+
     public RolesAndPermissionPage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
@@ -112,6 +118,14 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
     public RoleCreatePopupPage clickRoleCreation() {
         createRole.click();
         return new RoleCreatePopupPage(driver);
+    }
+
+    public RolesAndPermissionPage printPagination() throws InterruptedException {
+        paginationNext.click();
+        Thread.sleep(2000);
+        System.out.println(" paginate from =  " +  paginateFrom.getAttribute("value"));
+        System.out.println(" paginate until =  " + paginateUntil.getText());
+        return new RolesAndPermissionPage(driver);
     }
 
     /*********************GET/SET METHODS*********************/

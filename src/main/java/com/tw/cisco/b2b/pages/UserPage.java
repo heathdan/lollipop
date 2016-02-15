@@ -6,14 +6,12 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 /**
  * Created by aswathyn on 22/01/16.
  */
 public class UserPage extends BasePage<UserPage> {
 
-    @FindBy(className ="admin-table-content")
+    @FindBy(className ="admin-tab-users")
     private WebElement userTable;
 
     @FindBy(className = "icon-caret-down")
@@ -64,7 +62,7 @@ public class UserPage extends BasePage<UserPage> {
     @FindBy(xpath = ".//h5[text()='Status']")
     private  WebElement status;
 
-    @FindBy(xpath = ".//p[@class='item-email'and text()='mahone_7@mailinator.com']")
+    @FindBy(xpath = ".//p[@class='item-title-department'and text()='Alex Mahone']")
     private WebElement waitforsearch;
 
     @FindBy(xpath = ".//p[@class='item-email']")
@@ -117,10 +115,19 @@ public class UserPage extends BasePage<UserPage> {
     public UserPage searchUser(String emailID){
         searchField.sendKeys(emailID);
         searchIcon.click();
-        WebElement b = new WebDriverWait(driver,15).until(ExpectedConditions.visibilityOf(waitforsearch));
+        waitForElement(ExpectedConditions.visibilityOf(waitforsearch));
         return new UserPage(driver);
 
     }
+
+    public UserPage searchByExpertise(String expertise){
+        searchField.clear();
+        searchField.sendKeys(expertise);
+        searchIcon.click();
+        return new UserPage(driver);
+    }
+
+
 
     public AssignExpertisePopupPage clickAssignExpertise(){
         assignExpertisePopupicon.click();

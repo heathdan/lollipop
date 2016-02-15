@@ -3,8 +3,9 @@ package com.tw.cisco.b2b.steps;
 import com.tw.cisco.b2b.helper.DriverFactory;
 import com.tw.cisco.b2b.navigation.HeaderNav;
 import com.tw.cisco.b2b.navigation.TabbedNav;
-import com.tw.cisco.b2b.pages.*;
-import cucumber.api.PendingException;
+import com.tw.cisco.b2b.pages.LeftNav;
+import com.tw.cisco.b2b.pages.LoginPage;
+import com.tw.cisco.b2b.pages.UserPage;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -54,16 +55,13 @@ public class LoginStepdefs extends DriverFactory {
         UserPage page = new UserPage(driver);
         page.searchUser("\""+arg0+"\"");
         page.getUserDetails();
-
-
     }
 
     @And("^user performs operations on expertise popup$")
     public void userPerformsOperationsOnExpertisePopup() throws Throwable {
         UserPage page = new UserPage(driver);
-        page.clickAssignExpertise().expertiseOperation();
+        page.clickAssignExpertise().expertiseOperation("API");
 
     }
-
 
 }

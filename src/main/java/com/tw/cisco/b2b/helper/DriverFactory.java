@@ -1,7 +1,7 @@
 package com.tw.cisco.b2b.helper;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import com.tw.cisco.b2b.pages.BasePage;
+import org.openqa.selenium.WebDriver;
 
 import java.awt.*;
 import java.util.concurrent.TimeUnit;
@@ -26,7 +26,7 @@ public class DriverFactory {
     }
 
     private void createNewDriverInstance() {
-        driver = new FirefoxDriver();
+        driver = BasePage.geDriver(BasePage.Driver.FIREFOX,"40","MAC");
     }
 
     public WebDriver getDriver() {
