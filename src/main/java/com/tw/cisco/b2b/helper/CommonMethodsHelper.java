@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class CommonMethodsHelper {
 
-    private static Map<String, WebElement> tabs = new HashMap<String,WebElement>();
+    private static Map<String, WebElement>tabs = new HashMap<String,WebElement>();
 
     public WebElement iterateSuggestionBox(List<WebElement> elements, String searchItem) {
         WebElement retValue=null;

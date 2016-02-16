@@ -1,60 +1,140 @@
 package com.tw.cisco.b2b.helper;
 
-import com.tw.cisco.b2b.pages.BasePage;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.awt.*;
-import java.util.concurrent.TimeUnit;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.InvalidParameterException;
 
 /**
  * Created by aswathyn on 04/02/16.
  */
 public class DriverFactory {
 
-    protected static WebDriver driver;
-    protected static final String URL= "https://t2-qa.xkit.co/";
+    protected enum Driver {
+        FIREFOX,
+        CHROME,
+        IE,
+        HTMLUNIT,
 
-    public DriverFactory() {
-        initialize();
-        waitAndMaximize();
     }
 
-    public void initialize() {
-        if(driver==null) {
-            createNewDriverInstance();
+    public static String gridHubUrl = null;
+
+    /*  static {
+          gridHubUrl = CommonHelper.getGridHubUrl();
+      }
+    */
+
+    /**
+     *
+     * @param driverType
+     * @param browserVersion
+     * @param platform
+     * @return browser
+     */
+    public static WebDriver geDriver(Driver driverType, String browserVersion, String platform){
+        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+
+        if (gridHubUrl==null) {
+            //running on local
+            desiredCapabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
         }
-    }
-
-    private void createNewDriverInstance() {
-        driver = BasePage.geDriver(BasePage.Driver.FIREFOX,"40","MAC");
-    }
-
-    public WebDriver getDriver() {
-        return driver;
-    }
-
-    protected static void navigateToURL(String URL) {
-        try {
-            driver.navigate().to(URL);
-        } catch (Exception e) {
-            System.out.println(URL+" not found/accessible");
+        else {
+            //running on Selenium Grid
+            if(platform.equals("XP")){
+                desiredCapabilities.setPlatform(Platform.XP);
+            }
+            else if(platform.equals("WIN8")){
+                desiredCapabilities.setPlatform(Platform.WIN8);
+            }
+            else if(platform.equals("VISTA")){
+                desiredCapabilities.setPlatform(Platform.VISTA);
+            }
+            else if(platform.equals("ANDROID")){
+                desiredCapabilities.setPlatform(Platform.ANDROID);
+            }
+            desiredCapabilities.setVersion(browserVersion);
+            desiredCapabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
         }
-    }
 
-    private void waitAndMaximize() {
-        try {
-            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-            Toolkit toolkit = Toolkit.getDefaultToolkit();
-            int Width = (int) toolkit.getScreenSize().getWidth();
-            int Height = (int)toolkit.getScreenSize().getHeight();
-            driver.manage().window().setSize(new org.openqa.selenium.Dimension(Width,Height));
-        } catch (Exception e){
-            System.out.println("Browser handle not available");
+        switch (driverType) {
+
+            case FIREFOX:
+                // Disable Native Events on Windows for Firefox Driver.
+                try {
+                    FirefoxProfile firefoxProfile = new FirefoxProfile();
+                    firefoxProfile.setEnableNativeEvents(true);
+                    desiredCapabilities.setCapability(FirefoxDriver.PROFILE, firefoxProfile);
+
+                    if (null==gridHubUrl) {
+                        //running on local
+                        return new FirefoxDriver(desiredCapabilities);
+                    }
+                    else{
+                        //running on Selenium Grid
+                        desiredCapabilities.setBrowserName(DesiredCapabilities.firefox().getBrowserName());
+                        return new RemoteWebDriver(new URL(gridHubUrl), desiredCapabilities);
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            case CHROME:
+                if (null==System.getProperty(ChromeDriverService.CHROME_DRIVER_EXE_PROPERTY)){
+                    System.setProperty("webdriver.chrome.driver","src/test/resources/chromedriver");
+
+                }
+                try {
+                    if (null==gridHubUrl){
+                        //running on local
+                        return new ChromeDriver(desiredCapabilities);
+                    }
+                    else{
+                        //running on Selenium Grid
+                        desiredCapabilities.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
+                        return new RemoteWebDriver(new URL(gridHubUrl), desiredCapabilities);
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            case IE:
+                try {
+                    desiredCapabilities.setCapability(InternetExplorerDriver.SILENT, true);
+                    //desiredCapabilities.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
+                    desiredCapabilities.setCapability("EnableNativeEvents", true);
+                    desiredCapabilities.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, false);
+
+                    if (null==gridHubUrl){
+                        //running on local
+                        return new InternetExplorerDriver(desiredCapabilities);
+                    }
+                    else{
+                        //running on Selenium Grid
+                        desiredCapabilities.setBrowserName(DesiredCapabilities.internetExplorer().getBrowserName());
+                        return new RemoteWebDriver(new URL(gridHubUrl), desiredCapabilities);
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            case HTMLUNIT:
+                return new HtmlUnitDriver(true);
+            default:
+                throw new InvalidParameterException("You must choose one of the defined driver types");
+
         }
-    }
-
-    public void destroyDriver() {
-        driver.quit();
-        driver=null;
     }
 }

@@ -10,6 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,16 +22,16 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
     private LeftNav leftNav;
     private TabbedNav tabNav;
 
-    @FindBy(className = "admin-tab-roles")
+    @FindBy(className = "admin-table-content")
     private WebElement rolesTable;
 
     @FindBy(className = "icon-caret-down")
     private WebElement filter;
 
-    @FindBy(xpath = "//a[@class='sorter-toggle'][@data-icon-before='sort-descending']")
+    @FindBy(xpath = ".//a[@class='sorter-toggle'][@data-icon-before='sort-descending']")
     private WebElement sortDescending;
 
-    @FindBy(xpath = "//a[@class='sorter-toggle'][@data-icon-before='sort-ascending']")
+    @FindBy(xpath = ".//a[@class='sorter-toggle'][@data-icon-before='sort-ascending']")
     private WebElement sortAscending;
 
     @FindBy(id = "qa_automation_Name")
@@ -48,57 +49,71 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
     @FindBy(xpath = ".//button[@class='btn upload-btn']")
     private WebElement createRole;
 
-    @FindBys(@FindBy(xpath = "//p[contains(@class,'item-name')]"))
+    @FindBys(@FindBy(xpath = ".//p[contains(@class,'item-name')]"))
     private List<WebElement> rolesList;
 
-    /* //span[text()='Status']/parent::div */
-
-    @FindBys(@FindBy(xpath = "//p[contains(@class,'item-name')]/parent::div/parent::div//span[text()='Status']/parent::div"))
+    @FindBys(@FindBy(xpath = ".//p[contains(@class,'item-name')]/parent::div/parent::div//span[text()='Status']/parent::div"))
     private List<WebElement> statusList;
 
-    @FindBy(xpath = "//p[contains(@class,'item-name') and text()='Learner']/parent::div/parent::div//span[text()='Status']/parent::div")
+    @FindBy(xpath = ".//p[contains(@class,'item-name') and text()='Learner']/parent::div/parent::div//span[text()='Status']/parent::div")
     private WebElement learnerStatus;
 
-    @FindBy(xpath = "//p[contains(@class,'item-name') and text()='Learner']/parent::div/parent::div//span[text()='Actions']/parent::div//button")
+    @FindBy(xpath = ".//p[contains(@class,'item-name') and text()='Learner']/parent::div/parent::div//span[text()='Actions']/parent::div//button")
     private WebElement learnerViewRole;
 
-    @FindBys(@FindBy(xpath = "//button[@data-original-title='Deactivate Role']"))
+    @FindBys(@FindBy(xpath = ".//button[@data-original-title='Deactivate Role']"))
     private List<WebElement> deactivateRoleList;
 
-    @FindBys(@FindBy(xpath = "//[@data-original-title='Edit Permissions']"))
+    @FindBys(@FindBy(xpath = ".//[@data-original-title='Edit Permissions']"))
     private List<WebElement> editRoleList;
 
-    @FindBys(@FindBy(xpath = "//[@data-original-title= 'Delete Role']"))
+    @FindBys(@FindBy(xpath = ".//[@data-original-title= 'Delete Role']"))
     private List<WebElement> deleteRoleList;
 
-    @FindBy(xpath = "//p[text()='PLP Manager']/parent::div/parent::div//button[@data-original-title='Edit Permissions']")
+    @FindBy(xpath = ".//p[text()='PLP Manager']/parent::div/parent::div//button[@data-original-title='Edit Permissions']")
     private WebElement customEditRole;
 
-    @FindBy(xpath = "//p[text()='PLP Manager']/parent::div/parent::div//button[@data-original-title='Deactivate Role']")
+    @FindBy(xpath = ".//p[text()='PLP Manager']/parent::div/parent::div//button[@data-original-title='Deactivate Role']")
     private WebElement customDeActivateRole;
 
-    @FindBy(xpath = "//p[text()='PLP Manager']/parent::div/parent::div//button[@data-original-title='Delete Role']")
+    @FindBy(xpath = ".//p[text()='CustomSystemAdminRole']/parent::div/parent::div//button[@data-original-title='Delete Role']")
     private WebElement customDeleteRole;
 
-    @FindBy(xpath = "//ul[@class='pagination']/li/a[text()='← Previous']")
+    @FindBy(xpath = ".//ul[@class='pagination']/li/a[text()='← Previous']")
     private WebElement paginationPrevious;
 
-    @FindBy(xpath = "//ul[@class='pagination']//a[text()='Next →']")
+    @FindBy(xpath = ".//ul[@class='pagination']//a[text()='Next →']")
     private WebElement paginationNext;
 
-    @FindBy(xpath = "//li[@class='align-center']/input")
-    private WebElement paginateFrom;
+    @FindBy(xpath=".//ul[@class='pagination']//a[text()='Next →']/parent::li")
+    private WebElement paginationNextDisabled;
 
-    @FindBy(xpath = "//li[@class='align-center']")
-    private WebElement paginateUntil;
+    @FindBy(xpath=".//p[text()='CustomSystemAdminRole']")
+    private WebElement customSystemAdminRole;
+
+    @FindBy(xpath=".//div[@class='admin-table-content']//p[@class='item-name eclipse-text']")
+    private List<WebElement> roleNames;
+
+    @FindBy(xpath=".//p[text()='Selected Role has been deleted successfully.']")
+    private WebElement roleDeletionSuccessPopupMessage;
+
+    @FindBy(xpath=".//div[@id='confirmation']//h4[text()='Delete Roles']")
+    private WebElement deleteRolePopupHeader;
+
+    @FindBy(xpath=".//button[@id='confirmButton']")
+    private  WebElement deleteRoleConfirm;
+
+    private static int count,counter =0;
+    public static List<String> currentElements=new ArrayList<String>();
+    public static List<String> prevElements=new ArrayList<String>();
+    private boolean isMatchNotFound=true;
 
     public RolesAndPermissionPage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
-        waitForPageToLoad(getPageLoadCondition());
-        leftNav = new LeftNav(driver);
-        headerNav = new HeaderNav(driver);
+        //waitForPageToLoad(getPageLoadCondition());
         tabNav = new TabbedNav(driver);
+        headerNav = new HeaderNav(driver);
     }
 
     @Override
@@ -120,12 +135,55 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
         return new RoleCreatePopupPage(driver);
     }
 
-    public RolesAndPermissionPage printPagination() throws InterruptedException {
-        paginationNext.click();
-        Thread.sleep(2000);
-        System.out.println(" paginate from =  " +  paginateFrom.getAttribute("value"));
-        System.out.println(" paginate until =  " + paginateUntil.getText());
-        return new RolesAndPermissionPage(driver);
+   /* public RolesAndPermissionPage searchAndDeleteRole(String roleName) {
+        System.out.println("counter:" + ++counter);
+
+        for(WebElement element: roleNames) {
+            System.out.println(++count);
+            currentElements.add(element.getText());
+            if (roleName.equals(element.getText())) {
+                customDeleteRole.click();
+                waitForElement(ExpectedConditions.visibilityOf(deleteRolePopupHeader));
+                deleteRoleConfirm.click();
+                new RolesAndPermissionPage(driver).getHeaderNav().waitForSpinnerToStop();
+                waitForElement(ExpectedConditions.visibilityOf(roleDeletionSuccessPopupMessage));
+                isMatchNotFound = false;
+                break;
+            }
+        }
+        if(isMatchNotFound) {
+            paginationNext.click();
+            headerNav.waitForSpinnerToStop();
+            if (!prevElements.equals(currentElements)) {
+                System.out.println("equals");
+                //System.out.println("not the same" + prevElements + " : " + currentElements);
+                prevElements = new ArrayList<String>();
+                prevElements.addAll(currentElements);
+                currentElements = new ArrayList<String>();
+                new RolesAndPermissionPage(driver).searchAndDeleteRole(roleName);
+            }
+        }
+        return this;
+    }*/
+
+    public RolesAndPermissionPage findRoleAndDelete(String roleName) {
+        for(WebElement element: roleNames) {
+            if (roleName.equals(element.getText())) {
+                customDeleteRole.click();
+                waitForElement(ExpectedConditions.visibilityOf(deleteRolePopupHeader));
+                deleteRoleConfirm.click();
+                new RolesAndPermissionPage(driver).getHeaderNav().waitForSpinnerToStop();
+                waitForElement(ExpectedConditions.visibilityOf(roleDeletionSuccessPopupMessage));
+                isMatchNotFound=false;
+                break;
+            }
+        }
+        if(isMatchNotFound && !("disabled".equals(paginationNextDisabled.getAttribute("class")))) {
+            paginationNext.click();
+            headerNav.waitForSpinnerToStop();
+            new RolesAndPermissionPage(driver).findRoleAndDelete(roleName);
+        }
+        return this;
     }
 
     /*********************GET/SET METHODS*********************/

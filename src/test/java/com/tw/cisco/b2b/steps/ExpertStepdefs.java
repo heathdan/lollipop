@@ -1,10 +1,10 @@
 package com.tw.cisco.b2b.steps;
 
-import com.tw.cisco.b2b.helper.DriverFactory;
 import com.tw.cisco.b2b.pages.DefineExpertisePage;
 import com.tw.cisco.b2b.pages.UserPage;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
+import org.openqa.selenium.WebDriver;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,7 +14,8 @@ import java.util.Date;
  */
 
 
-public class ExpertStepdefs extends DriverFactory {
+public class ExpertStepdefs {
+    private WebDriver driver;
 
     String AreaOfExpertise = "SME" + new SimpleDateFormat("YYYYMMddhhmmss").format(new Date());
 

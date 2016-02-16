@@ -1,5 +1,6 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.navigation.HeaderNav;
 import com.tw.cisco.b2b.navigation.TabbedNav;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,8 +17,7 @@ import java.util.List;
  */
 public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
 
-
-    @FindBy(xpath = "//h4[text()='Create Custom Role']/parent::div/parent::div")
+    @FindBy(xpath=".//h4[text()='Create Custom Role']")
     private WebElement createRoleHeader;
 
     @FindBy(xpath = ".//h4[text()='Create Custom Role']/parent::div/parent::div")
@@ -53,18 +53,17 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
     @FindBy(xpath=".//div[@id='addRole']//h4[text()='Create Custom Role']")
     private WebElement roleSuccessPopupHeader;
 
-   /* @FindBy(className = "role-create-success")
-    private WebElement successRolePopUp;*/
-
     @FindBy(xpath = ".//div[contains(@class,'role-create-success')]/button")
     private WebElement roleSuccessPopUp;
 
     private TabbedNav tabNav;
+    private HeaderNav headerNav;
 
     public RoleCreatePopupPage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
-        waitForPageToLoad(getPageLoadCondition());
+        // waitForPageToLoad(getPageLoadCondition());
+        headerNav = new HeaderNav(driver);
     }
 
     @Override
@@ -87,6 +86,7 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
     }
 
     public RolesAndPermissionPage createNewInheritRole(String roleName, String inheritRoleName) {
+        //getHeaderNav().waitForSpinnerToStop();
         nameTextField.sendKeys(roleName);
         System.out.println("ROLE" + nameTextField.getText());
         rolesDropdown.click();
@@ -98,4 +98,11 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
     }
 
     /***********************GET/SET METHODS*********************/
+    public HeaderNav getHeaderNav() {
+        return headerNav;
+    }
+
+    public void setHeaderNav(HeaderNav headerNav) {
+        this.headerNav = headerNav;
+    }
 }
