@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features= {"src/test/resources/cucumber/"},
-        glue= {"com/tw/cisco/b2b/steps"},
+        glue= {"com/tw/cisco/b2b/steps/"},
         tags = "@Functional1",
         format= {"pretty","json:target/cucumber-report.json", "html:target/cucumber"})
 public class RunExpertiseTest {

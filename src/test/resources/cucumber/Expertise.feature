@@ -17,6 +17,3 @@ Feature: Experts
     And assign the TimeStamped expertise "SME" to the user "mahone_8@mailinator.com"
     Then user "mahone_8@mailinator.com" should be marked expert in expertise "SME"
 
-
-  Scenario: When user logs out
-   Given user "deonaraya1@gmail.com" logout

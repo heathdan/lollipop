@@ -31,16 +31,16 @@ public class SharedDriver extends EventFiringWebDriver {
         return REAL_DRIVER;
     }
 
-    /*static {
+    static {
         Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
-    }*/
+    }
 
 
     public SharedDriver() {
         super(getRealDriver());
         waitAndMaximize();
         navigateToURL(URL);
-        Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
+        //Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
     }
 
     @Override

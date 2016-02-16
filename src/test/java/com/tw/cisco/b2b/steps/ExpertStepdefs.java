@@ -1,5 +1,6 @@
 package com.tw.cisco.b2b.steps;
 
+import com.tw.cisco.b2b.helper.SharedDriver;
 import com.tw.cisco.b2b.pages.DefineExpertisePage;
 import com.tw.cisco.b2b.pages.UserPage;
 import cucumber.api.java.en.And;
@@ -16,30 +17,34 @@ import java.util.Date;
 
 public class ExpertStepdefs {
     private WebDriver driver;
-
+    DefineExpertisePage defineExpertisePage;
+    UserPage userPage;
     String AreaOfExpertise = "SME" + new SimpleDateFormat("YYYYMMddhhmmss").format(new Date());
+
+    public ExpertStepdefs(SharedDriver driver) {
+        this.driver = driver;
+    }
 
     @Then("^user define a new TimeStamped expertise \"([^\"]*)\"$")
     public void userDefineANewExpertise(String arg0) throws Throwable {
 
         System.out.println(AreaOfExpertise);
-        DefineExpertisePage page = new DefineExpertisePage(driver);
-        page.addExpertise(AreaOfExpertise);
-        page.searchExpertise(AreaOfExpertise);
+        defineExpertisePage = new DefineExpertisePage(driver);
+        defineExpertisePage.addExpertise(AreaOfExpertise).searchExpertise(AreaOfExpertise);
+        //defineExpertisePage.searchExpertise(AreaOfExpertise);
     }
 
     @And("^assign the TimeStamped expertise \"([^\"]*)\" to the user \"([^\"]*)\"$")
     public void assignTheTimeStampedExpertiseToTheUser(String arg0, String arg1) throws Throwable {
-        UserPage page = new UserPage(driver);
-        page.searchUser("\""+arg1+"\"");
-        page.clickAssignExpertise().assignExpertise(AreaOfExpertise);
+        userPage = new UserPage(driver);
+        userPage.searchUser("\""+arg1+"\"").clickAssignExpertise().assignExpertise(AreaOfExpertise);
     }
 
     @Then("^user \"([^\"]*)\" should be marked expert in expertise \"([^\"]*)\"$")
     public void userShouldBeMarkedExpertInExpertise(String arg0, String arg1) throws Throwable {
-        UserPage page = new UserPage(driver);
+        //userPage= new UserPage(driver);
         Thread.sleep(2000);
-        page.searchByExpertise("\""+AreaOfExpertise+"\"");
+        userPage.searchByExpertise("\""+AreaOfExpertise+"\"");
 
 
 
