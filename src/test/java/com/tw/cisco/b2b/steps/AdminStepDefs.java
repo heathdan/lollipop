@@ -15,7 +15,6 @@ import org.openqa.selenium.WebDriver;
 public class AdminStepDefs {
 
 
-    public class AdminStepdefs  {
         private WebDriver driver;
         AdminPage adminPage;
         RolesAndPermissionPage roleNpermission;
@@ -23,7 +22,7 @@ public class AdminStepDefs {
         RoleCreatePopupPage roleCreatePopupPage;
         LeftNav leftNav;
 
-        public AdminStepdefs(SharedDriver driver){
+        public AdminStepDefs(SharedDriver driver){
             this.driver=driver;
             homePage= new HomePage(driver);
         }
@@ -63,4 +62,4 @@ public class AdminStepDefs {
 
 
     }
-}
+
