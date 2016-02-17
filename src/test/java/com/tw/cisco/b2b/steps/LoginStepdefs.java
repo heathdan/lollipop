@@ -24,7 +24,7 @@ public class LoginStepdefs {
     @Given("^user \"([^\"]*)\" logout$")
     public void user_logout(String arg1) throws Throwable {
         homePage= new HomePage(driver);
-        homePage.getHeaderNav().cklogout();
+        homePage.getHeaderNav().CKlogout();
     }
 
 
@@ -33,5 +33,4 @@ public class LoginStepdefs {
         loginPage.enterEmail(arg2).enterCredentials(arg3);
 
     }
-
 }

@@ -4,11 +4,8 @@ Feature: Experts
   I should be able to view experts page
   So that I can look up all experts
 
-
   Background:
-
-  Scenario: User sign in
-   Given that the user "admin_name" logged in as "deonaraya1@gmail.com" and "Cisco@1234"
+    Given that the user "admin_name" logged in as "deonaraya1@gmail.com" and "Cisco@1234"
 
   Scenario: Define an expertise and assign the user A expert in the same
     Given user navigates to Define Expertise Tab

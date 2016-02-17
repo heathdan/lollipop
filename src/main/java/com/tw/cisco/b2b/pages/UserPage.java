@@ -6,6 +6,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 /**
  * Created by aswathyn on 22/01/16.
  */
@@ -62,7 +64,7 @@ public class UserPage extends BasePage<UserPage> {
     @FindBy(xpath = ".//h5[text()='Status']")
     private  WebElement status;
 
-    @FindBy(xpath = ".//p[@class='item-title-department'and text()='Alex Mahone']")
+    @FindBy(xpath = ".//p[@class='item-email'and text()='mahone_7@mailinator.com']")
     private WebElement waitforsearch;
 
     @FindBy(xpath = ".//p[@class='item-email']")
@@ -127,8 +129,6 @@ public class UserPage extends BasePage<UserPage> {
         return new UserPage(driver);
     }
 
-
-
     public AssignExpertisePopupPage clickAssignExpertise(){
         assignExpertisePopupicon.click();
         return new AssignExpertisePopupPage(driver);
@@ -147,5 +147,4 @@ public class UserPage extends BasePage<UserPage> {
     }
 
     /***********************GET/SET METHODS*********************/
-
 }

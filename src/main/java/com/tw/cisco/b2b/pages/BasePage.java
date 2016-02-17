@@ -16,7 +16,7 @@ public abstract class BasePage<P extends BasePage>{
     protected WebDriver driver;
     protected WebDriverWait waitTime;
     private static final String PAGE_TITLE="";
-    protected static final long ELEMENT_WAIT=10;
+    protected static final long ELEMENT_WAIT=5;
     protected static final long IMPLICIT_WAIT=20;
     protected static final int PAGE_LOAD_TIMEOUT = 30;
     protected static final int POLLING_RATE = 2;

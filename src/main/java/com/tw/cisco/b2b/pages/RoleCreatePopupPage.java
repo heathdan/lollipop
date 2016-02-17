@@ -17,6 +17,7 @@ import java.util.List;
  */
 public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
 
+    /*@FindBy(xpath = ".//h4[text()='Create Custom Role']/parent::div/parent::div")*/
     @FindBy(xpath=".//h4[text()='Create Custom Role']")
     private WebElement createRoleHeader;
 

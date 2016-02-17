@@ -3,6 +3,8 @@ package com.tw.cisco.b2b.helper;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +13,6 @@ import java.util.Map;
  * Created by aswathyn on 02/02/16.
  */
 public class CommonMethodsHelper {
-
     private static Map<String, WebElement>tabs = new HashMap<String,WebElement>();
 
     public WebElement iterateSuggestionBox(List<WebElement> elements, String searchItem) {
@@ -46,4 +47,12 @@ public class CommonMethodsHelper {
         }
 
     }
+
+    public String timeStamp(String name) {
+        String value = name + new SimpleDateFormat("ddMMYYhhmmss").format(new Date());
+        System.out.println("CommonMethods:" +value);
+        return value;
+
+    }
+
 }

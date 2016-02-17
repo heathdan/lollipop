@@ -17,7 +17,6 @@ import java.util.List;
 public class TabbedNav extends BasePage<TabbedNav> {
 
     private LeftNav leftNav;
-
     public enum TabName {
         USERS,
         ROLESPERMISSIONS,
@@ -75,6 +74,7 @@ public class TabbedNav extends BasePage<TabbedNav> {
     */
             case ROLESPERMISSIONS:
                 rolesNPermissionTab.click();
+                System.out.println("clicked role and permission");
                 page = new RolesAndPermissionPage(driver);
                 break;
 

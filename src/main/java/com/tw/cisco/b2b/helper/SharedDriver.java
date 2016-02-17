@@ -13,7 +13,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by aswathyn on 16/02/16.
  */
-
 public class SharedDriver extends EventFiringWebDriver {
     private static final String URL ="https://t2-qa.xkit.co";
     private static WebDriver REAL_DRIVER;
@@ -89,5 +88,3 @@ public class SharedDriver extends EventFiringWebDriver {
         }
     }
 }
-
-
