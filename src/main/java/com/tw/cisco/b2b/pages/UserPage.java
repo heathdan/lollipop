@@ -1,5 +1,6 @@
 package com.tw.cisco.b2b.pages;
 
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -133,16 +134,22 @@ public class UserPage extends BasePage<UserPage> {
         return new AssignExpertisePopupPage(driver);
     }
 
-    public UserPage  getUserDetails(){
+    public String  getUserDetails(WebElement item){
 
-        System.out.println("chandra" + " " + userEmail.getText());
+       /* System.out.println("chandra" + " " + userEmail.getText());
         System.out.println("Full Name" + " " +fullName.getText());
         System.out.println("Date Modified" + " " +dateModified.getText());
         System.out.println("Date Created" + " " +dateCreated.getText());
         System.out.println("LastLoggedIn" + " " +lastLoginDate.getText());
         System.out.println("Status" + " " +userStatus.getText());
         return new UserPage(driver);
+     */ return item.getText();
+    }
 
+    public UserPage verifyExpertiseAsignment(String emailId){
+        //Assert.assertEquals(getUserDetails(userEmail),emailId);
+        Assert.assertEquals("assigned expertise is ", getUserDetails(userEmail),emailId);
+        return new UserPage(driver);
     }
 
     /***********************GET/SET METHODS*********************/

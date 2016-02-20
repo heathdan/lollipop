@@ -41,6 +41,7 @@ public class ExpertiseStepdefs {
         userPage = new UserPage(driver);
         Thread.sleep(2000);
         userPage.searchByExpertise("\"" + AREAOFEXPERTISE + "\"");
+        userPage.verifyExpertiseAsignment(arg0);
     }
 
 }
