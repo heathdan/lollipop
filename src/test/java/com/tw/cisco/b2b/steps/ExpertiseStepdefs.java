@@ -1,12 +1,13 @@
 package com.tw.cisco.b2b.steps;
 
 import com.tw.cisco.b2b.helper.CommonMethodsHelper;
-import com.tw.cisco.b2b.helper.SharedDriver;
 import com.tw.cisco.b2b.pages.DefineExpertisePage;
 import com.tw.cisco.b2b.pages.UserPage;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import org.openqa.selenium.WebDriver;
+
+import java.lang.management.ManagementFactory;
 
 /**
  * Created by aswathyn on 16/02/16.
@@ -20,6 +21,10 @@ public class ExpertiseStepdefs {
 
     public ExpertiseStepdefs(SharedDriver driver) {
         this.driver = driver;
+        long threadId = Thread.currentThread().getId();
+        String processName = ManagementFactory.getRuntimeMXBean().getName();
+        System.out.println("Started in thread: " + threadId + ", in JVM: " + processName);
+
     }
 
     @Then("^user define a new TimeStamped expertise \"([^\"]*)\"$")

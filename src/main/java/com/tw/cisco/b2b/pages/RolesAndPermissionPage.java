@@ -9,8 +9,9 @@ import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -103,10 +104,8 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
     @FindBy(xpath=".//button[@id='confirmButton']")
     private  WebElement deleteRoleConfirm;
 
-    private static int count,counter =0;
-    public static List<String> currentElements=new ArrayList<String>();
-    public static List<String> prevElements=new ArrayList<String>();
     private boolean isMatchNotFound=true;
+    static final Logger LOGGER = LoggerFactory.getLogger(RolesAndPermissionPage.class);
 
     public RolesAndPermissionPage(WebDriver driver) {
         super(driver);
@@ -127,6 +126,7 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
+
         return ExpectedConditions.visibilityOf(rolesTable);
     }
 
@@ -134,37 +134,6 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
         createRole.click();
         return new RoleCreatePopupPage(driver);
     }
-
-   /* public RolesAndPermissionPage searchAndDeleteRole(String roleName) {
-        System.out.println("counter:" + ++counter);
-
-        for(WebElement element: roleNames) {
-            System.out.println(++count);
-            currentElements.add(element.getText());
-            if (roleName.equals(element.getText())) {
-                customDeleteRole.click();
-                waitForElement(ExpectedConditions.visibilityOf(deleteRolePopupHeader));
-                deleteRoleConfirm.click();
-                new RolesAndPermissionPage(driver).getHeaderNav().waitForSpinnerToStop();
-                waitForElement(ExpectedConditions.visibilityOf(roleDeletionSuccessPopupMessage));
-                isMatchNotFound = false;
-                break;
-            }
-        }
-        if(isMatchNotFound) {
-            paginationNext.click();
-            headerNav.waitForSpinnerToStop();
-            if (!prevElements.equals(currentElements)) {
-                System.out.println("equals");
-                //System.out.println("not the same" + prevElements + " : " + currentElements);
-                prevElements = new ArrayList<String>();
-                prevElements.addAll(currentElements);
-                currentElements = new ArrayList<String>();
-                new RolesAndPermissionPage(driver).searchAndDeleteRole(roleName);
-            }
-        }
-        return this;
-    }*/
 
     public RolesAndPermissionPage findRoleAndDelete(String roleName) {
         for(WebElement element: roleNames) {

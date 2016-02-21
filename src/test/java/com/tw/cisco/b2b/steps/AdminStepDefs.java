@@ -1,6 +1,5 @@
 package com.tw.cisco.b2b.steps;
 
-import com.tw.cisco.b2b.helper.SharedDriver;
 import com.tw.cisco.b2b.navigation.TabbedNav;
 import com.tw.cisco.b2b.pages.*;
 import cucumber.api.java.en.And;
@@ -8,6 +7,8 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
+
+import java.lang.management.ManagementFactory;
 
 /**
  * Created by aswathyn on 16/02/16.
@@ -22,7 +23,12 @@ public class AdminStepDefs  {
 
     public AdminStepDefs(SharedDriver driver){
         this.driver=driver;
+        long threadId = Thread.currentThread().getId();
+        String processName = ManagementFactory.getRuntimeMXBean().getName();
+        System.out.println("Started in thread: " + threadId + ", in JVM: " + processName);
         homePage= new HomePage(driver);
+
+
     }
 
     @Given("^user navigates to Define Expertise Tab$")

@@ -1,5 +1,6 @@
-package com.tw.cisco.b2b.helper;
+package com.tw.cisco.b2b.steps;
 
+import com.tw.cisco.b2b.helper.DriverFactory;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -7,6 +8,9 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 import java.util.concurrent.TimeUnit;
 
@@ -14,18 +18,25 @@ import java.util.concurrent.TimeUnit;
  * Created by aswathyn on 16/02/16.
  */
 public class SharedDriver extends EventFiringWebDriver {
+
+    static final Logger LOGGER = LoggerFactory.getLogger(SharedDriver.class);
     private static final String URL ="https://t2-qa.xkit.co";
     private static WebDriver REAL_DRIVER;
+
     private static final Thread CLOSE_THREAD= new Thread() {
         @Override
         public void run() {
-            REAL_DRIVER.quit();
+            try {
+                REAL_DRIVER.close();
+            } catch(WebDriverException e) {
+                System.out.println("Could not close driver");
+            }
         }
     };
 
     private static WebDriver getRealDriver() {
         if(REAL_DRIVER==null) {
-            REAL_DRIVER = DriverFactory.geDriver(DriverFactory.Driver.FIREFOX,"33","MAC");
+            REAL_DRIVER = DriverFactory.geDriver(DriverFactory.Driver.FIREFOX, "33", "MAC");
         }
         return REAL_DRIVER;
     }
@@ -39,7 +50,6 @@ public class SharedDriver extends EventFiringWebDriver {
         super(getRealDriver());
         waitAndMaximize();
         navigateToURL(URL);
-        //Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
     }
 
     @Override
@@ -57,7 +67,7 @@ public class SharedDriver extends EventFiringWebDriver {
         try {
             REAL_DRIVER.navigate().to(URL);
         } catch (Exception e) {
-            System.out.println(URL + " not found/accessible");
+           LOGGER.error(URL + " not found/accessible");
         }
     }
 
@@ -66,14 +76,16 @@ public class SharedDriver extends EventFiringWebDriver {
             REAL_DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             REAL_DRIVER.manage().window().maximize();
         } catch (Exception e){
-            System.out.println("Browser handle not available");
+            LOGGER.error("Browser handle not available");
         }
     }
 
     /*************************Before/After Cucumber Hooks***************************/
 
     @Before
-    public void deleteAllCookies() {
+    public void setUp(Scenario scenario) {
+        MDC.put("logFileName", scenario.getSourceTagNames().iterator().next());
+        LOGGER.info("SCENARIO ===== "+scenario.getName());
         manage().deleteAllCookies();
     }
 

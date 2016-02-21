@@ -7,6 +7,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by aswathyn on 22/01/16.
@@ -93,6 +95,8 @@ public class UserPage extends BasePage<UserPage> {
 
     @FindBy(xpath =".//ul[@class='pagination']//a[text()='Next →']")
     private WebElement paginationNext;
+
+    static final Logger LOGGER = LoggerFactory.getLogger(UserPage.class);
 
     public UserPage(WebDriver driver) {
         super(driver);

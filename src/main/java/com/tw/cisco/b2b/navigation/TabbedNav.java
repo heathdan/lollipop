@@ -8,6 +8,8 @@ import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class TabbedNav extends BasePage<TabbedNav> {
         ROLESPERMISSIONS,
         DEFINEEXPERTISE;
     }
+    static final Logger LOGGER = LoggerFactory.getLogger(TabbedNav.class);
 
     @FindBy(xpath=".//ul[@id='adminTab']//a[text()='Users']")
     private WebElement userTab;
@@ -74,12 +77,13 @@ public class TabbedNav extends BasePage<TabbedNav> {
     */
             case ROLESPERMISSIONS:
                 rolesNPermissionTab.click();
-                System.out.println("clicked role and permission");
+                LOGGER.info("clicked role and permission");
                 page = new RolesAndPermissionPage(driver);
                 break;
 
             case DEFINEEXPERTISE:
                 defineExpertiseTab.click();
+                LOGGER.info("DefineExpertise");
                 page = new DefineExpertisePage(driver);
                 break;
 

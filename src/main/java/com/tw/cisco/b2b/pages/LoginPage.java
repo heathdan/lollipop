@@ -6,6 +6,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by aswathyn on 19/01/16.
@@ -19,6 +21,7 @@ public class LoginPage extends BasePage<LoginPage> {
     private WebElement nextButton;
 
     public static final String PAGETITLE = "Cisco";
+    static final Logger LOGGER = LoggerFactory.getLogger(LoginPage.class);
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -40,9 +43,10 @@ public class LoginPage extends BasePage<LoginPage> {
     @Override
     public void instantiatePage(LoginPage page) {
         try {
+            LOGGER.info("intialising page+ "+page);
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
-            System.out.println(e);
+           LOGGER.error("Error instantiating+ "+page);
         }
     }
 
@@ -54,13 +58,7 @@ public class LoginPage extends BasePage<LoginPage> {
     }
 
     /*********************GET/SET METHODS***************************/
-    public WebElement getEmailInput() {
-        return email;
-    }
 
-    public WebElement getNextButton() {
-        return nextButton;
-    }
 }
 
 

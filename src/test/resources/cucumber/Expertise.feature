@@ -1,4 +1,4 @@
-@Functional1
+@Expertise
 Feature: Experts
   As a b2b user
   I should be able to view experts page

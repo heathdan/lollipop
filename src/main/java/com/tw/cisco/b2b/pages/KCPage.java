@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by aswathyn on 08/02/16.
@@ -20,6 +22,7 @@ public class KCPage extends BasePage<KCPage> {
     @FindBy(xpath = ".//span[text()='Shared Files']")
     private WebElement sharedFiles;
 
+    static final Logger LOGGER = LoggerFactory.getLogger(KCPage.class);
 
     public KCPage(WebDriver driver) {
         super(driver);

@@ -7,7 +7,8 @@ import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 import java.util.List;
@@ -50,6 +51,7 @@ public class AssignExpertisePopupPage extends BasePage<AssignExpertisePopupPage>
     @FindBy(xpath = ".//div[@class='modal-create-header']//i")
     private WebElement closeExpertisePopupIcon ;
 
+    static final Logger LOGGER = LoggerFactory.getLogger(AssignExpertisePopupPage.class);
 
 
     public AssignExpertisePopupPage(WebDriver driver) {

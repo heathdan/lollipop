@@ -9,6 +9,8 @@ import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -56,6 +58,8 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
 
     @FindBy(xpath = ".//div[contains(@class,'role-create-success')]/button")
     private WebElement roleSuccessPopUp;
+
+    static final Logger LOGGER = LoggerFactory.getLogger(RoleCreatePopupPage.class);
 
     private TabbedNav tabNav;
     private HeaderNav headerNav;

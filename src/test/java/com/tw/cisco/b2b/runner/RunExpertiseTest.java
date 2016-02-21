@@ -12,7 +12,8 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features= {"src/test/resources/cucumber/"},
         glue= {"com/tw/cisco/b2b/steps/"},
-        tags = "@Functional1",
-        format= {"pretty","json:target/cucumber-report.json", "html:target/cucumber"})
+        tags = "@Expertise",
+        monochrome = true,
+        plugin= {"json:target/cucumber-report.json", "html:target/cucumber-html-report"})
 public class RunExpertiseTest {
 }

@@ -5,8 +5,13 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
+
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * Created by aswathyn on 18/01/16.
@@ -24,6 +29,8 @@ public abstract class BasePage<P extends BasePage>{
     protected static final int SPINNER_TO_DISAPPEAR_TIMEOUT=30;
     protected static final int SPINNER_POLLING_RATE=50;
 
+    static final Logger LOGGER = LoggerFactory.getLogger(BasePage.class);
+
     public BasePage(WebDriver driver) {
         this.driver = driver;
     }
@@ -37,10 +44,15 @@ public abstract class BasePage<P extends BasePage>{
      * @param expectedCondition
      */
     protected void waitForPageToLoad(ExpectedCondition expectedCondition) {
-        Wait wait = new FluentWait(driver)
-                .withTimeout(PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS)
-                .pollingEvery(POLLING_RATE, TimeUnit.SECONDS);
-        wait.until(getPageLoadCondition());
+        try {
+            LOGGER.info("Waiting for page to load");
+            Wait wait = new FluentWait(driver)
+                    .withTimeout(PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS)
+                    .pollingEvery(POLLING_RATE, TimeUnit.SECONDS);
+            wait.until(getPageLoadCondition());
+        }catch (Exception e) {
+            LOGGER.error("Error in page loading");
+        }
     }
 
     /**
@@ -73,8 +85,14 @@ public abstract class BasePage<P extends BasePage>{
      *
      */
     protected void waitForElement(ExpectedCondition expectedCondition) {
-        waitTime= new WebDriverWait(driver,ELEMENT_WAIT);
-        waitTime.until(expectedCondition);
+        try {
+          LOGGER.info("waiting for element");
+            waitTime = new WebDriverWait(driver, ELEMENT_WAIT);
+            waitTime.until(expectedCondition);
+        } catch (Exception e) {
+            LOGGER.error("Error in waiting for element");
+
+        }
     }
 
 }

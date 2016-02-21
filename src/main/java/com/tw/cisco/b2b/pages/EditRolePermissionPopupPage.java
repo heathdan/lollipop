@@ -7,6 +7,8 @@ import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -40,6 +42,8 @@ public class EditRolePermissionPopupPage extends BasePage<EditRolePermissionPopu
 
     @FindBy(xpath = "//h4[text()='Set Permissions']/parent::div/parent::div//button[contains(text(),'Cancel')]")
     private WebElement cancelPermission1;
+
+    static final Logger LOGGER = LoggerFactory.getLogger(EditRolePermissionPopupPage.class);
 
     public EditRolePermissionPopupPage(WebDriver driver) {
         super(driver);

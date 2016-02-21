@@ -12,6 +12,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -41,6 +43,8 @@ public class HeaderNav extends BasePage<HeaderNav> {
     private WebElement spinner;
 
     By spinnerLocator = By.xpath(".//i[@class='icon-spin icon-spinner-dots loading-icon bigger-230']");
+
+    static final Logger LOGGER = LoggerFactory.getLogger(HeaderNav.class);
 
     public HeaderNav(WebDriver driver) {
         super(driver);
@@ -82,9 +86,9 @@ public class HeaderNav extends BasePage<HeaderNav> {
                 .pollingEvery(SPINNER_POLLING_RATE, TimeUnit.MILLISECONDS);
 
         try {
-            System.out.println("wait for spinner to appear");
+            LOGGER.info("wait for spinner to appear");
             if (waitForSpinnerAppear.until(ExpectedConditions.visibilityOf(spinner)) != null) {
-                System.out.println("wait for spinner to disappear");
+                LOGGER.info("wait for spinner to disappear");
                 waitForSpinnerDisappear.until(ExpectedConditions
                         .invisibilityOfElementLocated(spinnerLocator));
             }

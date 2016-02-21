@@ -21,7 +21,7 @@ import java.security.InvalidParameterException;
  */
 public class DriverFactory {
 
-    protected enum Driver {
+    public enum Driver {
         FIREFOX,
         CHROME,
         IE,

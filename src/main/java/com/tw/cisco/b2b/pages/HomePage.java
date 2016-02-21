@@ -7,6 +7,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by aswathyn on 20/01/16.
@@ -21,6 +23,7 @@ public class HomePage extends BasePage<HomePage> {
     private WebElement landingPage;
 
     public static final String HOME_PAGE_TITLE="Cisco";
+    static final Logger LOGGER = LoggerFactory.getLogger(HomePage.class);
 
     public HomePage(WebDriver driver) {
         super(driver);

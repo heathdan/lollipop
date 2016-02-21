@@ -7,6 +7,8 @@ import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -95,6 +97,8 @@ public class LeftNav extends BasePage<LeftNav> {
 
     @FindBy(xpath = ".//span[contains(text(),'My Team')]")
     private WebElement myTeam;
+
+    static final Logger LOGGER = LoggerFactory.getLogger(LeftNav.class);
 
     public LeftNav(WebDriver driver) {
         super(driver);

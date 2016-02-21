@@ -13,7 +13,6 @@
         <junit.version>4.12</junit.version>
         <cucumber.version>1.2.4</cucumber.version>
         <picocontainer.version>2.15</picocontainer.version>
-        <log4j.version>1.2.17</log4j.version>
         <maven-surefire.version>2.19</maven-surefire.version>
         <compiler.version>1.7</compiler.version>
     </properties>
@@ -23,11 +22,6 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>info.cukes</groupId>
@@ -65,27 +59,63 @@
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.16</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.1.5</version>
+        </dependency>
     </dependencies>
 
     <build>
     <pluginManagement>
         <plugins>
+
+            <plugin>
+                <groupId>com.github.temyers</groupId>
+                <artifactId>cucumber-jvm-parallel-plugin</artifactId>
+                <version>1.0.1</version>
+                <executions>
+                    <execution>
+                        <id>generateRunners</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>generateRunners</goal>
+                        </goals>
+                        <configuration>
+                            <glue>com/tw/cisco/b2b/steps/</glue>
+                            <featuresDirectory>src/test/resources/cucumber/</featuresDirectory>
+                            <cucumberOutputDir>target/cucumber-parallel</cucumberOutputDir>
+                            <format>json,html</format>
+                            <tags>"@Functional"</tags>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire.version}</version>
                 <configuration>
-                    <forkCount>10</forkCount>
+                    <forkCount>3</forkCount>
                     <reuseForks>true</reuseForks>
                     <testFailureIgnore>true</testFailureIgnore>
                     <includes>
                         <include>**/Run*Test.class</include>
                     </includes>
-                    <parallel>all</parallel>
-                    <threadCount>10</threadCount>
-                    <useUnlimitedThreads>true</useUnlimitedThreads>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

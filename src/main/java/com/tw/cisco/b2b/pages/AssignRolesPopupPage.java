@@ -7,6 +7,8 @@ import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -38,6 +40,8 @@ public class AssignRolesPopupPage extends BasePage<AssignRolesPopupPage> {
 
     @FindBys(@FindBy(xpath=".//div[@id='assignRoles']//div[@class='roles-scroller']//a"))
     private List<WebElement> rolesAssigned;
+
+    static final Logger LOGGER = LoggerFactory.getLogger(AssignRolesPopupPage.class);
 
     public AssignRolesPopupPage(WebDriver driver) {
         super(driver);

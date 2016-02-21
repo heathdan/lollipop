@@ -1,4 +1,4 @@
-@Functional
+@Admin
 Feature: Admin
   As a b2b admin user
   I should be able to administer the system
@@ -12,3 +12,9 @@ Feature: Admin
   Scenario: Creation of Custom Role and inherit System Admin role
     Given the user is on "Roles and Permissions" tab on admin page
     When he creates a new role named "CustomSystemAdminRole" and inherits permissions from "SystemAdmin" role
+    And User "deonaraya1@gmail.com" logout
+
+  Scenario: Login functionality
+    Given user navigates to Define Expertise Tab
+    And User "deonaraya1@gmail.com" logout
+
