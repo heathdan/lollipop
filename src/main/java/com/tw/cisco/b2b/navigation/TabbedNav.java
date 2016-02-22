@@ -67,6 +67,7 @@ public class TabbedNav extends BasePage<TabbedNav> {
         switch(tabName) {
             case USERS:
                 userTab.click();
+                LOGGER.info("Clicked userTab");
                 page = new UserPage(driver);
                 break;
 

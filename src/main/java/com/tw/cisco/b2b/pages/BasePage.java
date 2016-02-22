@@ -86,7 +86,7 @@ public abstract class BasePage<P extends BasePage>{
      */
     protected void waitForElement(ExpectedCondition expectedCondition) {
         try {
-          LOGGER.info("waiting for element");
+          LOGGER.info("waiting for element:"+expectedCondition.toString());
             waitTime = new WebDriverWait(driver, ELEMENT_WAIT);
             waitTime.until(expectedCondition);
         } catch (Exception e) {

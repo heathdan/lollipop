@@ -23,7 +23,7 @@
 
                 <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
                     <Pattern>
-                        %d{yyyy-MM-dd HH:mm:ss} [%thread] %highlight(%-5level) %cyan(%logger{0}) - %m<b>%xex</b>%n
+                        %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{0}:%C{0} %m%n
                     </Pattern>
                 </encoder>
 
@@ -47,7 +47,7 @@
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>
-                [%thread] %highlight(%-5level) %cyan(%c{0}) - %m%n
+                [%thread] %highlight(%-5level) %cyan(%c{0}): %m%n
             </Pattern>
         </layout>
     </appender>

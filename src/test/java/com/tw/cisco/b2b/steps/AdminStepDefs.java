@@ -7,6 +7,8 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.management.ManagementFactory;
 
@@ -14,21 +16,22 @@ import java.lang.management.ManagementFactory;
  * Created by aswathyn on 16/02/16.
  */
 public class AdminStepDefs  {
+    static final Logger LOGGER = LoggerFactory.getLogger(AdminStepDefs.class);
     private WebDriver driver;
     AdminPage adminPage;
     RolesAndPermissionPage roleNpermission;
     HomePage homePage;
     RoleCreatePopupPage roleCreatePopupPage;
     LeftNav leftNav;
+    AssignRolesPopupPage assignRolesPopupPage;
+    UserPage userPage;
 
     public AdminStepDefs(SharedDriver driver){
         this.driver=driver;
         long threadId = Thread.currentThread().getId();
         String processName = ManagementFactory.getRuntimeMXBean().getName();
-        System.out.println("Started in thread: " + threadId + ", in JVM: " + processName);
+        LOGGER.info("Started in thread: " + threadId + ", in JVM: " + processName);
         homePage= new HomePage(driver);
-
-
     }
 
     @Given("^user navigates to Define Expertise Tab$")
@@ -63,5 +66,12 @@ public class AdminStepDefs  {
         roleCreatePopupPage.createNewInheritRole(arg1, arg2);
     }
 
+    @When("^he assigns role \"([^\"]*)\" to \"([^\"]*)\"$")
+    public void he_assigns_role_to(String arg1, String arg2) throws Throwable {
+        assignRolesPopupPage= new UserPage(driver).searchUser("\"" + arg2 + "\"").clickAssignRole();
+        assignRolesPopupPage.deleteAllRoles().clickAssignRole().assignAllRoles(arg1);
+
+
+    }
 }
 

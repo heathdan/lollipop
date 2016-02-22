@@ -1,5 +1,6 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.navigation.HeaderNav;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -66,7 +67,7 @@ public class UserPage extends BasePage<UserPage> {
     @FindBy(xpath = ".//h5[text()='Status']")
     private  WebElement status;
 
-    @FindBy(xpath = ".//p[@class='item-title-department'and text()='Alex Mahone']")
+    @FindBy(xpath = ".//p[@class='item-email']")
     private WebElement waitforsearch;
 
     @FindBy(xpath = ".//p[@class='item-email']")
@@ -88,7 +89,10 @@ public class UserPage extends BasePage<UserPage> {
     private WebElement userStatus;
 
     @FindBy(xpath = ".//button[@data-original-title='Assign Expertise']")
-    private WebElement assignExpertisePopupicon ;
+    private WebElement assignExpertisePopupicon;
+
+    @FindBy(xpath=".//button[@data-original-title='Assign Roles']")
+    private WebElement assignRolesPopupicon;
 
     @FindBy(xpath = ".//ul[@class='pagination']/li/a[text()='← Previous']")
     private WebElement paginationPrevious;
@@ -97,11 +101,13 @@ public class UserPage extends BasePage<UserPage> {
     private WebElement paginationNext;
 
     static final Logger LOGGER = LoggerFactory.getLogger(UserPage.class);
+    HeaderNav headerNav;
 
     public UserPage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
         waitForPageToLoad(getPageLoadCondition());
+        headerNav = new HeaderNav(driver);
     }
 
     @Override
@@ -119,11 +125,15 @@ public class UserPage extends BasePage<UserPage> {
     }
 
     public UserPage searchUser(String emailID){
+        LOGGER.trace(">> searchUser()");
         searchField.sendKeys(emailID);
+        LOGGER.debug("-- Passed value:" + emailID);
         searchIcon.click();
-        waitForElement(ExpectedConditions.visibilityOf(waitforsearch));
+        LOGGER.debug("-- Searching:" + emailID);
+        LOGGER.info("------"+waitforsearch.getText());
+        waitForElement(ExpectedConditions.textToBePresentInElement(waitforsearch,emailID));
+        //waitForElement(ExpectedConditions.visibilityOf(waitforsearch));
         return new UserPage(driver);
-
     }
 
     public UserPage searchByExpertise(String expertise){
@@ -152,9 +162,23 @@ public class UserPage extends BasePage<UserPage> {
 
     public UserPage verifyExpertiseAsignment(String emailId){
         //Assert.assertEquals(getUserDetails(userEmail),emailId);
-        Assert.assertEquals("assigned expertise is ", getUserDetails(userEmail),emailId);
+        Assert.assertEquals("assigned expertise is ", getUserDetails(userEmail), emailId);
         return new UserPage(driver);
     }
 
+    public AssignRolesPopupPage clickAssignRole(){
+        LOGGER.trace(">> clickAssignRole()");
+        assignRolesPopupicon.click();
+        return new AssignRolesPopupPage(driver);
+    }
+
     /***********************GET/SET METHODS*********************/
+
+    public HeaderNav getHeaderNav() {
+        return headerNav;
+    }
+
+    public void setHeaderNav(HeaderNav headerNav) {
+        this.headerNav = headerNav;
+    }
 }

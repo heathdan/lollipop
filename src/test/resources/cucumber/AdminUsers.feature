@@ -12,6 +12,8 @@ Feature: Admin
   Scenario: Creation of Custom Role and inherit System Admin role
     Given the user is on "Roles and Permissions" tab on admin page
     When he creates a new role named "CustomSystemAdminRole" and inherits permissions from "SystemAdmin" role
+    And user navigates to the Users tab
+    When he assigns role "CustomSystemAdminRole" to "auto_kct2learner@mailinator.com"
     And User "deonaraya1@gmail.com" logout
 
   Scenario: Login functionality
