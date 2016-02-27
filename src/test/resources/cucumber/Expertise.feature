@@ -5,12 +5,12 @@ Feature: Experts
   So that I can look up all experts
 
   Background:
-    Given that the user "admin_name" logged in as "deonaraya1@gmail.com" and "Cisco@1234"
+    Given that the user "admin_name" logged in as "aswnair@mailinator.com" and "Cisco@1234"
 
   Scenario: Define an expertise and assign the user A expert in the same
     Given user navigates to Define Expertise Tab
     When user define a new TimeStamped expertise "SME"
     And user navigates to the Users tab
-    And assign the TimeStamped expertise "SME" to the user "mahone_8@mailinator.com"
-    Then user "mahone_8@mailinator.com" should be marked expert in expertise "SME"
+    And assign the TimeStamped expertise "SME" to the user "mahone_7@mailinator.com"
+    Then user "mahone_7@mailinator.com" should be marked expert in expertise "SME"
 

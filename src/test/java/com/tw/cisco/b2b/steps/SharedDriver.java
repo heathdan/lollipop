@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 public class SharedDriver extends EventFiringWebDriver {
 
     static final Logger LOGGER = LoggerFactory.getLogger(SharedDriver.class);
-    private static final String URL ="https://t2-qa.xkit.co";
+    private static final String URL ="https://qa1.learn.cisco";
     private static WebDriver REAL_DRIVER;
 
     private static final Thread CLOSE_THREAD= new Thread() {
@@ -67,7 +67,7 @@ public class SharedDriver extends EventFiringWebDriver {
         try {
             REAL_DRIVER.navigate().to(URL);
         } catch (Exception e) {
-           LOGGER.error(URL + " not found/accessible");
+           LOGGER.error("--"+URL + " not found/accessible");
         }
     }
 
@@ -76,7 +76,7 @@ public class SharedDriver extends EventFiringWebDriver {
             REAL_DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             REAL_DRIVER.manage().window().maximize();
         } catch (Exception e){
-            LOGGER.error("Browser handle not available");
+            LOGGER.error("-- Browser handle not available");
         }
     }
 
@@ -85,7 +85,7 @@ public class SharedDriver extends EventFiringWebDriver {
     @Before
     public void setUp(Scenario scenario) {
         MDC.put("logFileName", scenario.getSourceTagNames().iterator().next());
-        LOGGER.info("SCENARIO ===== "+scenario.getName());
+        LOGGER.info("SCENARIO ==="+scenario.getName());
         manage().deleteAllCookies();
     }
 

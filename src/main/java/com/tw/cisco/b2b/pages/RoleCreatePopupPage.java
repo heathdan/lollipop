@@ -50,7 +50,7 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
     @FindBy(xpath = ".//button[text()='Add Role']")
     private WebElement saveRoleCreation;
 
-    @FindBys(@FindBy(xpath=".//select[@id='roleSelector']//option"))
+    @FindBy(xpath=".//select[@id='roleSelector']//option"))
     private List<WebElement> inheritRolesList;
 
     @FindBy(xpath=".//div[@id='addRole']//h4[text()='Create Custom Role']")
@@ -91,7 +91,6 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
     }
 
     public RolesAndPermissionPage createNewInheritRole(String roleName, String inheritRoleName) {
-        //getHeaderNav().waitForSpinnerToStop();
         nameTextField.sendKeys(roleName);
         System.out.println("ROLE" + nameTextField.getText());
         rolesDropdown.click();

@@ -22,10 +22,10 @@ public class AssignRolesPopupPage extends BasePage<AssignRolesPopupPage> {
     @FindBy(xpath=".//div[@class='row roles-footer']//input[@class='tt-query']")
     private WebElement rolePlaceholder;
 
-    @FindBy(xpath=".//div[@class='tt-suggestion']/p")
+    @FindBy(xpath="(.//span[@class='tt-suggestions']//p)")
     private WebElement roleSuggestions;
 
-    @FindBy(xpath=".//div[@class='row roles-footer']//span[@class='tt-suggestions']")
+    @FindBy(xpath=".//div[@class='row roles-footer']//div[@class='tt-suggestion']")
     private WebElement roleSuggestionBox;
 
     @FindBy(xpath=".//div[@id='assignRoles']//button[@class='btn btn-default']")
@@ -60,19 +60,21 @@ public class AssignRolesPopupPage extends BasePage<AssignRolesPopupPage> {
     @Override
     protected void instantiatePage(AssignRolesPopupPage page) {
         try {
-            LOGGER.info("-- Instantiating "+page.toString());
+            LOGGER.info("** instantiatePage(): ",page.getClass().toString());
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
             System.out.println(e);
+            LOGGER.error("-- Error in instantiating page:" + page.getClass().toString());
         }
     }
 
     protected void assignRole(String roleName) {
-        LOGGER.trace(">> AssignRole(): " + roleName);
+        LOGGER.trace(">> AssignRole(): " ,roleName);
         rolePlaceholder.sendKeys(roleName);
         waitForElement(ExpectedConditions.visibilityOf(roleSuggestionBox));
         try {
             roleSuggestions.click();
+           // waitForElement();
         } catch(Exception e) {
             LOGGER.error("-- Failed to click role from suggestions");
             e.printStackTrace();
@@ -84,7 +86,13 @@ public class AssignRolesPopupPage extends BasePage<AssignRolesPopupPage> {
         LOGGER.trace(">> assignAllRoles()");
         assignRole("Learner");
         assignRole(customRoleName);
-        saveButton.click();
+        try {
+            LOGGER.info("--  Saving assigned roles");
+            saveButton.click();
+        }catch(Exception e){
+            LOGGER.error("-- Failed to save roles.");
+        }
+
         LOGGER.trace("<< assignAllRoles()");
         return new UserPage(driver);
     }
@@ -110,7 +118,7 @@ public class AssignRolesPopupPage extends BasePage<AssignRolesPopupPage> {
             LOGGER.trace("<< deleteAllRoles()");
             return new UserPage(driver);
         } else {
-            LOGGER.debug("-- No roles assigned.Exiting popup");
+            LOGGER.debug("-- No roles to unassign.Exiting popup");
             closeButton.click();
             LOGGER.trace("<< deleteAllRoles()");
             return new UserPage(driver);

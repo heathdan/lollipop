@@ -80,17 +80,11 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
     @FindBy(xpath = ".//p[text()='CustomSystemAdminRole']/parent::div/parent::div//button[@data-original-title='Delete Role']")
     private WebElement customDeleteRole;
 
-    @FindBy(xpath = ".//ul[@class='pagination']/li/a[text()='← Previous']")
-    private WebElement paginationPrevious;
-
     @FindBy(xpath = ".//ul[@class='pagination']//a[text()='Next →']")
     private WebElement paginationNext;
 
     @FindBy(xpath=".//ul[@class='pagination']//a[text()='Next →']/parent::li")
     private WebElement paginationNextDisabled;
-
-    @FindBy(xpath=".//p[text()='CustomSystemAdminRole']")
-    private WebElement customSystemAdminRole;
 
     @FindBy(xpath=".//div[@class='admin-table-content']//p[@class='item-name eclipse-text']")
     private List<WebElement> roleNames;
@@ -147,7 +141,7 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
                 break;
             }
         }
-        if(isMatchNotFound && !("disabled".equals(paginationNextDisabled.getAttribute("class")))) {
+        if(isMatchNotFound && !("disabled".equals(paginationNextDisabled.getAttribute("class"))) && (paginationNext.isEnabled())) {
             paginationNext.click();
             headerNav.waitForSpinnerToStop();
             new RolesAndPermissionPage(driver).findRoleAndDelete(roleName);

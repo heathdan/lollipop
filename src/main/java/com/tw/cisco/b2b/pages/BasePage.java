@@ -45,14 +45,15 @@ public abstract class BasePage<P extends BasePage>{
      */
     protected void waitForPageToLoad(ExpectedCondition expectedCondition) {
         try {
-            LOGGER.info("Waiting for page to load");
+            LOGGER.trace(">> waitForPageToLoad()");
             Wait wait = new FluentWait(driver)
                     .withTimeout(PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS)
                     .pollingEvery(POLLING_RATE, TimeUnit.SECONDS);
             wait.until(getPageLoadCondition());
         }catch (Exception e) {
-            LOGGER.error("Error in page loading");
+            LOGGER.error("-- Error in page loading");
         }
+        LOGGER.trace("<< waitForPageToLoad()");
     }
 
     /**
@@ -86,13 +87,13 @@ public abstract class BasePage<P extends BasePage>{
      */
     protected void waitForElement(ExpectedCondition expectedCondition) {
         try {
-          LOGGER.info("waiting for element:"+expectedCondition.toString());
+          LOGGER.trace(">> waitForElement()");
             waitTime = new WebDriverWait(driver, ELEMENT_WAIT);
             waitTime.until(expectedCondition);
         } catch (Exception e) {
-            LOGGER.error("Error in waiting for element");
-
+            LOGGER.error("-- Error in waiting for element");
         }
+        LOGGER.trace("<< waitForElement()");
     }
 
 }
