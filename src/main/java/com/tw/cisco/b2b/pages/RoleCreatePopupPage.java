@@ -5,7 +5,6 @@ import com.tw.cisco.b2b.navigation.TabbedNav;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -50,7 +49,7 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
     @FindBy(xpath = ".//button[text()='Add Role']")
     private WebElement saveRoleCreation;
 
-    @FindBy(xpath=".//select[@id='roleSelector']//option"))
+    @FindBy(xpath=".//select[@id='roleSelector']//option")
     private List<WebElement> inheritRolesList;
 
     @FindBy(xpath=".//div[@id='addRole']//h4[text()='Create Custom Role']")
@@ -91,7 +90,13 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
     }
 
     public RolesAndPermissionPage createNewInheritRole(String roleName, String inheritRoleName) {
-        nameTextField.sendKeys(roleName);
+
+        try {
+            enterText(nameTextField,roleName);
+        } catch(Exception e) {
+            LOGGER.error("error");
+        }
+        //nameTextField.sendKeys(roleName);
         System.out.println("ROLE" + nameTextField.getText());
         rolesDropdown.click();
         selectSystemAdmin.click();
