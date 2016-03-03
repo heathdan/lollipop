@@ -26,6 +26,8 @@ public class CommonMethodsHelper {
         return retValue;
     }
 
+
+
     public boolean validateDropDown(WebElement element,String[] expList) {
         List<WebElement> elements = new Select(element).getOptions();
         boolean finalValue=false;

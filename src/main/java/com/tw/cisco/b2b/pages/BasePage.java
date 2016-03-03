@@ -43,7 +43,7 @@ public abstract class BasePage<P extends BasePage>{
      * Method to wait for page to get loaded
      * @param expectedCondition
      */
-    protected void waitForPageToLoad(ExpectedCondition expectedCondition) {
+    protected void waitForPageToLoad(ExpectedCondition<?> expectedCondition) {
         try {
             LOGGER.trace(">> waitForPageToLoad()");
             Wait wait = new FluentWait(driver)
@@ -72,7 +72,7 @@ public abstract class BasePage<P extends BasePage>{
      *
      * @return ExpectedCondition for the element to be verified.
      */
-    protected abstract ExpectedCondition getPageLoadCondition();
+    protected abstract ExpectedCondition<?> getPageLoadCondition();
 
     /**
      *
