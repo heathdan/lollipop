@@ -1,6 +1,7 @@
 package com.tw.cisco.b2b.pages;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -94,6 +95,23 @@ public abstract class BasePage<P extends BasePage>{
             LOGGER.error("-- Error in waiting for element");
         }
         LOGGER.trace("<< waitForElement()");
+    }
+
+
+    public void enterText(WebElement webElement, String message) throws Exception{
+        boolean result=false;
+        if(!(webElement==null)) {
+            if(webElement.isDisplayed()) {
+                webElement.clear();
+                webElement.sendKeys(message);
+                result= true;
+            } else {
+                throw new Exception();
+            }
+        }else {
+            throw new Exception();
+        }
+
     }
 
 }

@@ -90,7 +90,13 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
     }
 
     public RolesAndPermissionPage createNewInheritRole(String roleName, String inheritRoleName) {
-        nameTextField.sendKeys(roleName);
+
+        try {
+            enterText(nameTextField,roleName);
+        } catch(Exception e) {
+            LOGGER.error("error");
+        }
+        //nameTextField.sendKeys(roleName);
         System.out.println("ROLE" + nameTextField.getText());
         rolesDropdown.click();
         selectSystemAdmin.click();
