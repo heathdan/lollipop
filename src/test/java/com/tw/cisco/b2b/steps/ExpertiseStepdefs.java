@@ -29,8 +29,6 @@ public class ExpertiseStepdefs {
 
     @Then("^user define a new TimeStamped expertise \"([^\"]*)\"$")
     public void userDefineANewExpertise(String arg0) throws Throwable {
-
-        System.out.println(AREAOFEXPERTISE);
         defineExpertisePage = new DefineExpertisePage(driver);
         defineExpertisePage.addExpertise(AREAOFEXPERTISE).searchExpertise(AREAOFEXPERTISE);
     }

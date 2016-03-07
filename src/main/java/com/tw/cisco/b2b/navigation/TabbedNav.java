@@ -1,5 +1,6 @@
 package com.tw.cisco.b2b.navigation;
 
+import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
 import com.tw.cisco.b2b.pages.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -62,31 +63,32 @@ public class TabbedNav extends BasePage<TabbedNav> {
     }
 
     public BasePage navToTab(TabName tabName) {
+        LOGGER.trace(">>navToTab() "+tabName);
         BasePage page = null;
-        System.out.println(tabName);
-        switch(tabName) {
-            case USERS:
-                userTab.click();
-                LOGGER.info("Clicked userTab");
-                page = new UserPage(driver);
-                break;
+        try {
+            switch (tabName) {
+                case USERS:
+                    clickIcon(userTab, "USER_TAB");
+                    LOGGER.debug("Clicked userTab");
+                    page = new UserPage(driver);
+                    break;
 
                  /*   case "Pending Registrations":
                         pendingRegTab.click();
                         page= new PendingRegPage(driver);
                         break;
-    */
-            case ROLESPERMISSIONS:
-                rolesNPermissionTab.click();
-                LOGGER.info("clicked role and permission");
-                page = new RolesAndPermissionPage(driver);
-                break;
+                        */
+                case ROLESPERMISSIONS:
+                    clickIcon(rolesNPermissionTab, "ROLES_PERMISSION_TAB");
+                    LOGGER.debug("clicked role and permission");
+                    page = new RolesAndPermissionPage(driver);
+                    break;
 
-            case DEFINEEXPERTISE:
-                defineExpertiseTab.click();
-                LOGGER.info("DefineExpertise");
-                page = new DefineExpertisePage(driver);
-                break;
+                case DEFINEEXPERTISE:
+                    clickIcon(defineExpertiseTab, "DEFINE_EXPERTISE");
+                    LOGGER.debug("DefineExpertise");
+                    page = new DefineExpertisePage(driver);
+                    break;
 
             /*case PENDINGREGISTRATIONS:
                 pendingRegTab.click();
@@ -114,9 +116,12 @@ public class TabbedNav extends BasePage<TabbedNav> {
                         status = page.getPeople().isDisplayed();
                         break;
                         */
-            default:
-                System.out.println("Error in finding the page");
-                break;
+                default:
+                    LOGGER.error("--- "+tabName+" not found");
+                    break;
+            }
+        } catch(ClickIconNotFoundException ex) {
+            LOGGER.error(tabName + " not clickable" + ex);
         }
         return page;
     }

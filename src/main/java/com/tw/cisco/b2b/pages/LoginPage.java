@@ -1,5 +1,8 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.exceptions.ClickElementException;
+import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
+import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -51,9 +54,14 @@ public class LoginPage extends BasePage<LoginPage> {
     }
 
     public CredentialsPage enterEmail(String userName) {
-        email.sendKeys(userName);
-        nextButton.click();
-        implicitWaitMethod();
+        try {
+            enterText(email, userName);
+            clickButton(nextButton);
+            implicitWaitMethod();
+        } catch(TextElementNotFoundException | ClickElementException | ElementNotFoundException ex) {
+           LOGGER.error("Sign in failed", ex);
+        }
+
         return new CredentialsPage(driver);
     }
 

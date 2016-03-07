@@ -1,18 +1,15 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.exceptions.*;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
 
 /**
  * Created by aswathyn on 18/01/16.
@@ -98,21 +95,61 @@ public abstract class BasePage<P extends BasePage>{
     }
 
 
-    public void enterText(WebElement webElement, String message) throws Exception{
-        boolean result=false;
+    public void enterText(WebElement webElement, String message) throws TextElementNotFoundException {
         if(!(webElement==null)) {
             if(webElement.isDisplayed()) {
                 webElement.clear();
                 webElement.sendKeys(message);
-                result= true;
             } else {
-                throw new Exception();
+                throw new TextElementNotFoundException("Text element not found");
             }
-        }else {
-            throw new Exception();
         }
-
     }
+
+    public void clickButton(WebElement webElement) throws ClickElementException,ElementNotFoundException {
+        if(!(webElement==null)) {
+            if(webElement.isDisplayed()) {
+                if(webElement.isEnabled()) {
+                    webElement.click();
+                } else {
+                    throw new ClickElementException(webElement.toString()+" not clickable");
+                }
+            } else {
+                throw new ElementNotFoundException(webElement.toString()+ "not visible");
+            }
+        }
+    }
+
+    public void clickByIndex(List<WebElement> element, int index) throws ClickElementException {
+       if(!(element==null)) {
+           if(element.get(index).isDisplayed()){
+               element.get(index).click();
+           } else {
+               throw new ClickElementException(element.get(index).toString()+" not clicked");
+           }
+       }
+    }
+
+    public void clickIcon(WebElement element,String message) throws ClickIconNotFoundException {
+        if (!(element == null)) {
+            if (element.isDisplayed()) {
+                element.click();
+            } else {
+                throw new ClickIconNotFoundException(message + " not found");
+            }
+        }
+    }
+
+    public void selectDropdownText(WebElement element, String textValue) throws SelectDropDownNotFoundException {
+        try {
+            Select selectValue = new Select(element);
+            selectValue.selectByVisibleText(textValue);
+        } catch(NoSuchElementException ex) {
+            throw new SelectDropDownNotFoundException(textValue+" not found", ex);
+        }
+    }
+
+
 
 }
 

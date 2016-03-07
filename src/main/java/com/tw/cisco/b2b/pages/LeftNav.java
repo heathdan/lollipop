@@ -1,5 +1,6 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -121,7 +122,11 @@ public class LeftNav extends BasePage<LeftNav> {
     }
 
     public AdminPage navToAdmin() {
-        admin.click();
+        try {
+            clickIcon(admin,"Admin Tab");
+        } catch (ClickIconNotFoundException ex) {
+            LOGGER.error("Admin access is missing", ex);
+        }
         return new AdminPage(driver);
     }
 

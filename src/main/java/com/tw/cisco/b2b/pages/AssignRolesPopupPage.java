@@ -1,5 +1,9 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.exceptions.ClickElementException;
+import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
+import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
+import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -60,7 +64,7 @@ public class AssignRolesPopupPage extends BasePage<AssignRolesPopupPage> {
     @Override
     protected void instantiatePage(AssignRolesPopupPage page) {
         try {
-            LOGGER.info("** instantiatePage(): ",page.toString());
+            LOGGER.info("** instantiatePage(): ", page.toString());
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
             System.out.println(e);
@@ -69,15 +73,13 @@ public class AssignRolesPopupPage extends BasePage<AssignRolesPopupPage> {
     }
 
     protected void assignRole(String roleName) {
-        LOGGER.trace(">> AssignRole(): " ,roleName);
-        rolePlaceholder.sendKeys(roleName);
-        waitForElement(ExpectedConditions.visibilityOf(roleSuggestionBox));
+        LOGGER.trace(">> AssignRole(): ", roleName);
         try {
-            roleSuggestions.click();
-           // waitForElement();
-        } catch(Exception e) {
-            LOGGER.error("-- Failed to click role from suggestions");
-            e.printStackTrace();
+            enterText(rolePlaceholder, roleName);
+            waitForElement(ExpectedConditions.visibilityOf(roleSuggestionBox));
+            clickButton(roleSuggestions);
+        } catch(TextElementNotFoundException| ClickElementException | ElementNotFoundException e) {
+            LOGGER.error("-- Failed to click role from suggestions", e);
         }
         LOGGER.trace("<< AssignRole()");
     }
@@ -89,40 +91,34 @@ public class AssignRolesPopupPage extends BasePage<AssignRolesPopupPage> {
         try {
             LOGGER.info("--  Saving assigned roles");
             saveButton.click();
-        }catch(Exception e){
+        }catch(Exception e) {
             LOGGER.error("-- Failed to save roles.");
         }
-
         LOGGER.trace("<< assignAllRoles()");
         return new UserPage(driver);
     }
 
-    protected void getRolesAssigned() {
-
-    }
-
     public UserPage deleteAllRoles() {
         LOGGER.trace(">> deleteAllRoles()");
-        if (!rolesAssigned.isEmpty()) {
-            for (int i = 0; i < rolesAssigned.size(); i++) {
-                try {
-                    rolesAssigned.get(i).click();
+        try {
+            if (!rolesAssigned.isEmpty()) {
+                for (int i = 0; i < rolesAssigned.size(); i++) {
+                    clickByIndex(rolesAssigned, i);
                     LOGGER.debug("-- Deleting role :" + rolesAssigned.get(i).getText());
-                    deleteButton.click();
-                } catch (Exception e) {
-                    LOGGER.error("-- " + rolesAssigned.get(i).getText() + " deletion failed");
+                    clickIcon(deleteButton, "Delete");
                 }
+                LOGGER.debug("-- Saving roles deleted");
+                clickButton(saveButton);
+                LOGGER.trace("<< deleteAllRoles()");
+            } else {
+                LOGGER.debug("-- No roles to unassign.Exiting popup");
+                clickButton(closeButton);
+                LOGGER.trace("<< deleteAllRoles()");
             }
-            LOGGER.debug("-- Saving roles deleted");
-            saveButton.click();
-            LOGGER.trace("<< deleteAllRoles()");
-            return new UserPage(driver);
-        } else {
-            LOGGER.debug("-- No roles to unassign.Exiting popup");
-            closeButton.click();
-            LOGGER.trace("<< deleteAllRoles()");
-            return new UserPage(driver);
+        } catch (ClickIconNotFoundException | ElementNotFoundException | ClickElementException ex){
+            LOGGER.error("Role deletion failed", ex);
         }
+        return new UserPage(driver);
     }
     protected void saveAndCloseRolesPopup() {
 

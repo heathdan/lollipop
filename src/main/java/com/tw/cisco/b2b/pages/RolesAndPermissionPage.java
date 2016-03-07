@@ -1,5 +1,6 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.exceptions.*;
 import com.tw.cisco.b2b.navigation.HeaderNav;
 import com.tw.cisco.b2b.navigation.TabbedNav;
 import org.openqa.selenium.WebDriver;
@@ -125,26 +126,37 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
     }
 
     public RoleCreatePopupPage clickRoleCreation() {
-        createRole.click();
+        LOGGER.trace(">> clickRoleCreation()");
+        try {
+            clickIcon(createRole,"Create Role");
+        }catch(ClickIconNotFoundException ex) {
+            LOGGER.error("Role create popup not found",ex);
+        }
         return new RoleCreatePopupPage(driver);
     }
 
     public RolesAndPermissionPage findRoleAndDelete(String roleName) {
-        for(WebElement element: roleNames) {
-            if (roleName.equals(element.getText())) {
-                customDeleteRole.click();
-                waitForElement(ExpectedConditions.visibilityOf(deleteRolePopupHeader));
-                deleteRoleConfirm.click();
-                new RolesAndPermissionPage(driver).getHeaderNav().waitForSpinnerToStop();
-                waitForElement(ExpectedConditions.visibilityOf(roleDeletionSuccessPopupMessage));
-                isMatchNotFound=false;
-                break;
+        LOGGER.trace(">> findRoleAndDelete(): "+roleName);
+        try {
+            for (WebElement element : roleNames) {
+                if (roleName.equals(element.getText())) {
+                    clickIcon(customDeleteRole, "Role Delete");
+                    waitForElement(ExpectedConditions.visibilityOf(deleteRolePopupHeader));
+                    clickIcon(deleteRoleConfirm, "Role delete confirm");
+                    new RolesAndPermissionPage(driver).getHeaderNav().waitForSpinnerToStop();
+                    waitForElement(ExpectedConditions.visibilityOf(roleDeletionSuccessPopupMessage));
+                    isMatchNotFound = false;
+                    break;
+                }
             }
-        }
-        if(isMatchNotFound && !("disabled".equals(paginationNextDisabled.getAttribute("class"))) && (paginationNext.isEnabled())) {
-            paginationNext.click();
+
+        if (isMatchNotFound && !("disabled".equals(paginationNextDisabled.getAttribute("class"))) && (paginationNext.isEnabled())) {
+            clickButton(paginationNext);
             headerNav.waitForSpinnerToStop();
             new RolesAndPermissionPage(driver).findRoleAndDelete(roleName);
+        }
+        } catch (ClickIconNotFoundException | ClickElementException | ElementNotFoundException | SpinnerNotDisappearException | SpinnerNotFoundException ex) {
+            LOGGER.error("---Role deletion failed", ex);
         }
         return this;
     }

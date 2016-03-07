@@ -1,5 +1,9 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.exceptions.ClickElementException;
+import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
+import com.tw.cisco.b2b.exceptions.SelectDropDownNotFoundException;
+import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
 import com.tw.cisco.b2b.navigation.HeaderNav;
 import com.tw.cisco.b2b.navigation.TabbedNav;
 import org.openqa.selenium.WebDriver;
@@ -10,8 +14,6 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 /**
  * Created by aswathyn on 22/01/16.
@@ -49,8 +51,8 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
     @FindBy(xpath = ".//button[text()='Add Role']")
     private WebElement saveRoleCreation;
 
-    @FindBy(xpath=".//select[@id='roleSelector']//option")
-    private List<WebElement> inheritRolesList;
+    @FindBy(xpath=".//select[@id='roleSelector']")
+    private WebElement inheritRoles;
 
     @FindBy(xpath=".//div[@id='addRole']//h4[text()='Create Custom Role']")
     private WebElement roleSuccessPopupHeader;
@@ -90,19 +92,21 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
     }
 
     public RolesAndPermissionPage createNewInheritRole(String roleName, String inheritRoleName) {
-
+        LOGGER.trace(">> createNewInheritRole():"+roleName);
         try {
-            enterText(nameTextField,roleName);
-        } catch(Exception e) {
-            LOGGER.error("error");
+            enterText(nameTextField, roleName);
+            clickButton(rolesDropdown);
+            selectDropdownText(inheritRoles, inheritRoleName);
+            clickButton(saveRoleCreation);
+            waitForElement(ExpectedConditions.visibilityOf(roleSuccessPopupHeader));
+            clickButton(roleSuccessPopUp);
         }
-        //nameTextField.sendKeys(roleName);
-        System.out.println("ROLE" + nameTextField.getText());
-        rolesDropdown.click();
-        selectSystemAdmin.click();
-        saveRoleCreation.click();
-        waitForElement(ExpectedConditions.visibilityOf(roleSuccessPopupHeader));
-        roleSuccessPopUp.click();
+        catch(TextElementNotFoundException | ClickElementException | ElementNotFoundException ex) {
+            LOGGER.error(roleName+" creation failed", ex);
+        }
+        catch(SelectDropDownNotFoundException ex) {
+            LOGGER.error("Role selection failed",ex);
+        }
         return new RolesAndPermissionPage(driver);
     }
 

@@ -6,6 +6,7 @@ package com.tw.cisco.b2b.exceptions;
 public class GenericException extends Exception {
 
     public GenericException() {
+
     }
 
     public GenericException(String message) {
@@ -13,6 +14,7 @@ public class GenericException extends Exception {
     }
 
     public GenericException(String message, Throwable cause) {
+
         super(message, cause);
     }
 

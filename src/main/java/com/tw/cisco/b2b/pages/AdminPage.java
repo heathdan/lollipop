@@ -1,5 +1,6 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
 import com.tw.cisco.b2b.navigation.TabbedNav;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -52,8 +53,12 @@ public class AdminPage extends BasePage<AdminPage> {
     }
 
     public TabbedNav navToUser() {
-        LOGGER.info("Navigating to User");
-        user.click();
+        try {
+            LOGGER.info("Navigating to User");
+            clickIcon(user, "Users");
+        } catch(ClickIconNotFoundException ex) {
+            LOGGER.error("Users not found", ex);
+        }
         return new TabbedNav(driver);
     }
 

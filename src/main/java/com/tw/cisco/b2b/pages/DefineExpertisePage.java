@@ -1,5 +1,7 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
+import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -76,8 +78,12 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
     }
 
     public DefineExpertisePage addExpertise(String Expertise){
-        addExpertiseTextField.sendKeys(Expertise);
-        addExpertiseButton.click();
+        try {
+            enterText(addExpertiseTextField,Expertise);
+            clickIcon(addExpertiseButton,"Expertise");
+        } catch ( ClickIconNotFoundException | TextElementNotFoundException ex) {
+            LOGGER.error(" Expertise addition failed", ex);
+        }
         return new DefineExpertisePage(driver);
     }
 

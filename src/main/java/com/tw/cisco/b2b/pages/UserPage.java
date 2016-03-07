@@ -1,5 +1,7 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
+import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
 import com.tw.cisco.b2b.navigation.HeaderNav;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
@@ -124,15 +126,17 @@ public class UserPage extends BasePage<UserPage> {
         return ExpectedConditions.visibilityOf(userTable);
     }
 
+
     public UserPage searchUser(String emailID){
         LOGGER.trace(">> searchUser()");
-        searchField.sendKeys(emailID);
-        LOGGER.debug("-- Passed value:" + emailID);
-        searchIcon.click();
-        LOGGER.debug("-- Searching:" + emailID);
-        LOGGER.info("------"+waitforsearch.getText());
-        waitForElement(ExpectedConditions.textToBePresentInElement(waitforsearch,emailID));
-        //waitForElement(ExpectedConditions.visibilityOf(waitforsearch));
+        try {
+            enterText(searchField, emailID);
+            LOGGER.debug("-- Passed value:" + emailID);
+            clickIcon(searchIcon, "Search");
+            LOGGER.debug("-- Searching:" + emailID);
+        } catch(ClickIconNotFoundException | TextElementNotFoundException ex) {
+            LOGGER.error(emailID+" not found",ex);
+        }
         return new UserPage(driver);
     }
 
@@ -144,6 +148,7 @@ public class UserPage extends BasePage<UserPage> {
     }
 
     public AssignExpertisePopupPage clickAssignExpertise(){
+        waitForElement(ExpectedConditions.textToBePresentInElement(waitforsearch,emailID));
         assignExpertisePopupicon.click();
         return new AssignExpertisePopupPage(driver);
     }
@@ -168,9 +173,15 @@ public class UserPage extends BasePage<UserPage> {
 
     public AssignRolesPopupPage clickAssignRole(){
         LOGGER.trace(">> clickAssignRole()");
-        assignRolesPopupicon.click();
+        try {
+            clickIcon(assignRolesPopupicon,"Roles icon");
+        } catch (ClickIconNotFoundException ex) {
+            LOGGER.error("Assign role popup not found", ex);
+        }
         return new AssignRolesPopupPage(driver);
     }
+
+    public void searchAndWait
 
     /***********************GET/SET METHODS*********************/
 

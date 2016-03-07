@@ -1,11 +1,13 @@
 package com.tw.cisco.b2b.navigation;
 
+
+import com.tw.cisco.b2b.exceptions.ClickElementException;
+import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
+import com.tw.cisco.b2b.exceptions.SpinnerNotDisappearException;
+import com.tw.cisco.b2b.exceptions.SpinnerNotFoundException;
 import com.tw.cisco.b2b.pages.BasePage;
 import com.tw.cisco.b2b.pages.LoginPage;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -66,16 +68,22 @@ public class HeaderNav extends BasePage<HeaderNav> {
         return ExpectedConditions.visibilityOf(topNavSearch);
     }
 
-    public LoginPage CKlogout() {
-        waitForSpinnerToStop();
-        topNavMyProfile.click();
-        logOut.click();
-        implicitWaitMethod();
+    public LoginPage CKlogout()  {
+        try {
+            waitForSpinnerToStop();
+            clickButton(topNavMyProfile);
+            clickButton(logOut);
+            implicitWaitMethod();
+        } catch (ClickElementException | ElementNotFoundException ex) {
+            LOGGER.error("--Error in logging out", ex);
+        } catch(SpinnerNotDisappearException | SpinnerNotFoundException ex) {
+            LOGGER.error("--Error waiting for spineer ", ex);
+        }
         return new LoginPage(driver);
     }
 
-    public void waitForSpinnerToStop() {
-        waitForSpinnerAppear= new WebDriverWait(driver, SPINNER_TO_APPEAR_TIMEOUT)
+    public void waitForSpinnerToStop() throws SpinnerNotDisappearException, SpinnerNotFoundException{
+        waitForSpinnerAppear = new WebDriverWait(driver, SPINNER_TO_APPEAR_TIMEOUT)
                 .ignoring(NoSuchElementException.class)
                 .ignoring(TimeoutException.class)
                 .pollingEvery(SPINNER_POLLING_RATE, TimeUnit.MILLISECONDS);
@@ -91,9 +99,11 @@ public class HeaderNav extends BasePage<HeaderNav> {
                 LOGGER.info("wait for spinner to disappear");
                 waitForSpinnerDisappear.until(ExpectedConditions
                         .invisibilityOfElementLocated(spinnerLocator));
+            } else {
+                throw new SpinnerNotFoundException("Spinner not found");
             }
-        } catch (Exception e) {
-            System.out.println(e);
+        }catch ( NoSuchElementException |ElementNotVisibleException ex ) {
+            throw new SpinnerNotDisappearException("Timeout for spinner to disappear",ex);
         }
     }
 
