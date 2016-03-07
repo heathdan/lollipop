@@ -1,5 +1,8 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.exceptions.ClickElementException;
+import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
+import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -75,14 +78,18 @@ public class AssignExpertisePopupPage extends BasePage<AssignExpertisePopupPage>
     }
 
     public UserPage assignExpertise(String expertise) {
-        expertiseTextField.sendKeys(expertise);
-        waitForElement(ExpectedConditions.visibilityOf(expertiseSuggest));
-        expertiseSuggest.click();
-        saveExpertiseButton.click();
-        waitForElement(ExpectedConditions.visibilityOf(sucessMessage));
+        try {
+            enterText(expertiseTextField,expertise);
+            waitForElement(ExpectedConditions.visibilityOf(expertiseSuggest));
+            clickButton(expertiseSuggest);
+            clickButton(saveExpertiseButton);
+            waitForElement(ExpectedConditions.visibilityOf(sucessMessage));
+        } catch (TextElementNotFoundException | ClickElementException | ElementNotFoundException ex) {
+            LOGGER.error("Expertise assignment failed",ex);
+        }
         return new UserPage(driver);
-
     }
+
     public UserPage verifyExpertiseAssigned(String expertise){
 
         for (WebElement exp : adminAssignedExpertiseList

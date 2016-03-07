@@ -135,21 +135,28 @@ public class UserPage extends BasePage<UserPage> {
             clickIcon(searchIcon, "Search");
             LOGGER.debug("-- Searching:" + emailID);
         } catch(ClickIconNotFoundException | TextElementNotFoundException ex) {
-            LOGGER.error(emailID+" not found",ex);
+            LOGGER.error("---"+emailID+" not found",ex);
         }
         return new UserPage(driver);
     }
 
-    public UserPage searchByExpertise(String expertise){
-        searchField.clear();
-        searchField.sendKeys(expertise);
-        searchIcon.click();
+    public UserPage searchByExpertise(String expertise) {
+        try {
+            enterText(searchField, expertise);
+            clickIcon(searchIcon, "Search by Expertise");
+        } catch (ClickIconNotFoundException | TextElementNotFoundException ex) {
+            LOGGER.error("--- Expertise search failed");
+        }
         return new UserPage(driver);
     }
 
-    public AssignExpertisePopupPage clickAssignExpertise(){
-        waitForElement(ExpectedConditions.textToBePresentInElement(waitforsearch,emailID));
-        assignExpertisePopupicon.click();
+    public AssignExpertisePopupPage clickAssignExpertise(String emailID){
+        try {
+            waitForElement(ExpectedConditions.textToBePresentInElement(waitforsearch,emailID));
+            clickIcon(assignExpertisePopupicon,"Expertise");
+        } catch (ClickIconNotFoundException ex) {
+            LOGGER.error("--- Expertise popup failed", ex);
+        }
         return new AssignExpertisePopupPage(driver);
     }
 
@@ -176,12 +183,10 @@ public class UserPage extends BasePage<UserPage> {
         try {
             clickIcon(assignRolesPopupicon,"Roles icon");
         } catch (ClickIconNotFoundException ex) {
-            LOGGER.error("Assign role popup not found", ex);
+            LOGGER.error("--- Assign role popup not found", ex);
         }
         return new AssignRolesPopupPage(driver);
     }
-
-    public void searchAndWait
 
     /***********************GET/SET METHODS*********************/
 
