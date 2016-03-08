@@ -117,7 +117,7 @@ public class LeftNav extends BasePage<LeftNav> {
         try {
             PageFactory.initElements(driver, page);
         } catch (Exception e) {
-            System.out.println(e);
+            LOGGER.error("--- Error instantiating :"+page.toString());
         }
     }
 

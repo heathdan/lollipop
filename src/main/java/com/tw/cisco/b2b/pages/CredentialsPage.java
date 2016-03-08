@@ -48,7 +48,7 @@ public class CredentialsPage extends BasePage<CredentialsPage> {
         try {
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
-            System.out.println(e);
+            LOGGER.error("-- Page instantiation failed",e);
         }
     }
 

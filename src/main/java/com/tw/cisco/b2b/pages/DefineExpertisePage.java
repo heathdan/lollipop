@@ -1,6 +1,8 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.exceptions.ClickElementException;
 import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
+import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
 import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -68,7 +70,7 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
         try {
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
-            System.out.println(e);
+            LOGGER.error("-- Error instantiating: "+page.toString(), e);
         }
     }
 
@@ -88,8 +90,13 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
     }
 
     public DefineExpertisePage searchExpertise(String Expertise){
-        searchExpertiseTextField.sendKeys(Expertise);
-        searchExpertiseIcon.click();
+        LOGGER.trace(">>searchExpertise()",Expertise);
+        try {
+            enterText(searchExpertiseTextField,Expertise);
+            clickButton(searchExpertiseIcon);
+        } catch(TextElementNotFoundException | ElementNotFoundException | ClickElementException ex) {
+            LOGGER.error("--Error in searching expertise",ex);
+        }
         return new DefineExpertisePage(driver) ;
     }
 

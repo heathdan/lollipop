@@ -49,7 +49,7 @@ public class LoginPage extends BasePage<LoginPage> {
             LOGGER.info("intialising page+ "+page);
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
-           LOGGER.error("Error instantiating+ "+page);
+            LOGGER.error("--- Error instantiating :"+page.toString());
         }
     }
 
