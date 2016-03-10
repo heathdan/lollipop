@@ -30,7 +30,7 @@ public class ExpertiseStepdefs {
     @Then("^user define a new TimeStamped expertise \"([^\"]*)\"$")
     public void userDefineANewExpertise(String arg0) throws Throwable {
         defineExpertisePage = new DefineExpertisePage(driver);
-        defineExpertisePage.addExpertise(AREAOFEXPERTISE).searchExpertise(AREAOFEXPERTISE);
+        defineExpertisePage.addExpertise(AREAOFEXPERTISE);
     }
 
     @And("^assign the TimeStamped expertise \"([^\"]*)\" to the user \"([^\"]*)\"$")
@@ -42,7 +42,7 @@ public class ExpertiseStepdefs {
     @Then("^user \"([^\"]*)\" should be marked expert in expertise \"([^\"]*)\"$")
     public void userShouldBeMarkedExpertInExpertise(String arg0, String arg1) throws Throwable {
         userPage = new UserPage(driver);
-        Thread.sleep(2000);
+       // Thread.sleep(2000);
         userPage.searchByExpertise("\"" + AREAOFEXPERTISE + "\"");
         userPage.verifyExpertiseAsignment(arg0);
     }

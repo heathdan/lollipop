@@ -127,21 +127,25 @@ public class UserPage extends BasePage<UserPage> {
     }
 
 
-    public UserPage searchUser(String emailID){
+    public UserPage searchUser(String emailID) throws InterruptedException {
         LOGGER.trace(">> searchUser()");
         try {
             enterText(searchField, emailID);
             LOGGER.debug("-- Passed value:" + emailID);
             clickIcon(searchIcon, "Search");
+            new UserPage(driver);
             LOGGER.debug("-- Searching:" + emailID);
+            Thread.sleep(2000);
         } catch(ClickIconNotFoundException | TextElementNotFoundException ex) {
             LOGGER.error("---"+emailID+" not found",ex);
         }
+
         return new UserPage(driver);
     }
 
     public UserPage searchByExpertise(String expertise) {
         try {
+            LOGGER.info("searching the expertise text"+expertise);
             enterText(searchField, expertise);
             clickIcon(searchIcon, "Search by Expertise");
         } catch (ClickIconNotFoundException | TextElementNotFoundException ex) {
@@ -152,7 +156,10 @@ public class UserPage extends BasePage<UserPage> {
 
     public AssignExpertisePopupPage clickAssignExpertise(String emailID){
         try {
+            LOGGER.info("waiting for the \""+emailID+"\" search to complete");
+            LOGGER.info("waiting for the \""+waitforsearch.getText()+"\" search to complete");
             waitForElement(ExpectedConditions.textToBePresentInElement(waitforsearch,emailID));
+            LOGGER.info("Assigning the expertise to user");
             clickIcon(assignExpertisePopupicon,"Expertise");
         } catch (ClickIconNotFoundException ex) {
             LOGGER.error("--- Expertise popup failed", ex);
@@ -173,7 +180,7 @@ public class UserPage extends BasePage<UserPage> {
     }
 
     public UserPage verifyExpertiseAsignment(String emailId){
-        //Assert.assertEquals(getUserDetails(userEmail),emailId);
+        LOGGER.info("Verifying the search results matches the email of user");
         Assert.assertEquals("assigned expertise is ", getUserDetails(userEmail), emailId);
         return new UserPage(driver);
     }
