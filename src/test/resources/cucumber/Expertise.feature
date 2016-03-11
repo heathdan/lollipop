@@ -5,7 +5,7 @@ Feature: Experts
   So that I can look up all experts
 
   Background:
-    Given that the user "admin_name" logged in as "aswnair@mailinator.com" and "Cisco@1234"
+    Given that the user "admin_name" logged in as "admin_user" and "password"
 
   Scenario: Define an expertise and assign the user A expert in the same
     Given user navigates to Define Expertise Tab

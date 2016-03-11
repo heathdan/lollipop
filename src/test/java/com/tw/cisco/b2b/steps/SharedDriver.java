@@ -1,5 +1,6 @@
 package com.tw.cisco.b2b.steps;
 
+import com.tw.cisco.b2b.helper.CommonMethodsHelper;
 import com.tw.cisco.b2b.helper.DriverFactory;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -22,6 +24,7 @@ public class SharedDriver extends EventFiringWebDriver {
     static final Logger LOGGER = LoggerFactory.getLogger(SharedDriver.class);
     private static final String URL ="https://qa1.learn.cisco";
     private static WebDriver REAL_DRIVER;
+    CommonMethodsHelper commonMethodsHelper;
 
     private static final Thread CLOSE_THREAD= new Thread() {
         @Override
@@ -49,7 +52,11 @@ public class SharedDriver extends EventFiringWebDriver {
     public SharedDriver() {
         super(getRealDriver());
         waitAndMaximize();
-        navigateToURL(URL);
+        try {
+            navigateToURL(getURL());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -61,6 +68,11 @@ public class SharedDriver extends EventFiringWebDriver {
         }catch (Throwable e){
             e.printStackTrace();
         }
+    }
+
+    public String getURL() throws IOException {
+        commonMethodsHelper = new CommonMethodsHelper();
+        return commonMethodsHelper.getPropValue("env");
     }
 
     protected static void navigateToURL(String URL) {
