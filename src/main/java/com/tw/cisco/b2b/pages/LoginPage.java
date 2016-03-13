@@ -3,6 +3,7 @@ package com.tw.cisco.b2b.pages;
 import com.tw.cisco.b2b.exceptions.ClickElementException;
 import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
 import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
+import com.tw.cisco.b2b.helper.CommonMethodsHelper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -25,6 +26,8 @@ public class LoginPage extends BasePage<LoginPage> {
 
     public static final String PAGETITLE = "Cisco";
     static final Logger LOGGER = LoggerFactory.getLogger(LoginPage.class);
+
+    CommonMethodsHelper commonMethodsHelper;
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -55,10 +58,11 @@ public class LoginPage extends BasePage<LoginPage> {
 
     public CredentialsPage enterEmail(String userName) {
         try {
+            commonMethodsHelper = new CommonMethodsHelper();
             enterText(email, userName);
             clickButton(nextButton);
             implicitWaitMethod();
-        } catch(TextElementNotFoundException | ClickElementException | ElementNotFoundException ex) {
+        } catch(TextElementNotFoundException | ClickElementException | ElementNotFoundException ex ) {
            LOGGER.error("Sign in failed", ex);
         }
 

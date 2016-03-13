@@ -1,6 +1,7 @@
 package com.tw.cisco.b2b.steps;
 
 import com.tw.cisco.b2b.navigation.HeaderNav;
+import com.tw.cisco.b2b.helper.CommonMethodsHelper;
 import com.tw.cisco.b2b.pages.HomePage;
 import com.tw.cisco.b2b.pages.LeftNav;
 import com.tw.cisco.b2b.pages.LoginPage;
@@ -18,6 +19,7 @@ public class LoginStepdefs {
     HomePage homePage;
     LoginPage loginPage;
     LeftNav leftNav;
+    CommonMethodsHelper commonMethodsHelper;
 
     public LoginStepdefs(SharedDriver driver){
         this.driver=driver;
@@ -29,7 +31,8 @@ public class LoginStepdefs {
 
     @Given("^that the user \"([^\"]*)\" logged in as \"([^\"]*)\" and \"([^\"]*)\"$")
     public void that_the_user_logged_in_as_and(String arg1, String arg2, String arg3) throws Throwable {
-        loginPage.enterEmail(arg2).enterCredentials(arg3);
+        commonMethodsHelper = new CommonMethodsHelper();
+        loginPage.enterEmail(commonMethodsHelper.getPropValue(arg2)).enterCredentials(commonMethodsHelper.getPropValue(arg3));
 
     }
 

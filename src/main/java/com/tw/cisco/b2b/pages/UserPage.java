@@ -3,6 +3,8 @@ package com.tw.cisco.b2b.pages;
 import com.tw.cisco.b2b.exceptions.ClickElementException;
 import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
 import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
+import com.tw.cisco.b2b.exceptions.SpinnerNotDisappearException;
+import com.tw.cisco.b2b.exceptions.SpinnerNotFoundException;
 import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
 import com.tw.cisco.b2b.navigation.HeaderNav;
 import org.junit.Assert;
@@ -86,9 +88,6 @@ public class UserPage extends BasePage<UserPage> {
     private  WebElement status;
 
     @FindBy(xpath = ".//p[@class='item-email']")
-    private WebElement waitforsearch;
-
-    @FindBy(xpath = ".//p[@class='item-email']")
     private WebElement userEmail;
 
     @FindBy(xpath = "(.//div[@class='item-wrap container']//p)[2]")
@@ -143,32 +142,46 @@ public class UserPage extends BasePage<UserPage> {
     }
 
 
-    public UserPage searchUser(String emailID){
+    public UserPage searchUser(String emailID) throws InterruptedException {
         LOGGER.trace(">> searchUser()");
         try {
-            enterText(searchField, emailID);
+            enterText(searchField, "\""+emailID+"\"");
             LOGGER.debug("-- Passed value:" + emailID);
             clickIcon(searchIcon, "Search");
+            headerNav.waitForSpinnerToStop();
+            LOGGER.info("after search the value for page fatory locator for email is   \""+userEmail.getText()+" \" " );
             LOGGER.debug("-- Searching:" + emailID);
         } catch(ClickIconNotFoundException | TextElementNotFoundException ex) {
             LOGGER.error("---"+emailID+" not found",ex);
+        } catch (SpinnerNotFoundException e) {
+            e.printStackTrace();
+        } catch (SpinnerNotDisappearException e) {
+            e.printStackTrace();
         }
+
         return new UserPage(driver);
     }
 
     public UserPage searchByExpertise(String expertise) {
         try {
+            LOGGER.info("searching the expertise text"+expertise);
             enterText(searchField, expertise);
             clickIcon(searchIcon, "Search by Expertise");
+            headerNav.waitForSpinnerToStop();
+            LOGGER.info("after search the value for page fatory for email is   \""+userEmail.getText()+" \" " );
         } catch (ClickIconNotFoundException | TextElementNotFoundException ex) {
             LOGGER.error("--- Expertise search failed");
+        } catch (SpinnerNotFoundException e) {
+            e.printStackTrace();
+        } catch (SpinnerNotDisappearException e) {
+            e.printStackTrace();
         }
         return new UserPage(driver);
     }
 
-    public AssignExpertisePopupPage clickAssignExpertise(String emailID){
+    public AssignExpertisePopupPage clickAssignExpertise(){
         try {
-            waitForElement(ExpectedConditions.textToBePresentInElement(waitforsearch, emailID));
+            LOGGER.info("Assigning the expertise to user");
             clickIcon(assignExpertisePopupicon,"Expertise");
         } catch (ClickIconNotFoundException ex) {
             LOGGER.error("--- Expertise popup failed", ex);
@@ -189,7 +202,7 @@ public class UserPage extends BasePage<UserPage> {
     }
 
     public UserPage verifyExpertiseAsignment(String emailId){
-        //Assert.assertEquals(getUserDetails(userEmail),emailId);
+        LOGGER.info("Verifying the search results matches the email of user");
         Assert.assertEquals("assigned expertise is ", getUserDetails(userEmail), emailId);
         return new UserPage(driver);
     }

@@ -81,7 +81,10 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
 
     public DefineExpertisePage addExpertise(String Expertise){
         try {
+            LOGGER.info("Creating the expertise\""+Expertise+"\"");
             enterText(addExpertiseTextField,Expertise);
+
+            LOGGER.info("Saving the expertise\""+Expertise+"\"");
             clickIcon(addExpertiseButton,"Expertise");
         } catch ( ClickIconNotFoundException | TextElementNotFoundException ex) {
             LOGGER.error(" Expertise addition failed", ex);

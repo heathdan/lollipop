@@ -6,7 +6,7 @@ Feature: Admin
 
 
   Background:
-    Given that the user "admin_name" logged in as "deonaraya4@gmail.com" and "Cisco@1234"
+    Given that the user "admin_name" logged in as "admin_user" and "password"
 
 
   #Scenario: Creation of Custom Role and inherit System Admin role

@@ -18,6 +18,7 @@ public class ExpertiseStepdefs {
     private WebDriver driver;
     DefineExpertisePage defineExpertisePage;
     UserPage userPage;
+    CommonMethodsHelper commonMethodsHelper ;
 
     public ExpertiseStepdefs(SharedDriver driver) {
         this.driver = driver;
@@ -30,21 +31,22 @@ public class ExpertiseStepdefs {
     @Then("^user define a new TimeStamped expertise \"([^\"]*)\"$")
     public void userDefineANewExpertise(String arg0) throws Throwable {
         defineExpertisePage = new DefineExpertisePage(driver);
-        defineExpertisePage.addExpertise(AREAOFEXPERTISE).searchExpertise(AREAOFEXPERTISE);
-    }
-
-    @And("^assign the TimeStamped expertise \"([^\"]*)\" to the user \"([^\"]*)\"$")
-    public void assignTheTimeStampedExpertiseToTheUser(String arg0, String arg1) throws Throwable {
-        userPage = new UserPage(driver);
-        userPage.searchUser("\"" + arg1 + "\"").clickAssignExpertise("\"" + arg1 + "\"").assignExpertise(AREAOFEXPERTISE);
+        defineExpertisePage.addExpertise(AREAOFEXPERTISE);
     }
 
     @Then("^user \"([^\"]*)\" should be marked expert in expertise \"([^\"]*)\"$")
     public void userShouldBeMarkedExpertInExpertise(String arg0, String arg1) throws Throwable {
         userPage = new UserPage(driver);
-        Thread.sleep(2000);
-        userPage.searchByExpertise("\"" + AREAOFEXPERTISE + "\"");
-        userPage.verifyExpertiseAsignment(arg0);
+       // Thread.sleep(2000);
+        userPage.searchByExpertise("\"" +AREAOFEXPERTISE+ "\"").verifyExpertiseAsignment(new CommonMethodsHelper().getPropValue(arg0));
     }
 
-}
+    @And("^assign the TimeStamped expertise \"([^\"]*)\" to the user \"([^\"]*)\"$")
+    public void assignTheTimeStampedExpertiseToTheUser(String arg0, String arg1) throws Throwable {
+        userPage = new UserPage(driver);
+        commonMethodsHelper = new CommonMethodsHelper();
+        userPage.searchUser(commonMethodsHelper.getPropValue(arg1)).clickAssignExpertise().assignExpertise(AREAOFEXPERTISE);
+    }
+
+    }
+

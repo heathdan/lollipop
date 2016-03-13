@@ -79,10 +79,13 @@ public class AssignExpertisePopupPage extends BasePage<AssignExpertisePopupPage>
 
     public UserPage assignExpertise(String expertise) {
         try {
+            LOGGER.info("Assigninng the expertise\""+expertise+"\"");
             enterText(expertiseTextField,expertise);
+            LOGGER.info("Waiting for the auto-suggestion for \""+expertise+"\"");
             waitForElement(ExpectedConditions.visibilityOf(expertiseSuggest));
             clickButton(expertiseSuggest);
             clickButton(saveExpertiseButton);
+            LOGGER.info("waiting for the success message");
             waitForElement(ExpectedConditions.visibilityOf(sucessMessage));
         } catch (TextElementNotFoundException | ClickElementException | ElementNotFoundException ex) {
             LOGGER.error("Expertise assignment failed",ex);
