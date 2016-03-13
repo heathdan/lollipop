@@ -11,6 +11,6 @@ Feature: Experts
     Given user navigates to Define Expertise Tab
     When user define a new TimeStamped expertise "SME"
     And user navigates to the Users tab
-    And assign the TimeStamped expertise "SME" to the user "mahone_7@mailinator.com"
-    Then user "mahone_7@mailinator.com" should be marked expert in expertise "SME"
+    And assign the TimeStamped expertise "SME" to the user "learner_username"
+    Then user "learner_username" should be marked expert in expertise "SME"
 

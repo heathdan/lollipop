@@ -1,6 +1,8 @@
 package com.tw.cisco.b2b.pages;
 
 import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
+import com.tw.cisco.b2b.exceptions.SpinnerNotDisappearException;
+import com.tw.cisco.b2b.exceptions.SpinnerNotFoundException;
 import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
 import com.tw.cisco.b2b.navigation.HeaderNav;
 import org.junit.Assert;
@@ -70,9 +72,6 @@ public class UserPage extends BasePage<UserPage> {
     private  WebElement status;
 
     @FindBy(xpath = ".//p[@class='item-email']")
-    private WebElement waitforsearch;
-
-    @FindBy(xpath = ".//p[@class='item-email']")
     private WebElement userEmail;
 
     @FindBy(xpath = "(.//div[@class='item-wrap container']//p)[2]")
@@ -130,14 +129,18 @@ public class UserPage extends BasePage<UserPage> {
     public UserPage searchUser(String emailID) throws InterruptedException {
         LOGGER.trace(">> searchUser()");
         try {
-            enterText(searchField, emailID);
+            enterText(searchField, "\""+emailID+"\"");
             LOGGER.debug("-- Passed value:" + emailID);
             clickIcon(searchIcon, "Search");
-            new UserPage(driver);
+            headerNav.waitForSpinnerToStop();
+            LOGGER.info("after search the value for page fatory locator for email is   \""+userEmail.getText()+" \" " );
             LOGGER.debug("-- Searching:" + emailID);
-            Thread.sleep(2000);
         } catch(ClickIconNotFoundException | TextElementNotFoundException ex) {
             LOGGER.error("---"+emailID+" not found",ex);
+        } catch (SpinnerNotFoundException e) {
+            e.printStackTrace();
+        } catch (SpinnerNotDisappearException e) {
+            e.printStackTrace();
         }
 
         return new UserPage(driver);
@@ -148,17 +151,20 @@ public class UserPage extends BasePage<UserPage> {
             LOGGER.info("searching the expertise text"+expertise);
             enterText(searchField, expertise);
             clickIcon(searchIcon, "Search by Expertise");
+            headerNav.waitForSpinnerToStop();
+            LOGGER.info("after search the value for page fatory for email is   \""+userEmail.getText()+" \" " );
         } catch (ClickIconNotFoundException | TextElementNotFoundException ex) {
             LOGGER.error("--- Expertise search failed");
+        } catch (SpinnerNotFoundException e) {
+            e.printStackTrace();
+        } catch (SpinnerNotDisappearException e) {
+            e.printStackTrace();
         }
         return new UserPage(driver);
     }
 
-    public AssignExpertisePopupPage clickAssignExpertise(String emailID){
+    public AssignExpertisePopupPage clickAssignExpertise(){
         try {
-            LOGGER.info("waiting for the \""+emailID+"\" search to complete");
-            LOGGER.info("waiting for the \""+waitforsearch.getText()+"\" search to complete");
-            waitForElement(ExpectedConditions.textToBePresentInElement(waitforsearch,emailID));
             LOGGER.info("Assigning the expertise to user");
             clickIcon(assignExpertisePopupicon,"Expertise");
         } catch (ClickIconNotFoundException ex) {
