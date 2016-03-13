@@ -1,6 +1,8 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.exceptions.ClickElementException;
 import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
+import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
 import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
 import com.tw.cisco.b2b.navigation.HeaderNav;
 import org.junit.Assert;
@@ -12,6 +14,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
 
 /**
  * Created by aswathyn on 22/01/16.
@@ -47,6 +51,18 @@ public class UserPage extends BasePage<UserPage> {
 
     @FindBy(xpath = ".//button[@data-original-title='Bulk Create Users']")
     private WebElement bulkCreateUsers;
+
+    @FindBy(xpath=".//div[@class='modal-create-header'])")
+    private WebElement bulkCreateUsersPopup;
+
+    @FindBy(xpath=".//div[@class='modal-create-header']//i[@class='icon-remove close']")
+    private WebElement bulkUploadClose;
+
+    @FindBy(xpath=".//input[@type='file']")
+    private WebElement uploadFileButton;
+
+    @FindBy(xpath=".//div[@class='modal-body clearfix']//button[@type='submit']")
+    private WebElement userUploadSubmit;
 
     @FindBy(id = "fromDate")
     private WebElement fromTextField;
@@ -152,7 +168,7 @@ public class UserPage extends BasePage<UserPage> {
 
     public AssignExpertisePopupPage clickAssignExpertise(String emailID){
         try {
-            waitForElement(ExpectedConditions.textToBePresentInElement(waitforsearch,emailID));
+            waitForElement(ExpectedConditions.textToBePresentInElement(waitforsearch, emailID));
             clickIcon(assignExpertisePopupicon,"Expertise");
         } catch (ClickIconNotFoundException ex) {
             LOGGER.error("--- Expertise popup failed", ex);
@@ -186,6 +202,20 @@ public class UserPage extends BasePage<UserPage> {
             LOGGER.error("--- Assign role popup not found", ex);
         }
         return new AssignRolesPopupPage(driver);
+    }
+
+    public UserPage BulkUserUpload(String fileName) throws IOException {
+        try{
+            clickIcon(bulkCreateUsers, "User Bulk Upload");
+            waitForElement(ExpectedConditions.visibilityOf(bulkCreateUsersPopup));
+            enterText(uploadFileButton, fileName);
+            clickButton(userUploadSubmit);
+            Thread.sleep(2000);
+            clickIcon(bulkUploadClose, "Popup Close");
+        } catch(ClickIconNotFoundException | TextElementNotFoundException | ElementNotFoundException | ClickElementException | InterruptedException ex) {
+            LOGGER.error("--- CSV upload failed",ex);
+        }
+        return this;
     }
 
     /***********************GET/SET METHODS*********************/

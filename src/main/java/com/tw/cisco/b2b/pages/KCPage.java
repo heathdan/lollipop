@@ -1,5 +1,7 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.exceptions.ClickElementException;
+import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -44,30 +46,26 @@ public class KCPage extends BasePage<KCPage> {
         return null;
     }
 
-    /*
-    public BasePage navToKCPage(String subPage) {
-        BasePage page = null;
-        System.out.println(subPage);
-        switch (subPage) {
-            case "Knowledge Library":
-                knowledgeLibrary.click();
-                page = new KnowLedgeLibraryPage(driver);
-                break;
-
-            case "My Files":
-                myFiles.click();
-                page = new MyFiles(driver);
-                break;
-
-            case "Shared Files":
-                sharedFiles.click();
-                page = new SharedFiles(driver);
-                break;
-
-            default:
-                System.out.println("Error in finding the page");
-                break;
+    public KnowledgeLibraryPage navToKnowledgeLibrary() {
+        LOGGER.trace(">> navToKnowledgeLibrary");
+        try {
+            LOGGER.info("Navigating to KnowledgeLibrary");
+            clickButton(knowledgeLibrary);
+        } catch(ClickElementException | ElementNotFoundException ex) {
+            LOGGER.error("--- KnowledgeLibrary not found",ex);
         }
-        return page;
-    } */
+        return new KnowledgeLibraryPage(driver);
+    }
+
+    public MyFilesPage navToMyFiles() {
+        LOGGER.trace(">> navToKnowledgeLibrary");
+        try {
+            LOGGER.info("Navigating to MyFiles");
+            clickButton(myFiles);
+        } catch(ClickElementException | ElementNotFoundException ex) {
+            LOGGER.error("--- MyFiles not found",ex);
+        }
+        return new MyFilesPage(driver);
+    }
+
 }

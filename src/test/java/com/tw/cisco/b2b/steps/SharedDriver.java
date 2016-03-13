@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 public class SharedDriver extends EventFiringWebDriver {
 
     static final Logger LOGGER = LoggerFactory.getLogger(SharedDriver.class);
-    private static final String URL ="https://qa1.learn.cisco";
+    private static final String URL ="https://t10-qa.xkit.co";
     private static WebDriver REAL_DRIVER;
 
     private static final Thread CLOSE_THREAD= new Thread() {
