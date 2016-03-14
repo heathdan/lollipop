@@ -1,5 +1,6 @@
 package com.tw.cisco.b2b.steps;
 
+import com.tw.cisco.b2b.navigation.HeaderNav;
 import com.tw.cisco.b2b.helper.CommonMethodsHelper;
 import com.tw.cisco.b2b.pages.HomePage;
 import com.tw.cisco.b2b.pages.LeftNav;
@@ -38,7 +39,6 @@ public class LoginStepdefs {
 
     @And("^User \"([^\"]*)\" logout$")
     public void User_logout(String arg1) throws Throwable {
-        homePage= new HomePage(driver);
-        homePage.getHeaderNav().CKlogout();
+        new HeaderNav(driver).CKlogout();
     }
 }

@@ -72,12 +72,6 @@ public class LeftNav extends BasePage<LeftNav> {
     @FindBy(xpath = ".//span[text()=' People']")
     private WebElement people;
 
-    @FindBy(xpath = ".//span[text()='All People']")
-    private WebElement allPeople;
-
-    @FindBy(xpath = ".//span[text()='Experts']")
-    private WebElement experts;
-
     @FindBy(xpath = ".//span[text()=' Mobile Folder']")
     private WebElement mobileFolder;
 
@@ -123,16 +117,29 @@ public class LeftNav extends BasePage<LeftNav> {
 
     public AdminPage navToAdmin() {
         try {
-            clickIcon(admin,"Admin Tab");
+            clickIcon(admin, "Admin Tab");
         } catch (ClickIconNotFoundException ex) {
             LOGGER.error("Admin access is missing", ex);
         }
         return new AdminPage(driver);
     }
 
-    public KCPage navToAdminKC() {
-        admin.click();
+    public KCPage navToKC() {
+        try {
+            clickIcon(knowledgeCenter,"KC");
+        } catch (ClickIconNotFoundException ex) {
+            LOGGER.error(" KC is missing",ex);
+        }
         return new KCPage(driver);
+    }
+
+    public PeoplePage navToPeople() {
+        try {
+            clickIcon(people,"People");
+        } catch (ClickIconNotFoundException ex) {
+            LOGGER.error(" People page is missing",ex);
+        }
+        return new PeoplePage(driver);
     }
 
     /***********************GET/SET METHODS*********************/

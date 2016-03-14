@@ -34,13 +34,6 @@ public class ExpertiseStepdefs {
         defineExpertisePage.addExpertise(AREAOFEXPERTISE);
     }
 
-    @And("^assign the TimeStamped expertise \"([^\"]*)\" to the user \"([^\"]*)\"$")
-    public void assignTheTimeStampedExpertiseToTheUser(String arg0, String arg1) throws Throwable {
-        userPage = new UserPage(driver);
-        commonMethodsHelper = new CommonMethodsHelper();
-        userPage.searchUser(commonMethodsHelper.getPropValue(arg1)).clickAssignExpertise().assignExpertise(AREAOFEXPERTISE);
-    }
-
     @Then("^user \"([^\"]*)\" should be marked expert in expertise \"([^\"]*)\"$")
     public void userShouldBeMarkedExpertInExpertise(String arg0, String arg1) throws Throwable {
         userPage = new UserPage(driver);
@@ -48,11 +41,19 @@ public class ExpertiseStepdefs {
         userPage.searchByExpertise("\"" +AREAOFEXPERTISE+ "\"").verifyExpertiseAsignment(new CommonMethodsHelper().getPropValue(arg0));
     }
 
+
     @And("^user search for the TimeStamped expertise \"([^\"]*)\"$")
     public void userSearchForTheTimeStampedExpertise(String arg0) throws Throwable {
-       defineExpertisePage = new DefineExpertisePage(driver);
+        defineExpertisePage = new DefineExpertisePage(driver);
         defineExpertisePage.searchExpertise(AREAOFEXPERTISE);
+    }
 
+    @And("^assign the TimeStamped expertise \"([^\"]*)\" to the user \"([^\"]*)\"$")
+    public void assignTheTimeStampedExpertiseToTheUser(String arg0, String arg1) throws Throwable {
+        commonMethodsHelper = new CommonMethodsHelper();
+        String email= commonMethodsHelper.getPropValue(arg1);
+        userPage = new UserPage(driver);
+        userPage.searchUser("\""+email+"\"").clickAssignExpertise(email).assignExpertise(AREAOFEXPERTISE);
     }
 
     @Then("^admin should be able to delete the unused expertise \"([^\"]*)\"$")

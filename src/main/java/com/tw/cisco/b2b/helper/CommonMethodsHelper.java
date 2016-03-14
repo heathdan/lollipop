@@ -1,11 +1,12 @@
 package com.tw.cisco.b2b.helper;
 
+import com.tw.cisco.b2b.exceptions.CSVParsingException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -28,8 +29,6 @@ public class CommonMethodsHelper {
         return retValue;
     }
 
-
-
     public boolean validateDropDown(WebElement element,String[] expList) {
         List<WebElement> elements = new Select(element).getOptions();
         boolean finalValue=false;
@@ -49,16 +48,33 @@ public class CommonMethodsHelper {
         for(WebElement element: elements) {
             tabs.put(element.getText(),element);
         }
-
     }
 
-
-
-    public String timeStamp(String name) {
+    public static String timeStamp(String name) {
         String value = name + new SimpleDateFormat("ddMMYYhhmmss").format(new Date());
-        System.out.println("CommonMethods:" +value);
         return value;
+    }
 
+    public static String getCSVDataForUpload(String csvFileName) throws CSVParsingException {
+        List<UserDetails> userDetails= null;
+        String filePath = null;
+        try {
+            userDetails=  CSVParser.parseUserCSVToBean(csvFileName);
+            filePath=CSVParser.writeToCSV(userDetails,csvFileName);
+        } catch (IOException ex) {
+            throw new CSVParsingException( "Could not find "+csvFileName);
+        }
+        return filePath;
+    }
+
+    public static List<UserDetails> parseCSVData(String csvFileName) throws CSVParsingException {
+        List<UserDetails> userDetails = null;
+        try {
+            userDetails = CSVParser.parseUserCSVToBean(csvFileName);
+        } catch (IOException ex) {
+            throw new CSVParsingException("Could not find " + csvFileName);
+        }
+        return userDetails;
     }
 
     public String getPropValue(String env, String item) throws IOException {
@@ -130,7 +146,6 @@ public class CommonMethodsHelper {
             userInfo.put("password", user.split("\\|")[1]);
             userInfo.put("First Name", user.split("\\|")[2]);
             userInfo.put("Last Name", user.split("\\|")[3]);
-
             users.add(userInfo);
         }
         return users;

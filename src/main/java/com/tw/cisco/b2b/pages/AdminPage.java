@@ -43,7 +43,7 @@ public class AdminPage extends BasePage<AdminPage> {
         try {
             PageFactory.initElements(driver, page);
         } catch (Exception e) {
-            System.out.println(e);
+           LOGGER.error("--- Error in instantiating page: ",page);
         }
     }
 
