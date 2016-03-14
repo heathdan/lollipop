@@ -43,9 +43,10 @@ public class ExpertiseStepdefs {
 
     @And("^assign the TimeStamped expertise \"([^\"]*)\" to the user \"([^\"]*)\"$")
     public void assignTheTimeStampedExpertiseToTheUser(String arg0, String arg1) throws Throwable {
-        userPage = new UserPage(driver);
         commonMethodsHelper = new CommonMethodsHelper();
-        userPage.searchUser(commonMethodsHelper.getPropValue(arg1)).clickAssignExpertise().assignExpertise(AREAOFEXPERTISE);
+        String email= commonMethodsHelper.getPropValue(arg1);
+        userPage = new UserPage(driver);
+        userPage.searchUser("\""+email+"\"").clickAssignExpertise(email).assignExpertise(AREAOFEXPERTISE);
     }
 
     }
