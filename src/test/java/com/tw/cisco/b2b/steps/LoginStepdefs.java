@@ -31,6 +31,7 @@ public class LoginStepdefs {
     @Given("^that the user \"([^\"]*)\" logged in as \"([^\"]*)\" and \"([^\"]*)\"$")
     public void that_the_user_logged_in_as_and(String arg1, String arg2, String arg3) throws Throwable {
         commonMethodsHelper = new CommonMethodsHelper();
+        loginPage = new LoginPage(driver);
         loginPage.enterEmail(commonMethodsHelper.getPropValue(arg2)).enterCredentials(commonMethodsHelper.getPropValue(arg3));
 
     }

@@ -153,12 +153,8 @@ public class UserPage extends BasePage<UserPage> {
             clickIcon(searchIcon, "Search by Expertise");
             headerNav.waitForSpinnerToStop();
             LOGGER.info("after search the value for page fatory for email is   \""+userEmail.getText()+" \" " );
-        } catch (ClickIconNotFoundException | TextElementNotFoundException ex) {
+        } catch (ClickIconNotFoundException | SpinnerNotFoundException|SpinnerNotDisappearException| TextElementNotFoundException ex) {
             LOGGER.error("--- Expertise search failed");
-        } catch (SpinnerNotFoundException e) {
-            e.printStackTrace();
-        } catch (SpinnerNotDisappearException e) {
-            e.printStackTrace();
         }
         return new UserPage(driver);
     }

@@ -1,5 +1,6 @@
 package com.tw.cisco.b2b.steps;
 
+import com.tw.cisco.b2b.helper.CommonMethodsHelper;
 import com.tw.cisco.b2b.navigation.TabbedNav;
 import com.tw.cisco.b2b.pages.*;
 import cucumber.api.java.en.And;
@@ -68,7 +69,7 @@ public class AdminStepDefs  {
 
     @When("^he assigns role \"([^\"]*)\" to \"([^\"]*)\"$")
     public void he_assigns_role_to(String arg1, String arg2) throws Throwable {
-        assignRolesPopupPage= new UserPage(driver).searchUser("\"" + arg2 + "\"").clickAssignRole();
+        assignRolesPopupPage= new UserPage(driver).searchUser(new CommonMethodsHelper().getPropValue(arg2)).clickAssignRole();
         assignRolesPopupPage.deleteAllRoles().clickAssignRole().assignAllRoles(arg1);
 
 

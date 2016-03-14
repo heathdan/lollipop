@@ -5,14 +5,13 @@ import com.tw.cisco.b2b.helper.DriverFactory;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -51,7 +50,8 @@ public class SharedDriver extends EventFiringWebDriver {
 
     public SharedDriver() {
         super(getRealDriver());
-        waitAndMaximize();
+       // waitAndMaximize();
+        maximizeBrowser();
         try {
             navigateToURL(getURL());
         } catch (IOException e) {
@@ -81,6 +81,13 @@ public class SharedDriver extends EventFiringWebDriver {
         } catch (Exception e) {
            LOGGER.error("--"+URL + " not found/accessible");
         }
+    }
+
+    public void maximizeBrowser(){
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        int Width = (int) toolkit.getScreenSize().getWidth();
+        int Height = (int)toolkit.getScreenSize().getHeight();
+        REAL_DRIVER.manage().window().setSize(new org.openqa.selenium.Dimension(Width,Height));
     }
 
     private static void waitAndMaximize() {

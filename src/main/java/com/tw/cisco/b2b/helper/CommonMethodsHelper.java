@@ -52,6 +52,8 @@ public class CommonMethodsHelper {
 
     }
 
+
+
     public String timeStamp(String name) {
         String value = name + new SimpleDateFormat("ddMMYYhhmmss").format(new Date());
         System.out.println("CommonMethods:" +value);
