@@ -14,7 +14,7 @@ import java.lang.management.ManagementFactory;
  */
 public class ExpertiseStepdefs {
 
-    private static final String AREAOFEXPERTISE = new CommonMethodsHelper().timeStamp("SME");
+    private static String AREAOFEXPERTISE = null ;
     private WebDriver driver;
     DefineExpertisePage defineExpertisePage;
     UserPage userPage;
@@ -31,13 +31,14 @@ public class ExpertiseStepdefs {
     @Then("^user define a new TimeStamped expertise \"([^\"]*)\"$")
     public void userDefineANewExpertise(String arg0) throws Throwable {
         defineExpertisePage = new DefineExpertisePage(driver);
+        AREAOFEXPERTISE = CommonMethodsHelper.timeStamp(arg0);
         defineExpertisePage.addExpertise(AREAOFEXPERTISE);
     }
 
     @Then("^user \"([^\"]*)\" should be marked expert in expertise \"([^\"]*)\"$")
     public void userShouldBeMarkedExpertInExpertise(String arg0, String arg1) throws Throwable {
         userPage = new UserPage(driver);
-       // Thread.sleep(2000);
+        Thread.sleep(2000);
         userPage.searchByExpertise("\"" +AREAOFEXPERTISE+ "\"").verifyExpertiseAsignment(new CommonMethodsHelper().getPropValue(arg0));
     }
 
@@ -50,8 +51,7 @@ public class ExpertiseStepdefs {
 
     @And("^assign the TimeStamped expertise \"([^\"]*)\" to the user \"([^\"]*)\"$")
     public void assignTheTimeStampedExpertiseToTheUser(String arg0, String arg1) throws Throwable {
-        commonMethodsHelper = new CommonMethodsHelper();
-        String email= commonMethodsHelper.getPropValue(arg1);
+        String email= CommonMethodsHelper.getPropValue(arg1);
         userPage = new UserPage(driver);
         userPage.searchUser("\""+email+"\"").clickAssignExpertise(email).assignExpertise(AREAOFEXPERTISE);
     }

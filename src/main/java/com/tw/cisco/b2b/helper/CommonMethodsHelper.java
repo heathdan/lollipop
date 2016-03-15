@@ -5,9 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -15,8 +13,10 @@ import java.util.*;
  * Created by aswathyn on 02/02/16.
  */
 public class CommonMethodsHelper {
-    String result = "";
-    InputStream inputStream;
+    private static String result = "";
+    private static String propertyPath=null;
+
+    private static InputStream inputStream;
     private static Map<String, WebElement>tabs = new HashMap<String,WebElement>();
     static final Logger LOGGER = LoggerFactory.getLogger(CommonMethodsHelper.class);
 
@@ -71,14 +71,18 @@ public class CommonMethodsHelper {
         return userDetails;
     }
 
-    public String getPropValue(String env, String item) throws IOException {
+    public static String getPropValue(String env, String item) throws IOException {
+        FileInputStream fs =null;
         try {
             Properties prop = new Properties();
             String propFileName = "environment.properties";
-            inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+            //inputStream = new CommonMethodsHelper().getClass().getClassLoader().getResourceAsStream(propFileName);
+            propertyPath = Classpath.filePathFor("environment.properties");
 
-            if (inputStream != null) {
-                prop.load(inputStream);
+            fs = new FileInputStream(new File(propertyPath));
+
+            if (fs != null) {
+                prop.load(fs);
             } else {
                 throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
             }
@@ -86,19 +90,22 @@ public class CommonMethodsHelper {
         } catch (Exception e) {
             LOGGER.error("Error in reading property file",e);
         } finally {
-            inputStream.close();
+            fs.close();
         }
         return result;
     }
 
-    public String getPropValue(String item) throws IOException {
+    public static String getPropValue(String item) throws IOException {
+        FileInputStream fs =null;
         try {
             Properties prop = new Properties();
             String propFileName = "environment.properties";
-            inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+           // inputStream = new CommonMethodsHelper().getClass().getClassLoader().getResourceAsStream(propFileName);
+            propertyPath = Classpath.filePathFor("environment.properties");
 
-            if (inputStream != null) {
-                prop.load(inputStream);
+    fs = new FileInputStream(new File(propertyPath));
+            if (fs != null) {
+                prop.load(fs);
             } else {
                 throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
             }
@@ -106,7 +113,7 @@ public class CommonMethodsHelper {
         } catch (Exception e) {
             LOGGER.error("Error in reading property file", e);
         } finally {
-            inputStream.close();
+            fs.close();
         }
         return result;
     }
