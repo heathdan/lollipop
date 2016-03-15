@@ -2,11 +2,12 @@ package com.tw.cisco.b2b.helper;
 
 import com.tw.cisco.b2b.exceptions.CSVParsingException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -17,32 +18,7 @@ public class CommonMethodsHelper {
     String result = "";
     InputStream inputStream;
     private static Map<String, WebElement>tabs = new HashMap<String,WebElement>();
-
-    public WebElement iterateSuggestionBox(List<WebElement> elements, String searchItem) {
-        WebElement retValue=null;
-        for (WebElement element : elements) {
-            if (searchItem.equalsIgnoreCase(element.getText())) {
-                retValue= element;
-                break;
-            }
-        }
-        return retValue;
-    }
-
-    public boolean validateDropDown(WebElement element,String[] expList) {
-        List<WebElement> elements = new Select(element).getOptions();
-        boolean finalValue=false;
-        for(WebElement e:elements) {
-            boolean match = false;
-            for(int i=0; i<expList.length; i++) {
-                if(e.getText().equals(expList[i])) {
-                    match= true;
-                }
-            }
-            finalValue=match;
-        }
-        return finalValue;
-    }
+    static final Logger LOGGER = LoggerFactory.getLogger(CommonMethodsHelper.class);
 
     public static void storeTabs(List<WebElement> elements) {
         for(WebElement element: elements) {
@@ -50,16 +26,28 @@ public class CommonMethodsHelper {
         }
     }
 
+    /**
+     *
+     * Method to generate timestamped to String data
+     *
+     * @return timestamped String
+     */
     public static String timeStamp(String name) {
         String value = name + new SimpleDateFormat("ddMMYYhhmmss").format(new Date());
         return value;
     }
 
+    /**
+     *
+     * Method to read from default CSV template and writes to new CSV
+     *
+     * @return FilePath of new CSV
+     */
     public static String getCSVDataForUpload(String csvFileName) throws CSVParsingException {
         List<UserDetails> userDetails= null;
         String filePath = null;
         try {
-            userDetails=  CSVParser.parseUserCSVToBean(csvFileName);
+            userDetails=  CSVParser.parseUserCSVToBean(csvFileName,false);
             filePath=CSVParser.writeToCSV(userDetails,csvFileName);
         } catch (IOException ex) {
             throw new CSVParsingException( "Could not find "+csvFileName);
@@ -67,10 +55,16 @@ public class CommonMethodsHelper {
         return filePath;
     }
 
+    /**
+     *
+     * Method to read data from new timestamped CSV
+     *
+     * @return Java object for the user details
+     */
     public static List<UserDetails> parseCSVData(String csvFileName) throws CSVParsingException {
         List<UserDetails> userDetails = null;
         try {
-            userDetails = CSVParser.parseUserCSVToBean(csvFileName);
+            userDetails = CSVParser.parseUserCSVToBean(csvFileName,true);
         } catch (IOException ex) {
             throw new CSVParsingException("Could not find " + csvFileName);
         }
@@ -78,11 +72,9 @@ public class CommonMethodsHelper {
     }
 
     public String getPropValue(String env, String item) throws IOException {
-
         try {
             Properties prop = new Properties();
             String propFileName = "environment.properties";
-
             inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
 
             if (inputStream != null) {
@@ -90,10 +82,9 @@ public class CommonMethodsHelper {
             } else {
                 throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
             }
-
             result = prop.getProperty(env + "." + item);
         } catch (Exception e) {
-            System.out.println("Exception: " + e);
+            LOGGER.error("Error in reading property file",e);
         } finally {
             inputStream.close();
         }
@@ -101,11 +92,9 @@ public class CommonMethodsHelper {
     }
 
     public String getPropValue(String item) throws IOException {
-
         try {
             Properties prop = new Properties();
             String propFileName = "environment.properties";
-
             inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
 
             if (inputStream != null) {
@@ -113,10 +102,9 @@ public class CommonMethodsHelper {
             } else {
                 throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
             }
-
             result = prop.getProperty(System.getProperty("environment") + "." + item);
         } catch (Exception e) {
-            System.out.println("Exception: " + e);
+            LOGGER.error("Error in reading property file", e);
         } finally {
             inputStream.close();
         }
@@ -132,7 +120,7 @@ public class CommonMethodsHelper {
             Users = Arrays.asList(items);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Error reeading user credentials for env",e);
         }
         return Users;
     }

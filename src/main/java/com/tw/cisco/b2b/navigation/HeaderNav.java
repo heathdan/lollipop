@@ -70,14 +70,12 @@ public class HeaderNav extends BasePage<HeaderNav> {
 
     public LoginPage CKlogout()  {
         try {
-            waitForSpinnerToStop();
+           // waitForSpinnerToStop();
             clickButton(topNavMyProfile);
             clickButton(logOut);
             implicitWaitMethod();
         } catch (ClickElementException | ElementNotFoundException ex) {
             LOGGER.error("--Error in logging out", ex);
-        } catch(SpinnerNotDisappearException | SpinnerNotFoundException ex) {
-            LOGGER.error("--Error waiting for spineer ", ex);
         }
         return new LoginPage(driver);
     }

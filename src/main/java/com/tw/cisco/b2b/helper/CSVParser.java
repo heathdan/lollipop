@@ -7,6 +7,7 @@ import au.com.bytecode.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 import java.io.*;
 import java.util.*;
 
@@ -17,13 +18,17 @@ public class CSVParser {
     private static final Logger LOGGER = LoggerFactory.getLogger(CSVParser.class);
 
 
-    protected static List<UserDetails> parseUserCSVToBean(String fileName) throws IOException {
+    protected static List<UserDetails> parseUserCSVToBean(String fileName,Boolean value) throws IOException {
         LOGGER.trace(">> parseUserCSVToBean()");
-
+        File csvFile = null;
         HeaderColumnNameTranslateMappingStrategy<UserDetails> beanStrategy = new HeaderColumnNameTranslateMappingStrategy<UserDetails>();
         String file = fileName+".csv";
         LOGGER.info("-- Reading CSV file :"+ file);
-        File csvFile = new File(file);
+        if(value) {
+            csvFile = new File(file);
+        } else {
+            csvFile = new File(Classpath.filePathFor("CSVFiles/"+file));
+        }
 
         beanStrategy.setType(UserDetails.class);
         Map<String,String> columnMapping = new HashMap<String,String>();
@@ -69,15 +74,11 @@ public class CSVParser {
         Iterator<UserDetails> iterator = users.iterator();
         while (iterator.hasNext()) {
             UserDetails user = iterator.next();
-            if(fileName.equals("manager_assignment.csv")) {
-                user.setManager(user.getUname());
-                user.setUname(CommonMethodsHelper.timeStamp(user.getFname()) + "@mailinator.com");
-
-            } else if(fileName.equals("no_manager_assigned.csv")) {
+            if(fileName.equals("CSVFiles/no_manager_assigned.csv")) {
                 user.setUname(CommonMethodsHelper.timeStamp(user.getFname()) + "@mailinator.com");
                 user.setManager(user.getUname());
 
-            } else if(fileName.equals("upload_users.csv")) {
+            } else if(fileName.equals("CSVFiles/upload_users.csv")) {
                 user.setUname(CommonMethodsHelper.timeStamp(user.getFname()) + "@mailinator.com");
 
             } else {

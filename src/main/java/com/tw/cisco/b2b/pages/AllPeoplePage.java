@@ -22,7 +22,7 @@ public class AllPeoplePage extends BasePage<AllPeoplePage> {
     private WebElement searchBox;
 
     @FindBy(xpath=".//h1[text()='All People']")
-    private WebElement title;
+    private WebElement pageTitle;
 
     @FindBy(xpath = ".//div[@id='view-option-buttons']/a[@id='catalog-grid-view']")
     private WebElement gridView;
@@ -42,6 +42,12 @@ public class AllPeoplePage extends BasePage<AllPeoplePage> {
     @FindBy(xpath = ".//i[@class='icon-search']")
     private WebElement searchIcon ;
 
+    @FindBy(xpath="(.//span[@class='profile-name']//parent::div)")
+    private WebElement userTitle;
+
+    @FindBy(xpath="(.//div[@class='content-section']//span)[1]")
+    private WebElement organisation;
+
     static final Logger LOGGER = LoggerFactory.getLogger(AllPeoplePage.class);
     HeaderNav headerNav;
 
@@ -49,12 +55,13 @@ public class AllPeoplePage extends BasePage<AllPeoplePage> {
         super(driver);
         instantiatePage(this);
         waitForPageToLoad(getPageLoadCondition());
-        headerNav = new HeaderNav(driver);
+        //headerNav = new HeaderNav(driver);
     }
 
     @Override
     protected void instantiatePage(AllPeoplePage page) {
         try {
+            LOGGER.info("Instanting "+page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch (Exception e) {
             LOGGER.error("--- Error instantiating :"+page.toString());
@@ -63,7 +70,7 @@ public class AllPeoplePage extends BasePage<AllPeoplePage> {
 
     @Override
     protected ExpectedCondition getPageLoadCondition(){
-        return ExpectedConditions.visibilityOf(title);
+        return ExpectedConditions.visibilityOf(pageTitle);
     }
 
     public AllPeoplePage searchUser(String emailID) {
@@ -73,15 +80,23 @@ public class AllPeoplePage extends BasePage<AllPeoplePage> {
             LOGGER.debug("-- Passed value:" + emailID);
             clickIcon(searchIcon, "Search");
             LOGGER.debug("-- Searching:" + emailID);
-            //getHeaderNav().waitForSpinnerToStop();
         } catch(ClickIconNotFoundException | TextElementNotFoundException ex) {
             LOGGER.error("---"+emailID+" not found",ex);
         }
         return new AllPeoplePage(driver);
     }
 
-    public void verifyUserSearch(String emailID) {
-       Assert.assertEquals(emailID, emailID.toString());
+    public void verifyUserSearch(String emailId) {
+        waitForElement(ExpectedConditions.textToBePresentInElement(emailID,emailId));
+        Assert.assertEquals(emailId, emailID.toString());
+    }
+
+    public void verifyUserOrgAndTitle(String emailId,String orgID, String title) {
+        waitForElement(ExpectedConditions.textToBePresentInElement(emailID,emailId));
+        LOGGER.info("userTitle:"+userTitle.getText());
+        LOGGER.info("orgid:" + organisation.getText());
+        Assert.assertEquals(orgID, organisation.getText());
+        Assert.assertTrue(userTitle.getText().contains(title));
     }
 
     /***********************GET/SET METHODS*********************/

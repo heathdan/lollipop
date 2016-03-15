@@ -1,6 +1,7 @@
 package com.tw.cisco.b2b.steps;
 
 import com.tw.cisco.b2b.helper.CommonMethodsHelper;
+import com.tw.cisco.b2b.helper.UserDetails;
 import com.tw.cisco.b2b.navigation.TabbedNav;
 import com.tw.cisco.b2b.pages.*;
 import cucumber.api.java.en.And;
@@ -19,13 +20,11 @@ import java.lang.management.ManagementFactory;
 public class AdminStepDefs  {
     static final Logger LOGGER = LoggerFactory.getLogger(AdminStepDefs.class);
     private WebDriver driver;
-    AdminPage adminPage;
     RolesAndPermissionPage roleNpermission;
     HomePage homePage;
     RoleCreatePopupPage roleCreatePopupPage;
     LeftNav leftNav;
     AssignRolesPopupPage assignRolesPopupPage;
-    UserPage userPage;
 
     public AdminStepDefs(SharedDriver driver){
         this.driver=driver;
@@ -75,6 +74,12 @@ public class AdminStepDefs  {
         the_user_is_on_Users_tab_on_admin_page();
     }
 
+    @And("^the csv \"([^\"]*)\" is updated for Organisation and title$")
+    public void the_csv_is_updated_for_Organisation_and_title(String arg1) throws Throwable {
+        UserDetails userData= CommonMethodsHelper.parseCSVData(arg1).get(0);
+        new LeftNav(driver).navToPeople().navToAllPeople().searchUser("\""+userData.getUname()+"\"").verifyUserOrgAndTitle(userData.getUname(),userData.getOrg(),userData.getTitle());
+    }
+
     @When("^he uploads a csv file \"([^\"]*)\" to on board user \"([^\"]*)\"$")
     public void he_uploads_a_csv_file_to_on_board_user(String arg1, String arg2) throws Throwable {
         new UserPage(driver).BulkUserUpload(CommonMethodsHelper.getCSVDataForUpload(arg1));
@@ -82,10 +87,8 @@ public class AdminStepDefs  {
 
     @Then("^user in \"([^\"]*)\" should be on boarded to the app$")
     public void user_in_should_be_on_boarded_to_the_app(String arg1) throws Throwable {
-        String emailID= CommonMethodsHelper.parseCSVData(arg1).get(0).getUname();
-        new LeftNav(driver).navToPeople().navToAllPeople().searchUser("\""+emailID+"\"").verifyUserSearch(emailID);
-
-
+        String emailID = CommonMethodsHelper.parseCSVData(arg1).get(0).getUname();
+        new LeftNav(driver).navToPeople().navToAllPeople().searchUser("\""+emailID+ "\"").verifyUserSearch(emailID);
     }
 }
 
