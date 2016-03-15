@@ -42,11 +42,8 @@ public class AllPeoplePage extends BasePage<AllPeoplePage> {
     @FindBy(xpath = ".//i[@class='icon-search']")
     private WebElement searchIcon ;
 
-    @FindBy(xpath="(.//span[@class='profile-name']//parent::div)")
-    private WebElement userTitle;
-
-    @FindBy(xpath="(.//div[@class='content-section']//span)[1]")
-    private WebElement organisation;
+    @FindBy(xpath=".//span[@class='profile-name']/a")
+    private WebElement userName;
 
     static final Logger LOGGER = LoggerFactory.getLogger(AllPeoplePage.class);
     HeaderNav headerNav;
@@ -86,18 +83,17 @@ public class AllPeoplePage extends BasePage<AllPeoplePage> {
         return new AllPeoplePage(driver);
     }
 
-    public void verifyUserSearch(String emailId) {
-        waitForElement(ExpectedConditions.textToBePresentInElement(emailID,emailId));
-        Assert.assertEquals(emailId, emailID.toString());
+    public AllPeoplePage verifyEmail(String email) {
+        Assert.assertEquals(email, emailID.getText());
+        return this;
     }
 
-    public void verifyUserOrgAndTitle(String emailId,String orgID, String title) {
-        waitForElement(ExpectedConditions.textToBePresentInElement(emailID,emailId));
-        LOGGER.info("userTitle:"+userTitle.getText());
-        LOGGER.info("orgid:" + organisation.getText());
-        Assert.assertEquals(orgID, organisation.getText());
-        Assert.assertTrue(userTitle.getText().contains(title));
+    public ProfilePage selectUser(String emailId) {
+        waitForElement(ExpectedConditions.textToBePresentInElement(emailID, emailId));
+        userName.click();
+        return new ProfilePage(driver);
     }
+
 
     /***********************GET/SET METHODS*********************/
     public HeaderNav getHeaderNav() {

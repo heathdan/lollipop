@@ -25,6 +25,7 @@ public class AdminStepDefs  {
     RoleCreatePopupPage roleCreatePopupPage;
     LeftNav leftNav;
     AssignRolesPopupPage assignRolesPopupPage;
+    ProfilePage profilePage;
 
     public AdminStepDefs(SharedDriver driver){
         this.driver=driver;
@@ -77,7 +78,8 @@ public class AdminStepDefs  {
     @And("^the csv \"([^\"]*)\" is updated for Organisation and title$")
     public void the_csv_is_updated_for_Organisation_and_title(String arg1) throws Throwable {
         UserDetails userData= CommonMethodsHelper.parseCSVData(arg1).get(0);
-        new LeftNav(driver).navToPeople().navToAllPeople().searchUser("\""+userData.getUname()+"\"").verifyUserOrgAndTitle(userData.getUname(),userData.getOrg(),userData.getTitle());
+        profilePage =new LeftNav(driver).navToPeople().navToAllPeople().searchUser("\""+userData.getUname()+"\"").selectUser(userData.getUname());
+        profilePage.verifyUserTitleAndOrg(userData.getOrg(), userData.getTitle());
     }
 
     @When("^he uploads a csv file \"([^\"]*)\" to on board user \"([^\"]*)\"$")
@@ -88,7 +90,15 @@ public class AdminStepDefs  {
     @Then("^user in \"([^\"]*)\" should be on boarded to the app$")
     public void user_in_should_be_on_boarded_to_the_app(String arg1) throws Throwable {
         String emailID = CommonMethodsHelper.parseCSVData(arg1).get(0).getUname();
-        new LeftNav(driver).navToPeople().navToAllPeople().searchUser("\""+emailID+ "\"").verifyUserSearch(emailID);
+        profilePage=new LeftNav(driver).navToPeople().navToAllPeople().searchUser("\""+emailID+ "\"").selectUser(emailID);
+        profilePage.verifyEmailID(emailID);
+    }
+
+    @Then("^user in \"([^\"]*)\" should be on boarded to the app with no manager assigned.$")
+    public void user_in_should_be_on_boarded_to_the_app_with_no_manager_assigned(String arg1) throws Throwable {
+        String emailID = CommonMethodsHelper.parseCSVData(arg1).get(0).getUname();
+        profilePage=new LeftNav(driver).navToPeople().navToAllPeople().searchUser("\""+emailID+ "\"").selectUser(emailID);
+        profilePage.verifyManager();
     }
 }
 
