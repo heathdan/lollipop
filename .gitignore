@@ -1,3 +1,7 @@
 *.iml
 .idea
-target
+target/
+given_upload_users_update.csv
+manager_assignment.csv
+no_manager_assigned.csv
+upload_users.csv
