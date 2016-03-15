@@ -1,9 +1,8 @@
 package com.tw.cisco.b2b.pages;
 
-import com.tw.cisco.b2b.exceptions.ClickElementException;
-import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
-import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
-import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
+import com.tw.cisco.b2b.exceptions.*;
+import com.tw.cisco.b2b.navigation.HeaderNav;
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -57,6 +56,9 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
     @FindBy(xpath = ".//div[@class='actions-wrap']/span[contains(@class,'expertise-action-delete')]")
     private WebElement expertiseDeleteButton ;
 
+    @FindBy(className = "no-value")
+    private WebElement noResultsMsg;
+
     static final Logger LOGGER = LoggerFactory.getLogger(DefineExpertisePage.class);
 
     public DefineExpertisePage(WebDriver driver) {
@@ -95,12 +97,36 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
     public DefineExpertisePage searchExpertise(String Expertise){
         LOGGER.trace(">>searchExpertise()",Expertise);
         try {
+            LOGGER.info("searching the expertise \""+Expertise+"\"");
             enterText(searchExpertiseTextField,Expertise);
             clickButton(searchExpertiseIcon);
+            LOGGER.info("waiting for search to complete");
+            waitForElement(ExpectedConditions.textToBePresentInElement(expertiseName,Expertise));
+            LOGGER.info("expertise text after search is \""+expertiseName.getText()+"\"");
+            Assert.assertEquals("Searched expertise is",expertiseName.getText(),Expertise);
         } catch(TextElementNotFoundException | ElementNotFoundException | ClickElementException ex) {
             LOGGER.error("--Error in searching expertise",ex);
         }
         return new DefineExpertisePage(driver) ;
+    }
+
+    public DefineExpertisePage deleteUnusedExpertise(String Expertise){
+        LOGGER.trace(">>Delete Unused Expertise()",Expertise);
+        try {
+            LOGGER.info("Deleting the expertise");
+            clickButton(expertiseDeleteButton);
+            LOGGER.info("Verify the expertise is deleted");
+            HeaderNav headerNav = new HeaderNav(driver);
+            headerNav.waitForSpinnerToStop();
+            LOGGER.info("searching the expertise \""+Expertise+"\"");
+            enterText(searchExpertiseTextField,Expertise);
+            clickButton(searchExpertiseIcon);
+            LOGGER.info("waiting for search to complete");
+            Assert.assertEquals("No results found for deleted search", noResultsMsg.getText(),"No results found");
+        } catch (ElementNotFoundException | TextElementNotFoundException | SpinnerNotFoundException | SpinnerNotDisappearException| ClickElementException ex) {
+            LOGGER.error("--Error in deleting expertise",ex);
+        }
+        return new DefineExpertisePage(driver);
     }
 
     public DefineExpertisePage displaySearchResults(){

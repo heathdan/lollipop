@@ -4,7 +4,6 @@ Feature: Admin
   I should be able to administer the system
   So that other users can use b2b application as desired
 
-
   Background:
     Given that the user "admin_name" logged in as "admin_user" and "password"
 

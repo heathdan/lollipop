@@ -134,7 +134,6 @@ public class CommonMethodsHelper {
             userInfo.put("password", user.split("\\|")[1]);
             userInfo.put("First Name", user.split("\\|")[2]);
             userInfo.put("Last Name", user.split("\\|")[3]);
-
             users.add(userInfo);
         }
         return users;

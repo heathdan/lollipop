@@ -59,7 +59,7 @@ public class AdminStepDefs  {
 
     @When("^he assigns role \"([^\"]*)\" to \"([^\"]*)\"$")
     public void he_assigns_role_to(String arg1, String arg2) throws Throwable {
-        assignRolesPopupPage= new UserPage(driver).searchUser("\"" + arg2 + "\"").clickAssignRole();
+        assignRolesPopupPage= new UserPage(driver).searchUser(new CommonMethodsHelper().getPropValue(arg2)).clickAssignRole();
         assignRolesPopupPage.deleteAllRoles().clickAssignRole().assignAllRoles(arg1);
     }
 

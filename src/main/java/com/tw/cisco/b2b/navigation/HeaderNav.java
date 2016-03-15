@@ -26,6 +26,7 @@ import java.util.concurrent.TimeoutException;
 public class HeaderNav extends BasePage<HeaderNav> {
 
     private FluentWait<WebDriver> waitForSpinnerAppear,waitForSpinnerDisappear;
+
     @FindBy(css="#navbar")
     private WebElement topNavBar;
 
@@ -57,9 +58,10 @@ public class HeaderNav extends BasePage<HeaderNav> {
     @Override
     protected void instantiatePage(HeaderNav page) {
         try {
+            LOGGER.info("Instantiating "+page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
-            System.out.println(e);
+            LOGGER.error("--- Error in instantiating "+page.getClass().getSimpleName());
         }
     }
 
@@ -69,11 +71,11 @@ public class HeaderNav extends BasePage<HeaderNav> {
     }
 
     public LoginPage CKlogout()  {
+        LOGGER.trace(">> CKlogout()");
         try {
-           // waitForSpinnerToStop();
+            LOGGER.info("Logging out of CK...");
             clickButton(topNavMyProfile);
             clickButton(logOut);
-            implicitWaitMethod();
         } catch (ClickElementException | ElementNotFoundException ex) {
             LOGGER.error("--Error in logging out", ex);
         }
