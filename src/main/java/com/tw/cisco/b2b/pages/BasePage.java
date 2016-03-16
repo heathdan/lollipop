@@ -149,6 +149,15 @@ public abstract class BasePage<P extends BasePage>{
         }
     }
 
+    public boolean isElementPresent(WebElement webElement) throws ElementNotFoundException {
+        try {
+            webElement.isDisplayed();
+            return true;
+        } catch(NoSuchElementException ex) {
+            throw new ElementNotFoundException(webElement.toString()+"not found");
+        }
+    }
+
 
 
 }

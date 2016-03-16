@@ -42,11 +42,16 @@ public class ExpertiseStepdefs {
         userPage.searchByExpertise("\"" +AREAOFEXPERTISE+ "\"").verifyExpertiseAsignment(new CommonMethodsHelper().getPropValue(arg0));
     }
 
-
     @And("^user search for the TimeStamped expertise \"([^\"]*)\"$")
     public void userSearchForTheTimeStampedExpertise(String arg0) throws Throwable {
         defineExpertisePage = new DefineExpertisePage(driver);
-        defineExpertisePage.searchExpertise(AREAOFEXPERTISE);
+        defineExpertisePage.searchExpertise(AREAOFEXPERTISE) ;
+    }
+
+    @And("^user verifies that expertise \"([^\"]*)\" is assigned successfully$")
+    public void userVerifiesThatExpertiseIsAssignedSuccessfully(String arg0) throws Throwable {
+        defineExpertisePage = new DefineExpertisePage(driver);
+        defineExpertisePage.verfiyExpertiseAsigned(AREAOFEXPERTISE);
     }
 
     @And("^assign the TimeStamped expertise \"([^\"]*)\" to the user \"([^\"]*)\"$")
@@ -62,5 +67,14 @@ public class ExpertiseStepdefs {
         defineExpertisePage.deleteUnusedExpertise(AREAOFEXPERTISE);
 
     }
+
+    @Then("^user should not find an option to delete the assigned expertise \"([^\"]*)\"$")
+    public void userShouldNotFindAnOptionToDeleteTheAssignedExpertise(String arg0) throws Throwable {
+        defineExpertisePage = new DefineExpertisePage(driver);
+        defineExpertisePage.verifyDeleteExpertiseIcon(AREAOFEXPERTISE);
+
+    }
+
+
 }
 

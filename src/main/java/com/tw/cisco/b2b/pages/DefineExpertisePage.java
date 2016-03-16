@@ -3,6 +3,7 @@ package com.tw.cisco.b2b.pages;
 import com.tw.cisco.b2b.exceptions.*;
 import com.tw.cisco.b2b.navigation.HeaderNav;
 import org.junit.Assert;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -101,15 +102,39 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
             enterText(searchExpertiseTextField,Expertise);
             clickButton(searchExpertiseIcon);
             LOGGER.info("waiting for search to complete");
-            waitForElement(ExpectedConditions.textToBePresentInElement(expertiseName,Expertise));
-            LOGGER.info("expertise text after search is \""+expertiseName.getText()+"\"");
-            Assert.assertEquals("Searched expertise is",expertiseName.getText(),Expertise);
         } catch(TextElementNotFoundException | ElementNotFoundException | ClickElementException ex) {
             LOGGER.error("--Error in searching expertise",ex);
         }
         return new DefineExpertisePage(driver) ;
     }
 
+    public DefineExpertisePage verfiyExpertiseAsigned(String Expertise){
+        searchExpertise(Expertise);
+        waitForElement(ExpectedConditions.textToBePresentInElement(expertiseName,Expertise));
+        LOGGER.info("expertise text after search is \""+expertiseName.getText()+"\"");
+        Assert.assertEquals("Searched expertise is",expertiseName.getText(),Expertise);
+        Assert.assertEquals("Expertise count should increase by one",expertsCount.getText(),"1");
+        return new DefineExpertisePage(driver);
+    }
+
+    public boolean elementIsPresent(WebElement element) {
+        try {
+            element.isDisplayed();
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+    public DefineExpertisePage verifyDeleteExpertiseIcon (String Expertise){
+        LOGGER.trace(">> verifyDeleteExpertiseIcon()");
+        try {
+            LOGGER.info("Verifying expertiseDeleteButton is not visible");
+            isElementPresent(expertiseDeleteButton);
+        } catch(ElementNotFoundException ex) {
+            LOGGER.info(expertiseDeleteButton.toString()+" is not present");
+        }
+        return new DefineExpertisePage(driver);
+    }
     public DefineExpertisePage deleteUnusedExpertise(String Expertise){
         LOGGER.trace(">>Delete Unused Expertise()",Expertise);
         try {
