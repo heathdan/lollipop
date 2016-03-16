@@ -44,11 +44,13 @@ public class CommonMethodsHelper {
      * @return FilePath of new CSV
      */
     public static String getCSVDataForUpload(String csvFileName) throws CSVParsingException {
+        LOGGER.trace(">> getCSVDataForUpload");
         List<UserDetails> userDetails= null;
         String filePath = null;
         try {
             userDetails=  CSVParser.parseUserCSVToBean(csvFileName,false);
-            filePath=CSVParser.writeToCSV(userDetails,csvFileName);
+            LOGGER.info("-- writing to csv:",csvFileName);
+            filePath=CSVParser.writeToCSV(userDetails, csvFileName);
         } catch (IOException ex) {
             throw new CSVParsingException( "Could not find "+csvFileName);
         }
@@ -64,6 +66,7 @@ public class CommonMethodsHelper {
     public static List<UserDetails> parseCSVData(String csvFileName) throws CSVParsingException {
         List<UserDetails> userDetails = null;
         try {
+            LOGGER.info("--Reading CSV:",csvFileName);
             userDetails = CSVParser.parseUserCSVToBean(csvFileName,true);
         } catch (IOException ex) {
             throw new CSVParsingException("Could not find " + csvFileName);
@@ -76,9 +79,7 @@ public class CommonMethodsHelper {
         try {
             Properties prop = new Properties();
             String propFileName = "environment.properties";
-            //inputStream = new CommonMethodsHelper().getClass().getClassLoader().getResourceAsStream(propFileName);
             propertyPath = Classpath.filePathFor("environment.properties");
-
             fs = new FileInputStream(new File(propertyPath));
 
             if (fs != null) {
@@ -100,10 +101,8 @@ public class CommonMethodsHelper {
         try {
             Properties prop = new Properties();
             String propFileName = "environment.properties";
-           // inputStream = new CommonMethodsHelper().getClass().getClassLoader().getResourceAsStream(propFileName);
             propertyPath = Classpath.filePathFor("environment.properties");
-
-    fs = new FileInputStream(new File(propertyPath));
+            fs = new FileInputStream(new File(propertyPath));
             if (fs != null) {
                 prop.load(fs);
             } else {

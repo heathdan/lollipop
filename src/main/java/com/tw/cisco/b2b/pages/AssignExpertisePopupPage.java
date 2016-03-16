@@ -54,8 +54,7 @@ public class AssignExpertisePopupPage extends BasePage<AssignExpertisePopupPage>
     @FindBy(xpath = ".//div[@class='modal-create-header']//i")
     private WebElement closeExpertisePopupIcon ;
 
-    static final Logger LOGGER = LoggerFactory.getLogger(AssignExpertisePopupPage.class);
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(AssignExpertisePopupPage.class);
 
     public AssignExpertisePopupPage(WebDriver driver) {
         super(driver);
@@ -66,9 +65,10 @@ public class AssignExpertisePopupPage extends BasePage<AssignExpertisePopupPage>
     @Override
     public void instantiatePage(AssignExpertisePopupPage page) {
         try {
+            LOGGER.info("** instantiatePage(): ", page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
-            LOGGER.error("--- Error instantiating :"+page.toString());
+            LOGGER.error("--- Error instantiating :"+page.getClass().getSimpleName());
         }
     }
 
@@ -82,11 +82,11 @@ public class AssignExpertisePopupPage extends BasePage<AssignExpertisePopupPage>
             LOGGER.info("Assigninng the expertise\""+expertise+"\"");
             enterText(expertiseTextField,expertise);
             LOGGER.info("Waiting for the auto-suggestion for \""+expertise+"\"");
-            waitForElement(ExpectedConditions.visibilityOf(expertiseSuggest));
+            waitForElement(ExpectedConditions.visibilityOf(expertiseSuggest),expertiseSuggest);
             clickButton(expertiseSuggest);
             clickButton(saveExpertiseButton);
             LOGGER.info("waiting for the success message");
-            waitForElement(ExpectedConditions.visibilityOf(sucessMessage));
+            waitForElement(ExpectedConditions.visibilityOf(sucessMessage),sucessMessage);
         } catch (TextElementNotFoundException | ClickElementException | ElementNotFoundException ex) {
             LOGGER.error("Expertise assignment failed",ex);
         }

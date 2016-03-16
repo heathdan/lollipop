@@ -48,7 +48,6 @@ public class AssignRolesPopupPage extends BasePage<AssignRolesPopupPage> {
     private List<WebElement> rolesAssigned;
 
     static final Logger LOGGER = LoggerFactory.getLogger(AssignRolesPopupPage.class);
-    private List<String> roles;
 
     public AssignRolesPopupPage(WebDriver driver) {
         super(driver);
@@ -64,11 +63,11 @@ public class AssignRolesPopupPage extends BasePage<AssignRolesPopupPage> {
     @Override
     protected void instantiatePage(AssignRolesPopupPage page) {
         try {
-            LOGGER.info("** instantiatePage(): ", page.toString());
+            LOGGER.info("** instantiatePage(): ", page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
             System.out.println(e);
-            LOGGER.error("-- Error in instantiating page:" + page.toString());
+            LOGGER.error("-- Error in instantiating page:" + page.getClass().getSimpleName());
         }
     }
 
@@ -76,7 +75,7 @@ public class AssignRolesPopupPage extends BasePage<AssignRolesPopupPage> {
         LOGGER.trace(">> AssignRole(): ", roleName);
         try {
             enterText(rolePlaceholder, roleName);
-            waitForElement(ExpectedConditions.visibilityOf(roleSuggestionBox));
+            waitForElement(ExpectedConditions.visibilityOf(roleSuggestionBox),roleSuggestionBox);
             clickButton(roleSuggestions);
         } catch(TextElementNotFoundException| ClickElementException | ElementNotFoundException e) {
             LOGGER.error("-- Failed to click role from suggestions", e);
@@ -119,8 +118,5 @@ public class AssignRolesPopupPage extends BasePage<AssignRolesPopupPage> {
             LOGGER.error("Role deletion failed", ex);
         }
         return new UserPage(driver);
-    }
-    protected void saveAndCloseRolesPopup() {
-
     }
 }

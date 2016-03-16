@@ -125,6 +125,7 @@ public class UserPage extends BasePage<UserPage> {
     @Override
     protected void instantiatePage(UserPage page) {
         try {
+            LOGGER.info("** instantiatePage(): ", page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
             LOGGER.error("--- Error instantiating :"+page.toString());
@@ -135,7 +136,6 @@ public class UserPage extends BasePage<UserPage> {
     protected ExpectedCondition getPageLoadCondition() {
         return ExpectedConditions.visibilityOf(userTable);
     }
-
 
     public UserPage searchUser(String emailID) throws InterruptedException {
         LOGGER.trace(">> searchUser()");
@@ -152,7 +152,7 @@ public class UserPage extends BasePage<UserPage> {
 
     public UserPage searchByExpertise(String expertise) {
         try {
-            LOGGER.info("searching the expertise text"+expertise);
+            LOGGER.info("searching the expertise text" + expertise);
             enterText(searchField, expertise);
             clickIcon(searchIcon, "Search by Expertise");
             LOGGER.info("after search the value for page fatory for email is   \""+userEmail.getText()+" \" " );
@@ -164,7 +164,7 @@ public class UserPage extends BasePage<UserPage> {
 
     public AssignExpertisePopupPage clickAssignExpertise(String email){
         try {
-            waitForElement(ExpectedConditions.textToBePresentInElement(userEmail,email));
+            waitForElement(ExpectedConditions.textToBePresentInElement(userEmail,email),userEmail);
             LOGGER.info("after search the value for page fatory for email is   \""+userEmail.getText()+" \" " );
             LOGGER.info("Assigning the expertise to user");
             clickIcon(assignExpertisePopupicon,"Expertise");
@@ -174,20 +174,12 @@ public class UserPage extends BasePage<UserPage> {
         return new AssignExpertisePopupPage(driver);
     }
 
-    public String  getUserDetails(WebElement item){
-
-       /* System.out.println("chandra" + " " + userEmail.getText());
-        System.out.println("Full Name" + " " +fullName.getText());
-        System.out.println("Date Modified" + " " +dateModified.getText());
-        System.out.println("Date Created" + " " +dateCreated.getText());
-        System.out.println("LastLoggedIn" + " " +lastLoginDate.getText());
-        System.out.println("Status" + " " +userStatus.getText());
-        return new UserPage(driver);
-     */ return item.getText();
+    public String getUserDetails(WebElement item){
+        return item.getText();
     }
 
     public UserPage verifyExpertiseAsignment(String emailId){
-        waitForElement(ExpectedConditions.textToBePresentInElement(userEmail,emailId));
+        waitForElement(ExpectedConditions.textToBePresentInElement(userEmail,emailId),userEmail);
         LOGGER.info("Verifying the search results matches the email of user");
         Assert.assertEquals("assigned expertise is ", getUserDetails(userEmail), emailId);
         return new UserPage(driver);
@@ -206,7 +198,7 @@ public class UserPage extends BasePage<UserPage> {
     public UserPage BulkUserUpload(String fileName) throws IOException {
         try{
             clickIcon(bulkCreateUsers, "User Bulk Upload");
-            waitForElement(ExpectedConditions.visibilityOf(bulkCreateUsersPopup));
+            waitForElement(ExpectedConditions.visibilityOf(bulkCreateUsersPopup),bulkCreateUsersPopup);
             enterText(uploadFileButton, fileName);
             clickButton(userUploadSubmit);
             Thread.sleep(2000);

@@ -3,7 +3,6 @@ package com.tw.cisco.b2b.pages;
 import com.tw.cisco.b2b.exceptions.ClickElementException;
 import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
 import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
-import com.tw.cisco.b2b.helper.CommonMethodsHelper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -25,14 +24,11 @@ public class LoginPage extends BasePage<LoginPage> {
     private WebElement nextButton;
 
     public static final String PAGETITLE = "Cisco";
-    static final Logger LOGGER = LoggerFactory.getLogger(LoginPage.class);
-
-    CommonMethodsHelper commonMethodsHelper;
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginPage.class);
 
     public LoginPage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
-
     }
 
     @Override
@@ -49,23 +45,23 @@ public class LoginPage extends BasePage<LoginPage> {
     @Override
     public void instantiatePage(LoginPage page) {
         try {
-            LOGGER.info("intialising page+ "+page);
+            LOGGER.info("** instantiatePage(): ", page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
-            LOGGER.error("--- Error instantiating :"+page.toString());
+            LOGGER.error("--- Error instantiating :"+page.getClass().getSimpleName());
         }
     }
 
     public CredentialsPage enterEmail(String userName) {
+        LOGGER.trace(">> enterEmail()");
         try {
-            commonMethodsHelper = new CommonMethodsHelper();
+            LOGGER.info("-- Emailid passed",userName);
             enterText(email, userName);
             clickButton(nextButton);
             implicitWaitMethod();
         } catch(TextElementNotFoundException | ClickElementException | ElementNotFoundException ex ) {
            LOGGER.error("Sign in failed", ex);
         }
-
         return new CredentialsPage(driver);
     }
 

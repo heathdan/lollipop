@@ -18,6 +18,7 @@ public class ExpertsPage extends BasePage<ExpertsPage> {
     @Override
     protected void instantiatePage(ExpertsPage page) {
         try {
+            LOGGER.info("** instantiatePage(): ", page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch (Exception e) {
             LOGGER.error("--- Error instantiating :"+page.toString());

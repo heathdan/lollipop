@@ -2,7 +2,6 @@ package com.tw.cisco.b2b.pages;
 
 import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
 import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
-import com.tw.cisco.b2b.navigation.HeaderNav;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -45,23 +44,21 @@ public class AllPeoplePage extends BasePage<AllPeoplePage> {
     @FindBy(xpath=".//span[@class='profile-name']/a")
     private WebElement userName;
 
-    static final Logger LOGGER = LoggerFactory.getLogger(AllPeoplePage.class);
-    HeaderNav headerNav;
+    private static final Logger LOGGER = LoggerFactory.getLogger(AllPeoplePage.class);
 
     public AllPeoplePage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
         waitForPageToLoad(getPageLoadCondition());
-        //headerNav = new HeaderNav(driver);
     }
 
     @Override
     protected void instantiatePage(AllPeoplePage page) {
         try {
-            LOGGER.info("Instanting "+page.getClass().getSimpleName());
+            LOGGER.info("** instantiatePage(): ", page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch (Exception e) {
-            LOGGER.error("--- Error instantiating :"+page.toString());
+            LOGGER.error("--- Error instantiating :"+page.getClass().getSimpleName());
         }
     }
 
@@ -89,19 +86,16 @@ public class AllPeoplePage extends BasePage<AllPeoplePage> {
     }
 
     public ProfilePage selectUser(String emailId) {
-        waitForElement(ExpectedConditions.textToBePresentInElement(emailID, emailId));
-        userName.click();
+        try {
+            waitForElement(ExpectedConditions.textToBePresentInElement(emailID, emailId), emailID);
+            clickIcon(userName, "User profile");
+        }catch (ClickIconNotFoundException ex){
+            LOGGER.error("-- User not selectable",ex);
+        }
         return new ProfilePage(driver);
     }
 
 
     /***********************GET/SET METHODS*********************/
-    public HeaderNav getHeaderNav() {
-        return headerNav;
-    }
-
-    public void setHeaderNav(HeaderNav headerNav) {
-        this.headerNav = headerNav;
-    }
 
 }

@@ -26,7 +26,6 @@ public class DriverFactory {
         CHROME,
         IE,
         HTMLUNIT,
-
     }
 
     public static String gridHubUrl = null;

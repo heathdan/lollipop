@@ -18,9 +18,10 @@ public class SharedFilesPage extends BasePage<SharedFilesPage> {
     @Override
     protected void instantiatePage(SharedFilesPage page) {
         try {
+            LOGGER.info("** instantiatePage(): ", page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch (Exception e) {
-            LOGGER.error("--- Error instantiating :"+page.toString());
+            LOGGER.error("--- Error instantiating :"+page.getClass().getSimpleName());
         }
     }
 

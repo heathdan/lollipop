@@ -28,9 +28,10 @@ public class PeoplePage extends BasePage<PeoplePage> {
     @Override
     protected void instantiatePage(PeoplePage page) {
         try {
+            LOGGER.info("** instantiatePage(): ", page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch (Exception e) {
-            LOGGER.error("--- Error instantiating :"+page.toString());
+            LOGGER.error("--- Error instantiating :"+page.getClass().getSimpleName());
         }
     }
 

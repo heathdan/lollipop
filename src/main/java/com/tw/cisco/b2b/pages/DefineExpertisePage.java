@@ -61,18 +61,21 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
 
     static final Logger LOGGER = LoggerFactory.getLogger(DefineExpertisePage.class);
 
+    HeaderNav headerNav;
     public DefineExpertisePage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
         waitForPageToLoad(getPageLoadCondition());
+        headerNav = new HeaderNav(driver);
     }
 
     @Override
     public void instantiatePage(DefineExpertisePage page) {
         try {
+            LOGGER.info("** instantiatePage(): ", page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
-            LOGGER.error("-- Error instantiating: "+page.toString(), e);
+            LOGGER.error("-- Error instantiating: ",page.getClass().getSimpleName());
         }
     }
 
@@ -84,10 +87,10 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
     public DefineExpertisePage addExpertise(String Expertise){
         try {
             LOGGER.info("Creating the expertise\""+Expertise+"\"");
-            enterText(addExpertiseTextField,Expertise);
+            enterText(addExpertiseTextField, Expertise);
 
             LOGGER.info("Saving the expertise\""+Expertise+"\"");
-            clickIcon(addExpertiseButton,"Expertise");
+            clickIcon(addExpertiseButton, "Expertise");
         } catch ( ClickIconNotFoundException | TextElementNotFoundException ex) {
             LOGGER.error(" Expertise addition failed", ex);
         }
@@ -97,11 +100,11 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
     public DefineExpertisePage searchExpertise(String Expertise){
         LOGGER.trace(">>searchExpertise()",Expertise);
         try {
-            LOGGER.info("searching the expertise \""+Expertise+"\"");
-            enterText(searchExpertiseTextField,Expertise);
+            LOGGER.info("searching the expertise \"" + Expertise + "\"");
+            enterText(searchExpertiseTextField, Expertise);
             clickButton(searchExpertiseIcon);
             LOGGER.info("waiting for search to complete");
-            waitForElement(ExpectedConditions.textToBePresentInElement(expertiseName,Expertise));
+            waitForElement(ExpectedConditions.textToBePresentInElement(expertiseName, Expertise), expertiseName);
             LOGGER.info("expertise text after search is \""+expertiseName.getText()+"\"");
             Assert.assertEquals("Searched expertise is",expertiseName.getText(),Expertise);
         } catch(TextElementNotFoundException | ElementNotFoundException | ClickElementException ex) {
@@ -111,13 +114,12 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
     }
 
     public DefineExpertisePage deleteUnusedExpertise(String Expertise){
-        LOGGER.trace(">>Delete Unused Expertise()",Expertise);
+        LOGGER.trace(">>Delete Unused Expertise()", Expertise);
         try {
             LOGGER.info("Deleting the expertise");
             clickButton(expertiseDeleteButton);
             LOGGER.info("Verify the expertise is deleted");
-            HeaderNav headerNav = new HeaderNav(driver);
-            headerNav.waitForSpinnerToStop();
+            getHeaderNav().waitForSpinnerToStop();
             LOGGER.info("searching the expertise \""+Expertise+"\"");
             enterText(searchExpertiseTextField,Expertise);
             clickButton(searchExpertiseIcon);
@@ -130,21 +132,30 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
     }
 
     public DefineExpertisePage displaySearchResults(){
-        System.out.println( expertiseName.getText() +
-        expertsCount.getText() +
-        expertiseCreatedBy.getText() +
-        expertiseUpdatedBy.getText() +
-        expertiseLastUpdate.getText() );
+        LOGGER.info(expertiseName.getText() +
+                expertsCount.getText() +
+                expertiseCreatedBy.getText() +
+                expertiseUpdatedBy.getText() +
+                expertiseLastUpdate.getText());
         return new DefineExpertisePage(driver);
     }
 
     public DefineExpertisePage editExpertise(String newExpertise){
-        editExpertiseButton.click();
-
-
+        try {
+            clickButton(editExpertiseButton);
+        } catch(ClickElementException | ElementNotFoundException ex) {
+            LOGGER.error("--- Error in edit expertise",ex);
+        }
         return new DefineExpertisePage(driver);
     }
 
+    /*********************GET/SET METHODS***************************/
 
+    public HeaderNav getHeaderNav() {
+        return headerNav;
+    }
 
+    public void setHeaderNav(HeaderNav headerNav) {
+        this.headerNav = headerNav;
+    }
 }
