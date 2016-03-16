@@ -75,7 +75,7 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
     @Override
     protected void instantiatePage(RoleCreatePopupPage page) {
         try {
-            LOGGER.info("** instantiatePage(): ", page.getClass().getSimpleName());
+            LOGGER.info("** instantiatePage(): "+ page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
             LOGGER.error("--- Error instantiating :"+page.getClass().getSimpleName());

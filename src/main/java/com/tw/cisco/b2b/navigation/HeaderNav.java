@@ -58,7 +58,7 @@ public class HeaderNav extends BasePage<HeaderNav> {
     @Override
     protected void instantiatePage(HeaderNav page) {
         try {
-            LOGGER.info("Instantiating "+page.getClass().getSimpleName());
+            LOGGER.info("** instantiatePage(): "+ page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
             LOGGER.error("--- Error in instantiating "+page.getClass().getSimpleName());

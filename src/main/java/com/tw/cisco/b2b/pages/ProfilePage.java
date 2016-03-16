@@ -68,17 +68,20 @@ public class ProfilePage extends BasePage<ProfilePage> {
         Assert.assertEquals(emailID, email.getText());
     }
 
-    public void verifyManager() {
-        Assert.assertTrue("Manager Not present",isElementPresent());
+    public void verifyManager(String managerId) {
+        if(isElementPresent(manager)) {
+            Assert.assertEquals(managerId,manager.getText());
+        } else {
+            LOGGER.info("Manager not assigned");
+        }
     }
 
-    public boolean isElementPresent() {
-        boolean value=false;
-        try {
-            value=ExpectedConditions.not(ExpectedConditions.presenceOfElementLocated(managerElement)).apply(driver);
-        } catch (NoSuchElementException ex) {
-            value=true;
-        }
-        return value;
+    public boolean isElementPresent(WebElement element) {
+       try {
+           element.isDisplayed();
+           return true;
+       } catch(NoSuchElementException ex) {
+           return false;
+       }
     }
 }

@@ -46,7 +46,7 @@ public class HomePage extends BasePage<HomePage> {
     @Override
     protected void instantiatePage(HomePage page) {
         try {
-            LOGGER.info("** instantiatePage(): ", page.getClass().getSimpleName());
+            LOGGER.info("** instantiatePage(): "+ page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
             LOGGER.error("--- Error instantiating :"+page.toString());

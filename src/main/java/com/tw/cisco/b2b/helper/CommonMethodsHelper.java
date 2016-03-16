@@ -49,7 +49,7 @@ public class CommonMethodsHelper {
         String filePath = null;
         try {
             userDetails=  CSVParser.parseUserCSVToBean(csvFileName,false);
-            LOGGER.info("-- writing to csv:",csvFileName);
+            LOGGER.info("-- writing to csv:"+csvFileName);
             filePath=CSVParser.writeToCSV(userDetails, csvFileName);
         } catch (IOException ex) {
             throw new CSVParsingException( "Could not find "+csvFileName);
@@ -66,7 +66,6 @@ public class CommonMethodsHelper {
     public static List<UserDetails> parseCSVData(String csvFileName) throws CSVParsingException {
         List<UserDetails> userDetails = null;
         try {
-            LOGGER.info("--Reading CSV:",csvFileName);
             userDetails = CSVParser.parseUserCSVToBean(csvFileName,true);
         } catch (IOException ex) {
             throw new CSVParsingException("Could not find " + csvFileName);

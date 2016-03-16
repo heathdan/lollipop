@@ -125,7 +125,7 @@ public class UserPage extends BasePage<UserPage> {
     @Override
     protected void instantiatePage(UserPage page) {
         try {
-            LOGGER.info("** instantiatePage(): ", page.getClass().getSimpleName());
+            LOGGER.info("** instantiatePage(): "+page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
             LOGGER.error("--- Error instantiating :"+page.toString());

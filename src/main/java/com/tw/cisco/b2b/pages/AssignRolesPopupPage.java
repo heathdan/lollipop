@@ -63,7 +63,7 @@ public class AssignRolesPopupPage extends BasePage<AssignRolesPopupPage> {
     @Override
     protected void instantiatePage(AssignRolesPopupPage page) {
         try {
-            LOGGER.info("** instantiatePage(): ", page.getClass().getSimpleName());
+            LOGGER.info("** instantiatePage(): "+ page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
             System.out.println(e);

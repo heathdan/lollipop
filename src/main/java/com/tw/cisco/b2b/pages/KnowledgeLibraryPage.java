@@ -26,7 +26,7 @@ public class KnowledgeLibraryPage extends BasePage<KnowledgeLibraryPage> {
     @Override
     protected void instantiatePage(KnowledgeLibraryPage page) {
         try {
-            LOGGER.info("** instantiatePage(): ", page.getClass().getSimpleName());
+            LOGGER.info("** instantiatePage(): "+ page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch (Exception e) {
             LOGGER.error("--- Error in instantiating page: "+page);

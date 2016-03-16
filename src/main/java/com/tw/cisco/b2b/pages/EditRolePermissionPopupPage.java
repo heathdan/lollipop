@@ -59,7 +59,7 @@ public class EditRolePermissionPopupPage extends BasePage<EditRolePermissionPopu
     @Override
     protected void instantiatePage(EditRolePermissionPopupPage page) {
         try {
-            LOGGER.info("** instantiatePage(): ", page.getClass().getSimpleName());
+            LOGGER.info("** instantiatePage(): "+ page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch (Exception e) {
             LOGGER.error("--- Error instantiating :"+page.toString());

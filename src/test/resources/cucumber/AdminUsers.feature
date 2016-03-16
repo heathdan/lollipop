@@ -26,20 +26,19 @@ Feature: Admin
 #    And the csv "given_upload_users_update" is updated for Organisation and title
 #    And User "deonaraya4@gmail.com" logout
 
-  @Admin
-  Scenario: Manager Validation : User is his own manager in Bulk user CSV upload
-    Given the user is on Users tab on admin page
-    When he uploads a csv file "no_manager_assigned" to on board user "z"
-    Then user in "no_manager_assigned" should be on boarded to the app with no manager assigned.
-    And User "deonaraya4@gmail.com" logout
-
-
-#  Scenario: Manager Validation : Manager is part of user on boarding in Bulk user CSV upload
-#    Given the user is on "Users" tab on admin page
-#    When he uploads a csv file "manager_assignment" to on board user "z"
-#    Then user in "upload_users" should be on boarded to the app
-#    And user "z" should be assigned a manager
+#  @Admin
+#  Scenario: Manager Validation : User is his own manager in Bulk user CSV upload
+#    Given the user is on Users tab on admin page
+#    When he uploads a csv file "no_manager_assigned" to on board user "z"
+#    Then user in "no_manager_assigned" should be on boarded to the app with no manager assigned.
 #    And User "deonaraya4@gmail.com" logout
+
+  @Admin
+  Scenario: Manager Validation : Manager is part of user on boarding in Bulk user CSV upload
+    Given the user is on Users tab on admin page
+    When he uploads a csv file "manager_assignment" to on board user "z"
+    Then user in "manager_assignment" should be on boarded to the app with manager assigned
+    And User "deonaraya4@gmail.com" logout
 
  # Scenario: Login functionality
   #  Given user navigates to Define Expertise Tab
