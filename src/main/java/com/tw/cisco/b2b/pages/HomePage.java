@@ -23,7 +23,7 @@ public class HomePage extends BasePage<HomePage> {
     private WebElement landingPage;
 
     public static final String HOME_PAGE_TITLE="Cisco";
-    static final Logger LOGGER = LoggerFactory.getLogger(HomePage.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HomePage.class);
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -46,6 +46,7 @@ public class HomePage extends BasePage<HomePage> {
     @Override
     protected void instantiatePage(HomePage page) {
         try {
+            LOGGER.info("** instantiatePage(): "+ page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
             LOGGER.error("--- Error instantiating :"+page.toString());

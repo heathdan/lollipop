@@ -46,6 +46,7 @@ public class CredentialsPage extends BasePage<CredentialsPage> {
     @Override
     protected void instantiatePage(CredentialsPage page) {
         try {
+            LOGGER.info("** instantiatePage(): "+ page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
             LOGGER.error("-- Page instantiation failed",e);

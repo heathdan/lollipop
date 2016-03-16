@@ -17,7 +17,6 @@ import java.util.*;
 public class CSVParser {
     private static final Logger LOGGER = LoggerFactory.getLogger(CSVParser.class);
 
-
     protected static List<UserDetails> parseUserCSVToBean(String fileName,Boolean value) throws IOException {
         LOGGER.trace(">> parseUserCSVToBean()");
         File csvFile = null;
@@ -74,11 +73,11 @@ public class CSVParser {
         Iterator<UserDetails> iterator = users.iterator();
         while (iterator.hasNext()) {
             UserDetails user = iterator.next();
-            if(fileName.equals("CSVFiles/no_manager_assigned.csv")) {
+            if(fileName.equals("no_manager_assigned.csv")) {
                 user.setUname(CommonMethodsHelper.timeStamp(user.getFname()) + "@mailinator.com");
                 user.setManager(user.getUname());
 
-            } else if(fileName.equals("CSVFiles/upload_users.csv")) {
+            } else if(fileName.equals("upload_users.csv")) {
                 user.setUname(CommonMethodsHelper.timeStamp(user.getFname()) + "@mailinator.com");
 
             } else {

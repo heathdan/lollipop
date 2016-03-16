@@ -56,9 +56,10 @@ public class TabbedNav extends BasePage<TabbedNav> {
     @Override
     protected void instantiatePage(TabbedNav page) {
         try {
+            LOGGER.info("** instantiatePage(): "+ page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
-            LOGGER.error("--- Error in instantiating page:",page);
+            LOGGER.error("--- Error in instantiating page:",page.getClass().getSimpleName());
         }
     }
 

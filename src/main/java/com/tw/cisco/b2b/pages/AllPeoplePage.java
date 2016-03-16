@@ -2,7 +2,6 @@ package com.tw.cisco.b2b.pages;
 
 import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
 import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
-import com.tw.cisco.b2b.navigation.HeaderNav;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -42,29 +41,24 @@ public class AllPeoplePage extends BasePage<AllPeoplePage> {
     @FindBy(xpath = ".//i[@class='icon-search']")
     private WebElement searchIcon ;
 
-    @FindBy(xpath="(.//span[@class='profile-name']//parent::div)")
-    private WebElement userTitle;
+    @FindBy(xpath=".//span[@class='profile-name']/a")
+    private WebElement userName;
 
-    @FindBy(xpath="(.//div[@class='content-section']//span)[1]")
-    private WebElement organisation;
-
-    static final Logger LOGGER = LoggerFactory.getLogger(AllPeoplePage.class);
-    HeaderNav headerNav;
+    private static final Logger LOGGER = LoggerFactory.getLogger(AllPeoplePage.class);
 
     public AllPeoplePage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
         waitForPageToLoad(getPageLoadCondition());
-        //headerNav = new HeaderNav(driver);
     }
 
     @Override
     protected void instantiatePage(AllPeoplePage page) {
         try {
-            LOGGER.info("Instanting "+page.getClass().getSimpleName());
+            LOGGER.info("** instantiatePage(): "+ page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch (Exception e) {
-            LOGGER.error("--- Error instantiating :"+page.toString());
+            LOGGER.error("--- Error instantiating :"+page.getClass().getSimpleName());
         }
     }
 
@@ -86,26 +80,22 @@ public class AllPeoplePage extends BasePage<AllPeoplePage> {
         return new AllPeoplePage(driver);
     }
 
-    public void verifyUserSearch(String emailId) {
-        waitForElement(ExpectedConditions.textToBePresentInElement(emailID,emailId));
-        Assert.assertEquals(emailId, emailID.toString());
+    public AllPeoplePage verifyEmail(String email) {
+        Assert.assertEquals(email, emailID.getText());
+        return this;
     }
 
-    public void verifyUserOrgAndTitle(String emailId,String orgID, String title) {
-        waitForElement(ExpectedConditions.textToBePresentInElement(emailID,emailId));
-        LOGGER.info("userTitle:"+userTitle.getText());
-        LOGGER.info("orgid:" + organisation.getText());
-        Assert.assertEquals(orgID, organisation.getText());
-        Assert.assertTrue(userTitle.getText().contains(title));
+    public ProfilePage selectUser(String emailId) {
+        try {
+            waitForElement(ExpectedConditions.textToBePresentInElement(emailID, emailId), emailID);
+            clickIcon(userName, "User profile");
+        }catch (ClickIconNotFoundException ex){
+            LOGGER.error("-- User not selectable",ex);
+        }
+        return new ProfilePage(driver);
     }
+
 
     /***********************GET/SET METHODS*********************/
-    public HeaderNav getHeaderNav() {
-        return headerNav;
-    }
-
-    public void setHeaderNav(HeaderNav headerNav) {
-        this.headerNav = headerNav;
-    }
 
 }

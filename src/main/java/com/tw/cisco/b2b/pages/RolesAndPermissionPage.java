@@ -113,15 +113,15 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
     @Override
     protected void instantiatePage(RolesAndPermissionPage page) {
         try {
+            LOGGER.info("** instantiatePage(): "+ page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch (Exception e) {
-            LOGGER.error("--- Error instantiating :"+page.toString());
+            LOGGER.error("--- Error instantiating :"+page.getClass().getSimpleName());
         }
     }
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
-
         return ExpectedConditions.visibilityOf(rolesTable);
     }
 
@@ -141,16 +141,17 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
             for (WebElement element : roleNames) {
                 if (roleName.equals(element.getText())) {
                     clickIcon(customDeleteRole, "Role Delete");
-                    waitForElement(ExpectedConditions.visibilityOf(deleteRolePopupHeader));
+                    waitForElement(ExpectedConditions.visibilityOf(deleteRolePopupHeader),deleteRolePopupHeader);
                     clickIcon(deleteRoleConfirm, "Role delete confirm");
                     new RolesAndPermissionPage(driver).getHeaderNav().waitForSpinnerToStop();
-                    waitForElement(ExpectedConditions.visibilityOf(roleDeletionSuccessPopupMessage));
+                    waitForElement(ExpectedConditions.visibilityOf(roleDeletionSuccessPopupMessage),roleDeletionSuccessPopupMessage);
                     isMatchNotFound = false;
                     break;
                 }
             }
 
         if (isMatchNotFound && !("disabled".equals(paginationNextDisabled.getAttribute("class"))) && (paginationNext.isEnabled())) {
+            LOGGER.info("Paginating ..");
             clickButton(paginationNext);
             headerNav.waitForSpinnerToStop();
             new RolesAndPermissionPage(driver).findRoleAndDelete(roleName);

@@ -47,18 +47,19 @@ public class EditRolePermissionPopupPage extends BasePage<EditRolePermissionPopu
 
     public EditRolePermissionPopupPage(WebDriver driver) {
         super(driver);
+        instantiatePage(this);
         waitForPageToLoad(getPageLoadCondition());
     }
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
-
         return ExpectedConditions.visibilityOf(editPermissionModal);
     }
 
     @Override
     protected void instantiatePage(EditRolePermissionPopupPage page) {
         try {
+            LOGGER.info("** instantiatePage(): "+ page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch (Exception e) {
             LOGGER.error("--- Error instantiating :"+page.toString());

@@ -30,7 +30,7 @@ public class AdminPage extends BasePage<AdminPage> {
     @FindBy(xpath = ".//span[text()='Reporting']")
     private WebElement reporting;
 
-    static final Logger LOGGER = LoggerFactory.getLogger(AdminPage.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdminPage.class);
 
     public AdminPage(WebDriver driver) {
         super(driver);
@@ -41,9 +41,10 @@ public class AdminPage extends BasePage<AdminPage> {
     @Override
     protected void instantiatePage(AdminPage page) {
         try {
+            LOGGER.info("** instantiatePage(): "+ page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch (Exception e) {
-           LOGGER.error("--- Error in instantiating page: ",page);
+           LOGGER.error("--- Error in instantiating page: ",page.getClass().getSimpleName());
         }
     }
 

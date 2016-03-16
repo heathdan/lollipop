@@ -68,27 +68,23 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
     public RoleCreatePopupPage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
-        // waitForPageToLoad(getPageLoadCondition());
+        waitForPageToLoad(getPageLoadCondition());
         headerNav = new HeaderNav(driver);
     }
 
     @Override
     protected void instantiatePage(RoleCreatePopupPage page) {
         try {
+            LOGGER.info("** instantiatePage(): "+ page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch(Exception e) {
-            LOGGER.error("--- Error instantiating :"+page.toString());
+            LOGGER.error("--- Error instantiating :"+page.getClass().getSimpleName());
         }
     }
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
         return ExpectedConditions.visibilityOf(createRoleHeader);
-    }
-
-    protected void createNewRole(String roleName) {
-
-
     }
 
     public RolesAndPermissionPage createNewInheritRole(String roleName, String inheritRoleName) {
@@ -98,7 +94,7 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
             clickButton(rolesDropdown);
             selectDropdownText(inheritRoles, inheritRoleName);
             clickButton(saveRoleCreation);
-            waitForElement(ExpectedConditions.visibilityOf(roleSuccessPopupHeader));
+            waitForElement(ExpectedConditions.visibilityOf(roleSuccessPopupHeader),roleSuccessPopupHeader);
             clickButton(roleSuccessPopUp);
         }
         catch(TextElementNotFoundException | ClickElementException | ElementNotFoundException ex) {
