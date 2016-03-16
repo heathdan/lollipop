@@ -1,7 +1,6 @@
 package com.tw.cisco.b2b.pages;
 
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -32,8 +31,6 @@ public class ProfilePage extends BasePage<ProfilePage> {
 
     @FindBy(xpath = ".//div[@id='contact-info']//a[@class='profile-info-text']")
     private WebElement email;
-
-    By managerElement = By.xpath(".//p[@class='manager-details']//a");
 
     public ProfilePage(WebDriver driver) {
         super(driver);
@@ -68,11 +65,11 @@ public class ProfilePage extends BasePage<ProfilePage> {
         Assert.assertEquals(emailID, email.getText());
     }
 
-    public void verifyManager(String managerId) {
-        if(isElementPresent(manager)) {
-            Assert.assertEquals(managerId,manager.getText());
+    public void verifyManager(boolean value) {
+        if(true) {
+            Assert.assertTrue(isElementPresent(manager));
         } else {
-            LOGGER.info("Manager not assigned");
+            Assert.assertFalse(isElementPresent(manager));
         }
     }
 

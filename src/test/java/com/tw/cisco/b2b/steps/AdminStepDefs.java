@@ -98,14 +98,14 @@ public class AdminStepDefs  {
     public void user_in_should_be_on_boarded_to_the_app_with_no_manager_assigned(String arg1) throws Throwable {
         UserDetails userData=CommonMethodsHelper.parseCSVData(arg1).get(0);
         profilePage=new LeftNav(driver).navToPeople().navToAllPeople().searchUser("\""+userData.getUname()+ "\"").selectUser(userData.getUname());
-        profilePage.verifyManager(userData.getManager());
+        profilePage.verifyManager(false);
     }
 
     @Then("^user in \"([^\"]*)\" should be on boarded to the app with manager assigned$")
     public void user_in_should_be_on_boarded_to_the_app_with_manager_assigned(String arg1) throws Throwable {
         UserDetails userData=CommonMethodsHelper.parseCSVData(arg1).get(0);
         profilePage=new LeftNav(driver).navToPeople().navToAllPeople().searchUser("\""+userData.getUname()+ "\"").selectUser(userData.getUname());
-        profilePage.verifyManager(userData.getFname()+" "+userData.getLname());
+        profilePage.verifyManager(true);
     }
 }
 

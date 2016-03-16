@@ -36,6 +36,9 @@ public class HeaderNav extends BasePage<HeaderNav> {
     @FindBy(xpath=".//i[@class='icon-caret-down']")
     private WebElement topNavMyProfile;
 
+    @FindBy(xpath=".//span[@class='user-name']")
+    private WebElement userName;
+
     @FindBy(xpath=".//li[@class='logout last']/a")
     private WebElement logOut;
 
@@ -74,7 +77,7 @@ public class HeaderNav extends BasePage<HeaderNav> {
         LOGGER.trace(">> CKlogout()");
         try {
             LOGGER.info("Logging out of CK...");
-            clickButton(topNavMyProfile);
+            clickButton(userName);
             clickButton(logOut);
         } catch (ClickElementException | ElementNotFoundException ex) {
             LOGGER.error("--Error in logging out", ex);

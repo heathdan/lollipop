@@ -107,7 +107,7 @@ public abstract class BasePage<P extends BasePage>{
     }
 
     public void clickButton(WebElement webElement) throws ClickElementException,ElementNotFoundException {
-        if(!(webElement==null)) {
+       /*if(!(webElement==null)) {
             if(webElement.isDisplayed()) {
                 if(webElement.isEnabled()) {
                     webElement.click();
@@ -117,6 +117,15 @@ public abstract class BasePage<P extends BasePage>{
             } else {
                 throw new ElementNotFoundException(webElement.toString()+ "not visible");
             }
+        }*/
+        if(isElementPresent(webElement)) {
+            if(webElement.isEnabled()) {
+                webElement.click();
+            } else {
+                throw new ClickElementException(webElement.toString()+" not clickable");
+            }
+        } else {
+            throw new ElementNotFoundException(webElement.toString()+" not visible");
         }
     }
 
@@ -131,12 +140,18 @@ public abstract class BasePage<P extends BasePage>{
     }
 
     public void clickIcon(WebElement element,String message) throws ClickIconNotFoundException {
-        if (!(element == null)) {
+      /*  if (!(element == null)) {
             if (element.isDisplayed()) {
                 element.click();
             } else {
                 throw new ClickIconNotFoundException(message + " not found");
             }
+        }*/
+
+        if(isElementPresent(element)){
+            element.click();
+        } else {
+            throw new ClickIconNotFoundException(message+" not found");
         }
     }
 
@@ -146,6 +161,15 @@ public abstract class BasePage<P extends BasePage>{
             selectValue.selectByVisibleText(textValue);
         } catch(NoSuchElementException ex) {
             throw new SelectDropDownNotFoundException(textValue+" not found", ex);
+        }
+    }
+
+    public boolean isElementPresent(WebElement element) {
+        try {
+            element.isDisplayed();
+            return true;
+        } catch(NoSuchElementException ex) {
+            return false;
         }
     }
 
