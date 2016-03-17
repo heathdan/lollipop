@@ -26,7 +26,7 @@ public class KCPage extends BasePage<KCPage> {
 
     static final Logger LOGGER = LoggerFactory.getLogger(KCPage.class);
 
-    public Kage(WebDriver driver) {
+    public KCPage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
         //waitForPageToLoad(getPageLoadCondition());
