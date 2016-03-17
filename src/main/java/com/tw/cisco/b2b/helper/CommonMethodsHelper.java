@@ -143,6 +143,11 @@ public class CommonMethodsHelper {
         }
         return users;
     }
+
+    public String getUploadFilePath(String fileName) {
+        File fileToUpload = new File(Classpath.filePathFor("KCDocuments/"+fileName));
+        return fileToUpload.getAbsolutePath();
+    }
 }
 
 

@@ -1,6 +1,7 @@
 package com.tw.cisco.b2b.pages;
 
 import com.tw.cisco.b2b.exceptions.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -102,18 +103,11 @@ public abstract class BasePage<P extends BasePage> {
         }
     }
 
+    public void enterTestBy(By ByElement,String message) {
+        driver.findElement(ByElement).sendKeys(message);
+    }
+
     public void clickButton(WebElement webElement) throws ClickElementException, ElementNotFoundException {
-       /*if(!(webElement==null)) {
-            if(webElement.isDisplayed()) {
-                if(webElement.isEnabled()) {
-                    webElement.click();
-                } else {
-                    throw new ClickElementException(webElement.toString()+" not clickable");
-                }
-            } else {
-                throw new ElementNotFoundException(webElement.toString()+ "not visible");
-            }
-        }*/
         if (isElementPresent(webElement)) {
             if (webElement.isEnabled()) {
                 webElement.click();
@@ -136,14 +130,6 @@ public abstract class BasePage<P extends BasePage> {
     }
 
     public void clickIcon(WebElement element, String message) throws ClickIconNotFoundException {
-      /*  if (!(element == null)) {
-            if (element.isDisplayed()) {
-                element.click();
-            } else {
-                throw new ClickIconNotFoundException(message + " not found");
-            }
-        }*/
-
         if (isElementPresent(element)) {
             element.click();
         } else {
@@ -167,6 +153,18 @@ public abstract class BasePage<P extends BasePage> {
         } catch (NoSuchElementException ex) {
             return false;
         }
+    }
+
+    public void switchToiFrame(WebElement element) throws IframeNotFoundException{
+        if(isElementPresent(element)){
+            driver.switchTo().frame(element);
+        }else {
+            throw new IframeNotFoundException(element.toString() + "not found");
+        }
+    }
+
+    public void switchBackFromiFrame() throws IframeNotFoundException {
+        driver.switchTo().defaultContent();
     }
 }
 
