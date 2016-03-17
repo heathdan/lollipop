@@ -70,14 +70,6 @@ public class KCPropertiesPage extends BasePage<KCPropertiesPage> {
 
 
 
-
-
-
-
-
-
-
-
     public KCPropertiesPage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
