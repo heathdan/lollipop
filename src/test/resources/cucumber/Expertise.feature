@@ -7,8 +7,6 @@ Feature: Experts
   Background:
     Given that the user "admin_name" logged in as "admin_user" and "password"
 
-
-
     Scenario: User can not delete an expertise once asigned to a user
       Given user navigates to Define Expertise Tab
       When user define a new TimeStamped expertise "ASIGN_EXP"
