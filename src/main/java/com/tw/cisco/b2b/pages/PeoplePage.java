@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 /**
  * Created by aswathyn on 13/03/16.
@@ -19,10 +20,13 @@ public class PeoplePage extends BasePage<PeoplePage> {
     @FindBy(xpath = ".//span[text()='Experts']")
     private WebElement experts;
 
+    @FindBy(xpath = ".//span[text()=' Knowledge Center']/parent::button[@data-icon2-after='triangle-open']")
+    private WebElement peopleWait;
+
     public PeoplePage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
-        //waitForPageToLoad(getPageLoadCondition());
+        waitForPageToLoad(getPageLoadCondition());
     }
 
     @Override
@@ -37,7 +41,8 @@ public class PeoplePage extends BasePage<PeoplePage> {
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
-        return null;
+        LOGGER.trace(">> waiting for Admin dropdown to appear >>");
+        return ExpectedConditions.visibilityOf(peopleWait);
     }
 
     public AllPeoplePage navToAllPeople() {

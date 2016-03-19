@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,12 +25,15 @@ public class KCPage extends BasePage<KCPage> {
     @FindBy(xpath = ".//span[text()='Shared Files']")
     private WebElement sharedFiles;
 
+    @FindBy(xpath = "//span[text()=' Knowledge Center']/parent::button[@data-icon2-after='triangle-open']")
+    private WebElement kcWait;
+
     static final Logger LOGGER = LoggerFactory.getLogger(KCPage.class);
 
     public KCPage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
-        //waitForPageToLoad(getPageLoadCondition());
+        waitForPageToLoad(getPageLoadCondition());
     }
 
     @Override
@@ -44,7 +48,8 @@ public class KCPage extends BasePage<KCPage> {
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
-        return null;
+        LOGGER.trace(">> waiting for KC dropdown to appear >>");
+        return ExpectedConditions.visibilityOf(kcWait);
     }
 
     public KnowledgeLibraryPage navToKnowledgeLibrary() {

@@ -58,6 +58,7 @@ public class AdminPage extends BasePage<AdminPage> {
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
+        LOGGER.trace(">> waiting for Admin dropdown to appear >>");
         return ExpectedConditions.visibilityOf(adminWait);
     }
 
