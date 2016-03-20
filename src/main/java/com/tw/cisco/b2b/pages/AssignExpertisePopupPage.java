@@ -33,7 +33,7 @@ public class AssignExpertisePopupPage extends BasePage<AssignExpertisePopupPage>
     @FindBys(@FindBy(xpath =  ".//div[@id='selfTaggedExpertise']//span[@class='item-tag-text']"))
     private List<WebElement> selfTaggedExpertiseList ;
 
-    @FindBys(@FindBy(xpath =  ".//div[@id='selfTaggedExpertise']//i[@class='icon-remove red']"))
+    @FindBys(@FindBy(xpath =  ".//div[@id='selfTaggedExpertise']//span[@class='item-tag-text']/following-sibling::span/i"))
     private List<WebElement> removeSelfTaggedExpertiseList ;
 
     @FindBys(@FindBy(xpath = ".//div[@class='tt-suggestion']"))
@@ -97,9 +97,15 @@ public class AssignExpertisePopupPage extends BasePage<AssignExpertisePopupPage>
     public UserPage deelteSelfTaggedExpertise(String expertise){
         try{
             LOGGER.info("Verifying the self tagged expertise");
-            Assert.assertEquals("Self tagged expertise gets updated as", expertise, selfTaggedExpertiseList.get(selfTaggedExpertiseList.size() -1 ).getText());
+            Assert.assertTrue("List of self tagged expertise contains timestamped expertise",searchInList(selfTaggedExpertiseList,expertise));
+       //   Assert.assertEquals("Self tagged expertise gets updated as", expertise, selfTaggedExpertiseList.get(selfTaggedExpertiseList.size() -1 ).getText());
             LOGGER.info("Deleting the self tagged expertise");
-            clickIcon(removeSelfTaggedExpertiseList.get(selfTaggedExpertiseList.size() -1),"deleting the self tagged expertise");
+            for (WebElement delIcon : removeSelfTaggedExpertiseList) {
+                LOGGER.info("removing all the self tagged expertise");
+                clickIcon(delIcon,"Untagging expertise");
+            }
+         // clickIcon(findInList(removeSelfTaggedExpertiseList,expertise),"deleting the self tagged expertise");
+         // clickIcon(removeSelfTaggedExpertiseList.get(selfTaggedExpertiseList.size() -1),"deleting the self tagged expertise");
             LOGGER.info("Saving the action on expertise pop up");
             clickButton(saveExpertiseButton);
             headerNav = new HeaderNav(driver);
@@ -108,6 +114,27 @@ public class AssignExpertisePopupPage extends BasePage<AssignExpertisePopupPage>
             LOGGER.error("Delete self tagged expertise failed , ex");
         }
         return new UserPage(driver);
+    }
+    
+    public boolean searchInList(List<WebElement> webElement, String searchBy){
+        boolean res = false;
+        for (WebElement elm :webElement) {
+            if (elm.getText().equals(searchBy))
+                LOGGER.info(elm.getText());
+                res = true;
+                break;
+        }
+        return res;
+    }
+
+    public WebElement findInList(List<WebElement> webElement, String searchBy){
+        WebElement res = null;
+        for (WebElement elm : webElement){
+            if(elm.getText().equals(searchBy))
+                LOGGER.info(elm.getText());
+                res = elm;
+        }
+        return res;
     }
 
     public UserPage verifyExpertiseAssigned(String expertise){

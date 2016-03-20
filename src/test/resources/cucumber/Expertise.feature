@@ -7,19 +7,22 @@ Feature: Experts
   Background:
     Given that the user "admin_name" logged in as "admin_user" and "password"
 
+  Scenario: User is able to delete the self tagged expertise for himself
+    Given user navigates to Define Expertise Tab
+    When user define a new TimeStamped expertise "UNIFIED"
+    And user navigates to Profile page
+    And user tags himself with the TimeStamped expertise "UNIFIED"
+    Then user navigates to the Users tab
+    Then user opens the assign expertise pop up for "admin_user"
+    And user deletes the self tagged expertise "UNIFIED" and save the changes
+    And User "admin_user" logout
+
   Scenario: Define an expertise and assign the user A expert in the same
     Given user navigates to Define Expertise Tab
     When user define a new TimeStamped expertise "SME"
     And user navigates to the Users tab
     And assign the TimeStamped expertise "SME" to the user "learner_username"
     Then user "learner_username" should be marked expert in expertise "SME"
-    And User "admin_user" logout
-
-  Scenario: Delete unused expertise
-    Given user navigates to Define Expertise Tab
-    Then user define a new TimeStamped expertise "TobeDeleted"
-    And user search for the TimeStamped expertise "TobeDeleted"
-    Then admin should be able to delete the unused expertise "TobeDeleted"
     And User "admin_user" logout
 
   Scenario: User can not delete an expertise once assigned to a user
@@ -32,24 +35,14 @@ Feature: Experts
     Then user should not find an option to delete the assigned expertise "ASIGN_EXP"
     And User "admin_user" logout
 
-  Scenario: User is able to delete the self tagged expertise for himself
+  Scenario: Delete unused expertise
     Given user navigates to Define Expertise Tab
-    When user define a new TimeStamped expertise "UNIFIED"
-    And user navigates to Profile page
-    And user tags himself with the TimeStamped expertise "UNIFIED"
-    Then user navigates to the Users tab
-    Then user opens the assign expertise pop up for "admin_user"
-    And user deletes the self tagged expertise "UNIFIED" and save the changes
+    Then user define a new TimeStamped expertise "TobeDeleted"
+    And user search for the TimeStamped expertise "TobeDeleted"
+    Then admin should be able to delete the unused expertise "TobeDeleted"
     And User "admin_user" logout
 
-  Scenario: Search user via assigned expertise from unified search
-    Given user navigates to Define Expertise Tab
-    When user define a new TimeStamped expertise "UNIFIED"
-    And user navigates to the Users tab
-    And assign the TimeStamped expertise "UNIFIED" to the user "learner_username"
-    Then user "learner_username" should be marked expert in expertise "UNIFIED"
-    Then user search for expertise "UNIFIED" from unified search text field.
-    Then unified search results should display the user "learner_username"
+
 
 
 
