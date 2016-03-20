@@ -1,8 +1,8 @@
 package com.tw.cisco.b2b.pages;
 
-import com.tw.cisco.b2b.exceptions.ClickElementException;
-import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
-import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
+import com.tw.cisco.b2b.exceptions.*;
+import com.tw.cisco.b2b.navigation.HeaderNav;
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -56,6 +56,7 @@ public class AssignExpertisePopupPage extends BasePage<AssignExpertisePopupPage>
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AssignExpertisePopupPage.class);
 
+    HeaderNav headerNav;
     public AssignExpertisePopupPage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
@@ -89,6 +90,22 @@ public class AssignExpertisePopupPage extends BasePage<AssignExpertisePopupPage>
             waitForElement(ExpectedConditions.visibilityOf(sucessMessage),sucessMessage);
         } catch (TextElementNotFoundException | ClickElementException | ElementNotFoundException ex) {
             LOGGER.error("Expertise assignment failed",ex);
+        }
+        return new UserPage(driver);
+    }
+
+    public UserPage deelteSelfTaggedExpertise(String expertise){
+        try{
+            LOGGER.info("Verifying the self tagged expertise");
+            Assert.assertEquals("Self tagged expertise gets updated as", expertise, selfTaggedExpertiseList.get(selfTaggedExpertiseList.size() -1 ).getText());
+            LOGGER.info("Deleting the self tagged expertise");
+            clickIcon(removeSelfTaggedExpertiseList.get(selfTaggedExpertiseList.size() -1),"deleting the self tagged expertise");
+            LOGGER.info("Saving the action on expertise pop up");
+            clickButton(saveExpertiseButton);
+            headerNav = new HeaderNav(driver);
+            headerNav.waitForSpinnerToStop();
+        } catch(ClickElementException| ElementNotFoundException | SpinnerNotFoundException | SpinnerNotDisappearException | ClickIconNotFoundException ex ){
+            LOGGER.error("Delete self tagged expertise failed , ex");
         }
         return new UserPage(driver);
     }

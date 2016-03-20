@@ -1,7 +1,9 @@
 package com.tw.cisco.b2b.steps;
 
 import com.tw.cisco.b2b.helper.CommonMethodsHelper;
+import com.tw.cisco.b2b.pages.AssignExpertisePopupPage;
 import com.tw.cisco.b2b.pages.DefineExpertisePage;
+import com.tw.cisco.b2b.pages.ProfilePage;
 import com.tw.cisco.b2b.pages.UserPage;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
@@ -18,6 +20,8 @@ public class ExpertiseStepdefs {
     private WebDriver driver;
     DefineExpertisePage defineExpertisePage;
     UserPage userPage;
+    ProfilePage profilePage;
+    AssignExpertisePopupPage assignExpertisePopupPage;
     CommonMethodsHelper commonMethodsHelper ;
 
     public ExpertiseStepdefs(SharedDriver driver) {
@@ -74,6 +78,27 @@ public class ExpertiseStepdefs {
         defineExpertisePage.verifyDeleteExpertiseIcon(AREAOFEXPERTISE);
 
     }
+
+    @And("^user tags himself with the TimeStamped expertise \"([^\"]*)\"$")
+    public void userTagsHimselfWithTheTimeStampedExpertise(String arg0) throws Throwable {
+        profilePage = new ProfilePage(driver);
+        profilePage.selfTagExpertise(AREAOFEXPERTISE);
+    }
+
+
+    @Then("^user opens the assign expertise pop up for \"([^\"]*)\"$")
+    public void userOpensTheAssignExpertisePopUpFor(String arg0) throws Throwable {
+        String email = CommonMethodsHelper.getPropValue(arg0);
+        userPage = new UserPage(driver);
+        userPage.searchUser("\""+email+"\"").clickAssignExpertise(email);
+    }
+
+    @And("^user deletes the self tagged expertise \"([^\"]*)\" and save the changes$")
+    public void userDeletesTheSelfTaggedExpertiseAndSaveTheChanges(String arg0) throws Throwable {
+        assignExpertisePopupPage = new AssignExpertisePopupPage(driver);
+        assignExpertisePopupPage.deelteSelfTaggedExpertise(AREAOFEXPERTISE);
+    }
+
 
 
 }

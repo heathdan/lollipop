@@ -1,12 +1,11 @@
 package com.tw.cisco.b2b.navigation;
 
 
-import com.tw.cisco.b2b.exceptions.ClickElementException;
-import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
-import com.tw.cisco.b2b.exceptions.SpinnerNotDisappearException;
-import com.tw.cisco.b2b.exceptions.SpinnerNotFoundException;
+import com.tw.cisco.b2b.exceptions.*;
 import com.tw.cisco.b2b.pages.BasePage;
+import com.tw.cisco.b2b.pages.HomePage;
 import com.tw.cisco.b2b.pages.LoginPage;
+import com.tw.cisco.b2b.pages.ProfilePage;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -30,6 +29,9 @@ public class HeaderNav extends BasePage<HeaderNav> {
     @FindBy(css="#navbar")
     private WebElement topNavBar;
 
+    @FindBy(className = "navbar-header")
+    private WebElement homeIcon;
+
     @FindBy(xpath=".//div[@id='navbar']//input[@id='top-nav-search-box']")
     private WebElement topNavSearch;
 
@@ -38,6 +40,12 @@ public class HeaderNav extends BasePage<HeaderNav> {
 
     @FindBy(xpath=".//span[@class='user-name']")
     private WebElement userName;
+
+    @FindBy(xpath = "//li/a[text()='My Account ']")
+    private WebElement myAccount;
+
+    @FindBy(xpath = "//li/a[text()='Profile ']")
+    private WebElement profile;
 
     @FindBy(xpath=".//li[@class='logout last']/a")
     private WebElement logOut;
@@ -109,6 +117,30 @@ public class HeaderNav extends BasePage<HeaderNav> {
             throw new SpinnerNotDisappearException("Timeout for spinner to disappear",ex);
         }
     }
+
+    public ProfilePage navToProfile(){
+        LOGGER.trace("<< Navigating to Profile Page >>");
+        try{
+            LOGGER.info("navigating to profile page from TopNAv");
+            clickButton(userName);
+            clickButton(profile);
+        } catch (ClickElementException | ElementNotFoundException ex) {
+            LOGGER.error("--Error in clicking profile link from TopNav", ex);
+        }
+        return new ProfilePage(driver);
+    }
+
+    public HomePage navToHome(){
+        try{
+            LOGGER.info("navigating to home page via home Icon");
+            clickIcon(homeIcon,"Favicon");
+        }catch(ClickIconNotFoundException ex){
+            LOGGER.error("-- error in clicking favicon to navifate to homepage");
+        }
+        return new HomePage(driver);
+    }
+
+
 
 
     /***********************GET/SET METHODS*********************/

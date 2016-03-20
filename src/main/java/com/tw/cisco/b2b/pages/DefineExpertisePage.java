@@ -67,7 +67,7 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
         super(driver);
         instantiatePage(this);
         waitForPageToLoad(getPageLoadCondition());
-        headerNav = new HeaderNav(driver);
+       // headerNav = new HeaderNav(driver);
     }
 
     @Override
@@ -136,10 +136,11 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
     public DefineExpertisePage deleteUnusedExpertise(String Expertise){
         LOGGER.trace(">>Delete Unused Expertise()", Expertise);
         try {
+            headerNav = new HeaderNav(driver);
             LOGGER.info("Deleting the expertise");
             clickButton(expertiseDeleteButton);
             LOGGER.info("Verify the expertise is deleted");
-            getHeaderNav().waitForSpinnerToStop();
+            headerNav.waitForSpinnerToStop();
             LOGGER.info("searching the expertise \""+Expertise+"\"");
             enterText(searchExpertiseTextField,Expertise);
             clickButton(searchExpertiseIcon);
@@ -171,9 +172,6 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
 
     /*********************GET/SET METHODS***************************/
 
-    public HeaderNav getHeaderNav() {
-        return headerNav;
-    }
 
     public void setHeaderNav(HeaderNav headerNav) {
         this.headerNav = headerNav;

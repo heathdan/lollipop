@@ -2,6 +2,7 @@ package com.tw.cisco.b2b.steps;
 
 import com.tw.cisco.b2b.helper.CommonMethodsHelper;
 import com.tw.cisco.b2b.helper.UserDetails;
+import com.tw.cisco.b2b.navigation.HeaderNav;
 import com.tw.cisco.b2b.navigation.TabbedNav;
 import com.tw.cisco.b2b.pages.*;
 import cucumber.api.java.en.And;
@@ -24,6 +25,7 @@ public class AdminStepDefs  {
     HomePage homePage;
     RoleCreatePopupPage roleCreatePopupPage;
     LeftNav leftNav;
+    HeaderNav headerNav;
     AssignRolesPopupPage assignRolesPopupPage;
     ProfilePage profilePage;
 
@@ -51,6 +53,12 @@ public class AdminStepDefs  {
     @Given("^the user is on Roles and Permissions tab on admin page$")
     public void the_user_is_on_tab_on_admin_page() throws Throwable {
         userNavigatesToRolesPermissionTab();
+    }
+
+    @And("^user navigates to Profile page$")
+    public void userNavigatesToProfilePage() throws Throwable {
+        headerNav = new HeaderNav(driver);
+        headerNav.navToProfile();
     }
 
     @When("^he creates a new role named \"([^\"]*)\" and inherits permissions from \"([^\"]*)\" role$")
@@ -108,5 +116,6 @@ public class AdminStepDefs  {
         profilePage=new LeftNav(driver).navToPeople().navToAllPeople().searchUser("\""+userData.getUname()+ "\"").selectUser(userData.getUname());
         profilePage.verifyManager(true);
     }
+
 }
 

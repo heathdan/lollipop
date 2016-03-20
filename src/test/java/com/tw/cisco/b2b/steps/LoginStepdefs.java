@@ -1,7 +1,7 @@
 package com.tw.cisco.b2b.steps;
 
-import com.tw.cisco.b2b.navigation.HeaderNav;
 import com.tw.cisco.b2b.helper.CommonMethodsHelper;
+import com.tw.cisco.b2b.navigation.HeaderNav;
 import com.tw.cisco.b2b.pages.HomePage;
 import com.tw.cisco.b2b.pages.LeftNav;
 import com.tw.cisco.b2b.pages.LoginPage;
@@ -41,4 +41,5 @@ public class LoginStepdefs {
     public void User_logout(String arg1) throws Throwable {
         new HeaderNav(driver).CKlogout();
     }
+
 }

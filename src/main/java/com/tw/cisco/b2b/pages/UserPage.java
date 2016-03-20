@@ -113,13 +113,13 @@ public class UserPage extends BasePage<UserPage> {
     private WebElement paginationNext;
 
     static final Logger LOGGER = LoggerFactory.getLogger(UserPage.class);
-    HeaderNav headerNav;
 
+    HeaderNav headerNav;
     public UserPage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
         waitForPageToLoad(getPageLoadCondition());
-        headerNav = new HeaderNav(driver);
+      //  headerNav = new HeaderNav(driver);
     }
 
     @Override
@@ -166,7 +166,7 @@ public class UserPage extends BasePage<UserPage> {
         try {
             waitForElement(ExpectedConditions.textToBePresentInElement(userEmail,email),userEmail);
             LOGGER.info("after search the value for page fatory for email is   \""+userEmail.getText()+" \" " );
-            LOGGER.info("Assigning the expertise to user");
+            LOGGER.info("clicking on assign expertise icon");
             clickIcon(assignExpertisePopupicon,"Expertise");
         } catch (ClickIconNotFoundException ex) {
             LOGGER.error("--- Expertise popup failed", ex);

@@ -1,5 +1,10 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.exceptions.ClickElementException;
+import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
+import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
+import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
+import com.tw.cisco.b2b.navigation.HeaderNav;
 import org.junit.Assert;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -23,7 +28,7 @@ public class ProfilePage extends BasePage<ProfilePage> {
     @FindBy(xpath = ".//h5[@id='qa-automation-username']//following-sibling::p[1]")
     private WebElement title;
 
-    @FindBy(xpath = "//h5[@id='qa-automation-username']//following-sibling::p[2]")
+    @FindBy(xpath = ".//h5[@id='qa-automation-username']//following-sibling::p[2]")
     private WebElement org;
 
     @FindBy(xpath = ".//p[@class='manager-details']//a")
@@ -32,6 +37,19 @@ public class ProfilePage extends BasePage<ProfilePage> {
     @FindBy(xpath = ".//div[@id='contact-info']//a[@class='profile-info-text']")
     private WebElement email;
 
+    @FindBy(xpath = ".//h4[text()=' Expertise']/parent::div//button")
+    private WebElement editSaveIcon;
+
+    @FindBy(xpath = ".//input[@class='tt-query' and @placeholder='Start typing to choose an Area of Expertise...']")
+    private WebElement expertiseTextField;
+
+    @FindBy(xpath = ".//div[@class='tt-suggestion']//p")
+    private WebElement expertiseSuggest;
+
+    @FindBy(xpath = ".//div[@class='success' and text()='Area of Expertise added successfully.']")
+    private WebElement expertiseSuccessMessage;
+
+    HeaderNav headerNav;
     public ProfilePage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
@@ -41,7 +59,7 @@ public class ProfilePage extends BasePage<ProfilePage> {
     @Override
     protected void instantiatePage(ProfilePage page) {
         try {
-            LOGGER.info("Instantiating page: " + page.getClass().getSimpleName());
+            LOGGER.info("** instantiating page: " + page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch (Exception e) {
             LOGGER.error("--- Error instantiating :" + page.getClass().getSimpleName());
@@ -71,6 +89,26 @@ public class ProfilePage extends BasePage<ProfilePage> {
         } else {
             Assert.assertFalse(isElementPresent(manager));
         }
+    }
+
+    public HomePage selfTagExpertise(String expertise) {
+        LOGGER.trace("<< Self Tagging expertise on Profile page");
+        try {
+            LOGGER.info("Editing the expertise section on profile page");
+            clickIcon(editSaveIcon,"Edit Expertise icon on Profile Page");
+            LOGGER.info("entering the time stamped expertise");
+            enterText(expertiseTextField,expertise);
+            LOGGER.info("waiting for the expertise auto suggest");
+            waitForElement(ExpectedConditions.visibilityOf(expertiseSuggest),expertiseSuggest);
+            clickButton(expertiseSuggest);
+            LOGGER.info("waiting for success message");
+            waitForElement(ExpectedConditions.visibilityOf(expertiseSuccessMessage),expertiseSuccessMessage);
+            headerNav = new HeaderNav(driver);
+            headerNav.navToHome();
+        } catch (ClickIconNotFoundException | TextElementNotFoundException | ElementNotFoundException | ClickElementException ex) {
+            LOGGER.error("--error in self tagging expertise", ex );
+        }
+        return new HomePage(driver);
     }
 
     public boolean isElementPresent(WebElement element) {

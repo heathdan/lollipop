@@ -118,6 +118,10 @@ public class LeftNav extends BasePage<LeftNav> {
 
     public AdminPage navToAdmin() {
         try {
+          //  Actions actions = new Actions(driver);
+          //  actions.moveToElement(admin);
+          //  actions.click();
+         //   actions.perform();
             clickIcon(admin, "Admin Tab");
         } catch (ClickIconNotFoundException ex) {
             LOGGER.error("Admin access is missing", ex);
