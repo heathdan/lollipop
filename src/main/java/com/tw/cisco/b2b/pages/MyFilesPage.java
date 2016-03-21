@@ -99,12 +99,6 @@ public class MyFilesPage extends BasePage<MyFilesPage> {
     @FindBy(className = "truncate")
     private WebElement fileTags;
 
-
-
-
-
-
-
     public MyFilesPage(WebDriver driver) {
         super(driver);
         instantiatePage(this);

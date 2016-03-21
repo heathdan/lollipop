@@ -8,6 +8,8 @@ import com.tw.cisco.b2b.pages.LoginPage;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.management.ManagementFactory;
 
@@ -15,6 +17,7 @@ import java.lang.management.ManagementFactory;
  * Created by aswathyn on 04/02/16.
  */
 public class LoginStepdefs {
+    static final Logger LOGGER = LoggerFactory.getLogger(AdminStepDefs.class);
     private WebDriver driver;
     HomePage homePage;
     LoginPage loginPage;
@@ -26,7 +29,7 @@ public class LoginStepdefs {
         loginPage = new LoginPage(driver);
         long threadId = Thread.currentThread().getId();
         String processName = ManagementFactory.getRuntimeMXBean().getName();
-        System.out.println("Started in thread: " + threadId + ", in JVM: " + processName);
+        LOGGER.info("Started in thread: " + threadId + ", in JVM: " + processName);
     }
 
     @Given("^that the user \"([^\"]*)\" logged in as \"([^\"]*)\" and \"([^\"]*)\"$")
