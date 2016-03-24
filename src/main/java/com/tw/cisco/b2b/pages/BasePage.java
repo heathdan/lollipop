@@ -1,5 +1,6 @@
 package com.tw.cisco.b2b.pages;
 
+import com.google.common.base.Function;
 import com.tw.cisco.b2b.exceptions.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -27,6 +28,8 @@ public abstract class BasePage<P extends BasePage> {
     protected static final int SPINNER_TO_APPEAR_TIMEOUT = 5;
     protected static final int SPINNER_TO_DISAPPEAR_TIMEOUT = 30;
     protected static final int SPINNER_POLLING_RATE = 50;
+    protected static final int INDEXING_TIMEOUT=40;
+    protected static final int INDEXING_POLLING_RATE=5;
 
     static final Logger LOGGER = LoggerFactory.getLogger(BasePage.class);
 
@@ -54,6 +57,21 @@ public abstract class BasePage<P extends BasePage> {
             LOGGER.error("-- Error in page loading");
         }
         LOGGER.trace("<< waitForPageToLoad()");
+    }
+
+    protected WebElement waitForIndexing(final WebElement webElement) {
+
+        Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+                .withTimeout(INDEXING_TIMEOUT,TimeUnit.SECONDS)
+                .pollingEvery(INDEXING_POLLING_RATE,TimeUnit.SECONDS);
+
+        WebElement element = wait.until(new Function<WebDriver, WebElement>() {
+            public WebElement apply(WebDriver driver) {
+                refreshPage();
+                return webElement;
+            }
+        });
+        return element;
     }
 
     /**
@@ -165,6 +183,10 @@ public abstract class BasePage<P extends BasePage> {
 
     public void switchBackFromiFrame() throws IframeNotFoundException {
         driver.switchTo().defaultContent();
+    }
+
+    public void refreshPage() {
+        driver.navigate().refresh();
     }
 }
 

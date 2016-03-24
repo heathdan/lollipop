@@ -8,6 +8,8 @@ import com.tw.cisco.b2b.pages.UserPage;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.management.ManagementFactory;
 
@@ -22,13 +24,13 @@ public class ExpertiseStepdefs {
     UserPage userPage;
     ProfilePage profilePage;
     AssignExpertisePopupPage assignExpertisePopupPage;
-    CommonMethodsHelper commonMethodsHelper ;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExpertiseStepdefs.class);
 
     public ExpertiseStepdefs(SharedDriver driver) {
         this.driver = driver;
         long threadId = Thread.currentThread().getId();
         String processName = ManagementFactory.getRuntimeMXBean().getName();
-        System.out.println("Started in thread: " + threadId + ", in JVM: " + processName);
+        LOGGER.info("Started in thread: " + threadId + ", in JVM: " + processName);
 
     }
 

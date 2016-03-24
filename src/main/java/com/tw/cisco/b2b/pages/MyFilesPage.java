@@ -1,5 +1,11 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
+import com.tw.cisco.b2b.exceptions.SpinnerNotDisappearException;
+import com.tw.cisco.b2b.exceptions.SpinnerNotFoundException;
+import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
+import com.tw.cisco.b2b.navigation.HeaderNav;
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,13 +19,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public class MyFilesPage extends BasePage<MyFilesPage> {
 
     @FindBy(xpath = "//h1[@title='My Files']")
-    private WebElement MyFilesWait;
+    private WebElement myFilesWait;
 
     @FindBy(id = "catalog-grid-view")
     private WebElement gridLayoutIcon;
 
     @FindBy(id = "catalog-list-view")
-    private WebElement ListLayoutIcon;
+    private WebElement listLayoutIcon;
 
     @FindBy(xpath = "//a[@data-icon-before='sort-descending']")
     private WebElement sortDescending;
@@ -66,8 +72,8 @@ public class MyFilesPage extends BasePage<MyFilesPage> {
     @FindBy(xpath = "//li[@class='views-filter']/input[@value='followed']")
     private WebElement filterByFollowedRadioButton;
 
-    @FindBy(xpath = "//p[@class='item-title eclipse-text']/a")
-    private WebElement fileLink;
+    @FindBy(xpath = ".//div[@id='file-library-list']//a[@class='eclipse-text view-details']")
+    private WebElement searchfileLink;
 
     @FindBy(xpath = "//p[@class='subtitle item-size']")
     private WebElement fileSize;
@@ -76,7 +82,7 @@ public class MyFilesPage extends BasePage<MyFilesPage> {
     private WebElement fileModifiedDate;
 
     @FindBy(xpath = "//span[text()='Modified ']/following-sibling::p[@class='subtitle modf-time']")
-    private WebElement FileModifiedTime;
+    private WebElement fileModifiedTime;
 
     @FindBy(xpath = "//span[text()='Uploaded ']/following-sibling::p[@class='subtitle modf-date']")
     private WebElement fileUploadDate;
@@ -85,30 +91,33 @@ public class MyFilesPage extends BasePage<MyFilesPage> {
     private WebElement fileUploaddTime;
 
     @FindBy(xpath = "//ul[@class='file-actions']//a[@data-original-title='Download']")
-    private WebElement DownloadIcon;
+    private WebElement downloadIcon;
 
     @FindBy(xpath = "//ul[@class='file-actions']//a[@data-original-title='Properties']")
-    private WebElement PropertiesIcon;
+    private WebElement propertiesIcon;
 
     @FindBy(xpath = "//ul[@class='file-actions']//a[@data-original-title='Share']")
-    private WebElement ShareIcon;
+    private WebElement shareIcon;
 
     @FindBy(xpath = "//ul[@class='file-actions']//a[@data-original-title='Delete']")
-    private WebElement DeleteIcon;
+    private WebElement deleteIcon;
 
     @FindBy(className = "truncate")
     private WebElement fileTags;
 
+    @FindBy(xpath = ".//div[@class='filter-wrapper']//button[@class='btn upload-btn']")
+    private WebElement uploadFile;
 
+    @FindBy(xpath = ".//div[@class='no-value' and text()=' No results found']")
+    private WebElement noResults;
 
-
-
-
+    HeaderNav headerNav;
 
     public MyFilesPage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
         waitForPageToLoad(getPageLoadCondition());
+        headerNav = new HeaderNav(driver);
     }
 
     @Override
@@ -119,10 +128,38 @@ public class MyFilesPage extends BasePage<MyFilesPage> {
         } catch (Exception e) {
             LOGGER.error("--- Error instantiating :"+page.getClass().getSimpleName());
         }
-    }
 
+    }
     @Override
     protected ExpectedCondition getPageLoadCondition() {
-        return ExpectedConditions.visibilityOf(MyFilesWait);
+        return ExpectedConditions.visibilityOf(myFilesWait);
+    }
+
+    public UploadFilePopupPage navToFileUpload() {
+        uploadFile.click();
+        return new UploadFilePopupPage(driver);
+    }
+
+    public void searchAndRefresh(String fileName) {
+        String searchFileName = null ;
+        try {
+            enterText(searchinputField, fileName);
+            clickIcon(searchIcon, "Searching file");
+            getHeaderNav().waitForSpinnerToStop();
+            searchFileName= new MyFilesPage(driver).waitForIndexing(searchfileLink).getText();
+            Assert.assertEquals(fileName,searchFileName);
+        } catch (ClickIconNotFoundException | TextElementNotFoundException |SpinnerNotFoundException | SpinnerNotDisappearException ex) {
+            LOGGER.error("-- Error in searching file",ex);
+        }
+    }
+
+    /***********************GET/SET METHODS*********************/
+
+    public HeaderNav getHeaderNav() {
+        return headerNav;
+    }
+
+    public void setHeaderNav(HeaderNav headerNav) {
+        this.headerNav = headerNav;
     }
 }
