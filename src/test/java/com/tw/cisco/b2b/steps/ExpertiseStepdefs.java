@@ -25,13 +25,17 @@ public class ExpertiseStepdefs {
     UserPage userPage;
     ProfilePage profilePage;
     AssignExpertisePopupPage assignExpertisePopupPage;
-    CommonMethodsHelper commonMethodsHelper ;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExpertiseStepdefs.class);
 
     public ExpertiseStepdefs(SharedDriver driver) {
         this.driver = driver;
         long threadId = Thread.currentThread().getId();
         String processName = ManagementFactory.getRuntimeMXBean().getName();
         LOGGER.info("Started in thread: " + threadId + ", in JVM: " + processName);
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
     }
 
     @Then("^user define a new TimeStamped expertise \"([^\"]*)\"$")

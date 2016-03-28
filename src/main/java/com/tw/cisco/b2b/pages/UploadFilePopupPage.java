@@ -1,5 +1,10 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.exceptions.*;
+import com.tw.cisco.b2b.navigation.HeaderNav;
+import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -42,11 +47,19 @@ public class UploadFilePopupPage extends BasePage<UploadFilePopupPage> {
     @FindBy(xpath=".//div[@class='modal-footer file-upload-error']/button[text()='Try Again']")
     private WebElement uploadErrorTryAgain;
 
+    //@FindBy(xpath=".//input[@type='file']")
+    @FindBy(xpath = ".//fieldset//input[@type='file']")
+    private WebElement uploadFile;
+
+    By fileInput = By.xpath(".//input[@type='file']");
+
+    HeaderNav headerNav;
 
     public UploadFilePopupPage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
         waitForPageToLoad(getPageLoadCondition());
+        headerNav = new HeaderNav(driver);
     }
 
     @Override
@@ -64,7 +77,35 @@ public class UploadFilePopupPage extends BasePage<UploadFilePopupPage> {
         return ExpectedConditions.visibilityOf(popupHeader);
     }
 
-    public void uploadFile(String fileName) {
+    public MyFilesPage uploadFile(String fileName,String filePath) throws TextElementNotFoundException, ElementNotFoundException, ClickElementException, SpinnerNotDisappearException, SpinnerNotFoundException {
+        LOGGER.trace(">> uploadFile() :"+fileName +","+filePath);
 
+            LOGGER.debug("Uploading from filePath :"+filePath);
+            String jsScript = "document.getElementById('kc-files').style.display = 'block';";
+            JavascriptExecutor executor = (JavascriptExecutor)driver;
+            executor.executeScript(jsScript);
+
+           enterText(uploadFile,filePath);
+           //enterTextBy(fileInput,filePath);
+            LOGGER.debug("Uploading file with title:"+fileName);
+            enterText(title,fileName);
+            clickButton(uploadButton);
+            getHeaderNav().waitForSpinnerToStop();
+            Assert.assertTrue(uploadSuccess.isDisplayed());
+            clickButton(doneButton);
+            getHeaderNav().waitForSpinnerToStop();
+
+        return new MyFilesPage(driver);
+
+    }
+
+    /***********************GET/SET METHODS*********************/
+
+    public HeaderNav getHeaderNav() {
+        return headerNav;
+    }
+
+    public void setHeaderNav(HeaderNav headerNav) {
+        this.headerNav = headerNav;
     }
 }
