@@ -42,7 +42,7 @@ public class DriverFactory {
      * @param platform
      * @return browser
      */
-    public static WebDriver geDriver(Driver driverType, String browserVersion, String platform){
+    public static WebDriver getDriver(Driver driverType, String browserVersion, String platform){
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
 
         if (gridHubUrl==null) {

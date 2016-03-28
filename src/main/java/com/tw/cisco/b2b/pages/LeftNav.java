@@ -131,8 +131,9 @@ public class LeftNav extends BasePage<LeftNav> {
 
     public KCPage navToKC() {
         try {
+            //
             clickIcon(knowledgeCenter,"KC");
-        } catch (ClickIconNotFoundException ex) {
+        } catch ( ClickIconNotFoundException ex) {
             LOGGER.error(" KC is missing",ex);
         }
         return new KCPage(driver);

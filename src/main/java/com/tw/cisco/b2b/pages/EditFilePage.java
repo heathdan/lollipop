@@ -90,7 +90,7 @@ public class EditFilePage extends BasePage<EditFilePage> {
             LOGGER.info("Switching to iframe");
             switchToiFrame(iframeClass);
             LOGGER.info("Passing file description");
-            enterTestBy(iframeDescription, content);
+            enterTextBy(iframeDescription, content);
             LOGGER.info("switching back from iframe");
             switchBackFromiFrame();
         } catch (IframeNotFoundException ex) {

@@ -3,6 +3,8 @@ package com.tw.cisco.b2b.pages;
 import com.tw.cisco.b2b.exceptions.*;
 import com.tw.cisco.b2b.navigation.HeaderNav;
 import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -45,8 +47,11 @@ public class UploadFilePopupPage extends BasePage<UploadFilePopupPage> {
     @FindBy(xpath=".//div[@class='modal-footer file-upload-error']/button[text()='Try Again']")
     private WebElement uploadErrorTryAgain;
 
-    @FindBy(xpath=".//input[@type='file']")
+    //@FindBy(xpath=".//input[@type='file']")
+    @FindBy(xpath = ".//fieldset//input[@type='file']")
     private WebElement uploadFile;
+
+    By fileInput = By.xpath(".//input[@type='file']");
 
     HeaderNav headerNav;
 
@@ -54,7 +59,7 @@ public class UploadFilePopupPage extends BasePage<UploadFilePopupPage> {
         super(driver);
         instantiatePage(this);
         waitForPageToLoad(getPageLoadCondition());
-
+        headerNav = new HeaderNav(driver);
     }
 
     @Override
@@ -74,9 +79,14 @@ public class UploadFilePopupPage extends BasePage<UploadFilePopupPage> {
 
     public MyFilesPage uploadFile(String fileName,String filePath) throws TextElementNotFoundException, ElementNotFoundException, ClickElementException, SpinnerNotDisappearException, SpinnerNotFoundException {
         LOGGER.trace(">> uploadFile() :"+fileName +","+filePath);
-//        try {
+
             LOGGER.debug("Uploading from filePath :"+filePath);
-            enterText(uploadFile,filePath);
+            String jsScript = "document.getElementById('kc-files').style.display = 'block';";
+            JavascriptExecutor executor = (JavascriptExecutor)driver;
+            executor.executeScript(jsScript);
+
+           enterText(uploadFile,filePath);
+           //enterTextBy(fileInput,filePath);
             LOGGER.debug("Uploading file with title:"+fileName);
             enterText(title,fileName);
             clickButton(uploadButton);
@@ -84,12 +94,7 @@ public class UploadFilePopupPage extends BasePage<UploadFilePopupPage> {
             Assert.assertTrue(uploadSuccess.isDisplayed());
             clickButton(doneButton);
             getHeaderNav().waitForSpinnerToStop();
-//        } catch (TextElementNotFoundException | ElementNotFoundException |ClickElementException ex) {
-//            LOGGER.error("-- Upload failed",ex);
-//            throw new
-//        } catch(SpinnerNotDisappearException | SpinnerNotFoundException ex) {
-//            LOGGER.error("-- Spinner not found", ex);
-//        }
+
         return new MyFilesPage(driver);
 
     }

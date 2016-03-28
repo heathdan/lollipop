@@ -113,7 +113,7 @@ public abstract class BasePage<P extends BasePage> {
     public void enterText(WebElement webElement, String message) throws TextElementNotFoundException {
         if (!(webElement == null)) {
             if (webElement.isDisplayed()) {
-                webElement.clear();
+                //webElement.clear();
                 webElement.sendKeys(message);
             } else {
                 throw new TextElementNotFoundException("Text element not found");
@@ -121,7 +121,7 @@ public abstract class BasePage<P extends BasePage> {
         }
     }
 
-    public void enterTestBy(By ByElement,String message) {
+    public void enterTextBy(By ByElement, String message) {
         driver.findElement(ByElement).sendKeys(message);
     }
 
