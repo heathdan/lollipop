@@ -1,9 +1,6 @@
 package com.tw.cisco.b2b.pages;
 
-import com.tw.cisco.b2b.exceptions.ClickElementException;
-import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
-import com.tw.cisco.b2b.exceptions.SelectDropDownNotFoundException;
-import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
+import com.tw.cisco.b2b.exceptions.*;
 import com.tw.cisco.b2b.navigation.HeaderNav;
 import com.tw.cisco.b2b.navigation.TabbedNav;
 import org.openqa.selenium.WebDriver;
@@ -96,8 +93,9 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
             clickButton(saveRoleCreation);
             waitForElement(ExpectedConditions.visibilityOf(roleSuccessPopupHeader),roleSuccessPopupHeader);
             clickButton(roleSuccessPopUp);
+            new HeaderNav(driver).waitForSpinnerToStop();
         }
-        catch(TextElementNotFoundException | ClickElementException | ElementNotFoundException ex) {
+        catch(TextElementNotFoundException | ClickElementException |SpinnerNotFoundException|SpinnerNotDisappearException| ElementNotFoundException ex) {
             LOGGER.error(roleName+" creation failed", ex);
         }
         catch(SelectDropDownNotFoundException ex) {

@@ -21,7 +21,7 @@ public class LeftNav extends BasePage<LeftNav> {
     @FindBys(@FindBy(xpath = ".//li[@class='active']/button/span[@class='menu-text']"))
     private List<WebElement> leftNavPanel;
 
-    @FindBy(xpath = ".//li[@class='active']//span[text()=' Workspace']/parent::button/parent::li")
+    @FindBy(xpath = ".//li[@class='active']//span[text()='Workspace']/parent::button/parent::li")
     private WebElement workspace;
 
     @FindBy(xpath = ".//span[text()='Knowledge Map']")
@@ -30,7 +30,7 @@ public class LeftNav extends BasePage<LeftNav> {
     @FindBy(xpath = ".//span[text()='Activity Stream']")
     private WebElement ActivityStream;
 
-    @FindBy(xpath = ".//li[@class='active']//span[text()=' Learning']/parent::button/parent::li")
+    @FindBy(xpath = ".//li[@class='active']//span[text()='Learning']/parent::button/parent::li")
     private WebElement learrning;
 
     @FindBy(xpath = ".//span[text()='Training Catalog']")
@@ -48,7 +48,7 @@ public class LeftNav extends BasePage<LeftNav> {
     @FindBy(xpath = ".//button[@id='knowledgeCenterLeftNavButton']")
     private WebElement knowledgeCenter;
 
-    @FindBy(xpath = ".//li[@class='active']//span[text()=' Collaborate']/parent::button/parent::li")
+    @FindBy(xpath = ".//li[@class='active']//span[text()='Collaborate']/parent::button/parent::li")
     private WebElement collaborate;
 
     @FindBy(xpath = ".//span[text()='Communities']")
@@ -69,10 +69,10 @@ public class LeftNav extends BasePage<LeftNav> {
     @FindBy(xpath = ".//span[text()='RSS Feeds']")
     private WebElement RSSFeeds;
 
-    @FindBy(xpath = ".//li[@class='active']//span[text()=' People']/parent::button/parent::li")
+    @FindBy(xpath = ".//li[@class='active']//span[text()='People']/parent::button/parent::li")
     private WebElement people;
 
-    @FindBy(xpath = ".//li[@class='active']//span[text()=' Mobile Folder']/parent::button/parent::li")
+    @FindBy(xpath = ".//li[@class='active']//span[text()='Mobile Folder']/parent::button/parent::li")
     private WebElement mobileFolder;
 
     @FindBy(xpath = ".//span[text()='My Collections']")

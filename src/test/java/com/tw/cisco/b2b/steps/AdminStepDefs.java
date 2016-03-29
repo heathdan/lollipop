@@ -63,14 +63,16 @@ public class AdminStepDefs  {
 
     @When("^he creates a new role named \"([^\"]*)\" and inherits permissions from \"([^\"]*)\" role$")
     public void he_creates_a_new_role_named_and_inherits_permissions_from_role(String arg1, String arg2) throws Throwable {
+        roleNpermission = new RolesAndPermissionPage(driver);
         roleCreatePopupPage= roleNpermission.findRoleAndDelete(arg1).clickRoleCreation();
         roleCreatePopupPage.createNewInheritRole(arg1, arg2);
     }
 
     @When("^he assigns role \"([^\"]*)\" to \"([^\"]*)\"$")
     public void he_assigns_role_to(String arg1, String arg2) throws Throwable {
-        assignRolesPopupPage= new UserPage(driver).searchUser(new CommonMethodsHelper().getPropValue(arg2)).clickAssignRole();
-        assignRolesPopupPage.deleteAllRoles().clickAssignRole().assignAllRoles(arg1);
+        String learner = new CommonMethodsHelper().getPropValue(arg2);
+        assignRolesPopupPage= new UserPage(driver).searchUser("\""+learner+"\"").clickAssignRole(learner);
+        assignRolesPopupPage.deleteAllRoles().clickAssignRole(learner).assignAllRoles(arg1);
     }
 
     @Given("^the user is on Users tab on admin page$")
