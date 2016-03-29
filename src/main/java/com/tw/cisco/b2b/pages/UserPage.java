@@ -185,9 +185,12 @@ public class UserPage extends BasePage<UserPage> {
         return new UserPage(driver);
     }
 
-    public AssignRolesPopupPage clickAssignRole(){
+    public AssignRolesPopupPage clickAssignRole(String email){
         LOGGER.trace(">> clickAssignRole()");
         try {
+            waitForElement(ExpectedConditions.textToBePresentInElement(userEmail,email),userEmail);
+            LOGGER.info("after search the value for page fatory for email is   \""+userEmail.getText()+" \" " );
+            LOGGER.info("clicking on assign roles icon");
             clickIcon(assignRolesPopupicon,"Roles icon");
         } catch (ClickIconNotFoundException ex) {
             LOGGER.error("--- Assign role popup not found", ex);

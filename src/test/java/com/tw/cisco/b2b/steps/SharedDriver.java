@@ -38,7 +38,7 @@ public class SharedDriver extends EventFiringWebDriver {
 
     private static WebDriver getRealDriver() {
         if(REAL_DRIVER==null) {
-            REAL_DRIVER = DriverFactory.getDriver(DriverFactory.Driver.FIREFOX, "33", "MAC");
+            REAL_DRIVER = DriverFactory.getDriver(DriverFactory.Driver.CHROME, "33", "MAC");
         }
         return REAL_DRIVER;
     }
