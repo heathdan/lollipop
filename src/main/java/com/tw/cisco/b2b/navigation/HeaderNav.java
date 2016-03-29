@@ -108,8 +108,7 @@ public class HeaderNav extends BasePage<HeaderNav> {
             LOGGER.info("wait for spinner to appear");
             if (waitForSpinnerAppear.until(ExpectedConditions.visibilityOf(spinner)) != null) {
                 LOGGER.info("wait for spinner to disappear");
-                waitForSpinnerDisappear.until(ExpectedConditions
-                        .invisibilityOfElementLocated(spinnerLocator));
+                waitForSpinnerDisappear.until(ExpectedConditions.invisibilityOfElementLocated(spinnerLocator));
             } else {
                 throw new SpinnerNotFoundException("Spinner not found");
             }
@@ -119,9 +118,9 @@ public class HeaderNav extends BasePage<HeaderNav> {
     }
 
     public ProfilePage navToProfile(){
-        LOGGER.trace("<< Navigating to Profile Page >>");
+        LOGGER.trace(">> Navigating to Profile Page");
         try{
-            LOGGER.info("navigating to profile page from TopNAv");
+            LOGGER.info("navigating to profile page from TopNav");
             clickButton(userName);
             clickButton(profile);
         } catch (ClickElementException | ElementNotFoundException ex) {
@@ -135,9 +134,16 @@ public class HeaderNav extends BasePage<HeaderNav> {
             LOGGER.info("navigating to home page via home Icon");
             clickIcon(homeIcon,"Favicon");
         }catch(ClickIconNotFoundException ex){
-            LOGGER.error("-- error in clicking favicon to navifate to homepage");
+            LOGGER.error("-- error in clicking favicon to navigate to homepage");
         }
         return new HomePage(driver);
+    }
+
+    public TabbedNav navToMyActivity() throws Exception {
+        LOGGER.trace(">>navToMyActivity() ");
+        clickButton(userName);
+        clickButton(profile);
+        return new TabbedNav(driver);
     }
 
 

@@ -18,7 +18,6 @@ Feature: KC-1
     Then he should be able to open the "epub" in a new window
     And the user deletes the file "epub_UploadDoc"
 
-
   Scenario:Learner uploads a video file
     Given the user should be able to upload file "Video_File" from "Documents/small.webm"
     And the user deletes the file "Video_File"

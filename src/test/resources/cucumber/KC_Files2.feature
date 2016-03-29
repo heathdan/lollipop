@@ -10,6 +10,6 @@ Feature: KC-1
   Scenario:Learner uploads a pdf file
     Given the user is on "My File" KC page
     Then the user should be able to upload file "pdf_UploadDoc" from "DataStageAndMongoDB.pdf"
-#    When I open "My Activities" page
+    When I open "My Activities" page
 #    Then I should be able to see the "uploaded" a "file" document activity
 #    And the user deletes the file "pdf_UploadDoc"

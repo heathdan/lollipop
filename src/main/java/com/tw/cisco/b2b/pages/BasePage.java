@@ -59,12 +59,17 @@ public abstract class BasePage<P extends BasePage> {
         LOGGER.trace("<< waitForPageToLoad()");
     }
 
-    protected WebElement waitForIndexing(final WebElement webElement) {
 
+    /**
+     * Method to wait for indexing to complete
+     *
+     * @param webElement
+     */
+    protected WebElement waitForIndexing(final WebElement webElement) {
+        LOGGER.debug(">> waitForIndexing"+ webElement.toString());
         Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
                 .withTimeout(INDEXING_TIMEOUT,TimeUnit.SECONDS)
                 .pollingEvery(INDEXING_POLLING_RATE,TimeUnit.SECONDS);
-
         WebElement element = wait.until(new Function<WebDriver, WebElement>() {
             public WebElement apply(WebDriver driver) {
                 refreshPage();
@@ -109,13 +114,13 @@ public abstract class BasePage<P extends BasePage> {
         LOGGER.trace("<< waitForElement()");
     }
 
-
     public void enterText(WebElement webElement, String message) throws TextElementNotFoundException {
         if (!(webElement == null)) {
             if (webElement.isDisplayed()) {
-                //webElement.clear();
+                webElement.clear();
                 webElement.sendKeys(message);
             } else {
+                LOGGER.error("--"+webElement.toString()+ " not found");
                 throw new TextElementNotFoundException("Text element not found");
             }
         }
@@ -130,9 +135,11 @@ public abstract class BasePage<P extends BasePage> {
             if (webElement.isEnabled()) {
                 webElement.click();
             } else {
+                LOGGER.error("--"+webElement.toString()+ " not clickable");
                 throw new ClickElementException(webElement.toString() + " not clickable");
             }
         } else {
+            LOGGER.error("--"+webElement.toString()+ " not visible");
             throw new ElementNotFoundException(webElement.toString() + " not visible");
         }
     }
@@ -151,6 +158,7 @@ public abstract class BasePage<P extends BasePage> {
         if (isElementPresent(element)) {
             element.click();
         } else {
+            LOGGER.error("--"+element.toString()+ " not found");
             throw new ClickIconNotFoundException(message + " not found");
         }
     }
@@ -160,6 +168,7 @@ public abstract class BasePage<P extends BasePage> {
             Select selectValue = new Select(element);
             selectValue.selectByVisibleText(textValue);
         } catch (NoSuchElementException ex) {
+            LOGGER.error("--"+element.toString()+ " not found");
             throw new SelectDropDownNotFoundException(textValue + " not found", ex);
         }
     }
@@ -169,6 +178,7 @@ public abstract class BasePage<P extends BasePage> {
             webElement.isDisplayed();
             return true;
         } catch (NoSuchElementException ex) {
+            LOGGER.error("--"+webElement.toString()+ " not displayed");
             return false;
         }
     }
@@ -177,6 +187,7 @@ public abstract class BasePage<P extends BasePage> {
         if(isElementPresent(element)){
             driver.switchTo().frame(element);
         }else {
+            LOGGER.error("-- iframe not found");
             throw new IframeNotFoundException(element.toString() + "not found");
         }
     }

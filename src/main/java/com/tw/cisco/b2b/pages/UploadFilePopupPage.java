@@ -80,23 +80,19 @@ public class UploadFilePopupPage extends BasePage<UploadFilePopupPage> {
     public MyFilesPage uploadFile(String fileName,String filePath) throws TextElementNotFoundException, ElementNotFoundException, ClickElementException, SpinnerNotDisappearException, SpinnerNotFoundException {
         LOGGER.trace(">> uploadFile() :"+fileName +","+filePath);
 
-            LOGGER.debug("Uploading from filePath :"+filePath);
-            String jsScript = "document.getElementById('kc-files').style.display = 'block';";
-            JavascriptExecutor executor = (JavascriptExecutor)driver;
-            executor.executeScript(jsScript);
+        String jsScript = "document.getElementById('kc-files').style.display = 'block';";
+        JavascriptExecutor executor = (JavascriptExecutor)driver;
+        executor.executeScript(jsScript);
 
-           enterText(uploadFile,filePath);
-           //enterTextBy(fileInput,filePath);
-            LOGGER.debug("Uploading file with title:"+fileName);
-            enterText(title,fileName);
-            clickButton(uploadButton);
-            getHeaderNav().waitForSpinnerToStop();
-            Assert.assertTrue(uploadSuccess.isDisplayed());
-            clickButton(doneButton);
-            getHeaderNav().waitForSpinnerToStop();
-
+        enterText(uploadFile,filePath);
+        LOGGER.debug("Uploading file with title:"+fileName);
+        enterText(title,fileName);
+        clickButton(uploadButton);
+        getHeaderNav().waitForSpinnerToStop();
+        Assert.assertTrue(uploadSuccess.isDisplayed());
+        clickButton(doneButton);
+        getHeaderNav().waitForSpinnerToStop();
         return new MyFilesPage(driver);
-
     }
 
     /***********************GET/SET METHODS*********************/

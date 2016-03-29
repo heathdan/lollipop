@@ -140,17 +140,14 @@ public class MyFilesPage extends BasePage<MyFilesPage> {
         return new UploadFilePopupPage(driver);
     }
 
-    public void searchAndRefresh(String fileName) {
+    public void searchAndRefresh(String fileName) throws TextElementNotFoundException,ClickIconNotFoundException,SpinnerNotDisappearException, SpinnerNotFoundException {
+        LOGGER.info("Searching the file :"+fileName);
         String searchFileName = null ;
-        try {
-            enterText(searchinputField, fileName);
-            clickIcon(searchIcon, "Searching file");
-            getHeaderNav().waitForSpinnerToStop();
-            searchFileName= new MyFilesPage(driver).waitForIndexing(searchfileLink).getText();
-            Assert.assertEquals(fileName,searchFileName);
-        } catch (ClickIconNotFoundException | TextElementNotFoundException |SpinnerNotFoundException | SpinnerNotDisappearException ex) {
-            LOGGER.error("-- Error in searching file",ex);
-        }
+        enterText(searchinputField, fileName);
+        clickIcon(searchIcon, "Searching file");
+        getHeaderNav().waitForSpinnerToStop();
+        searchFileName= new MyFilesPage(driver).waitForIndexing(searchfileLink).getText();
+        Assert.assertEquals(fileName,searchFileName);
     }
 
     /***********************GET/SET METHODS*********************/

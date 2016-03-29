@@ -40,7 +40,7 @@ public class AdminStepDefs  {
     @Given("^user navigates to Define Expertise Tab$")
     public void userNavigatesToDefineExpertiseTab() throws Throwable {
         leftNav = new LeftNav(driver);
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
         leftNav.navToAdmin().navToUser().navToTab(TabbedNav.TabName.DEFINEEXPERTISE);
     }
 
