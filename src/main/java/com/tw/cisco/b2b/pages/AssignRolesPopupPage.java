@@ -1,9 +1,7 @@
 package com.tw.cisco.b2b.pages;
 
-import com.tw.cisco.b2b.exceptions.ClickElementException;
-import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
-import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
-import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
+import com.tw.cisco.b2b.exceptions.*;
+import com.tw.cisco.b2b.navigation.HeaderNav;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -27,9 +25,10 @@ public class AssignRolesPopupPage extends BasePage<AssignRolesPopupPage> {
     private WebElement rolePlaceholder;
 
     @FindBy(xpath="(.//span[@class='tt-suggestions']//p)")
-    private WebElement roleSuggestions;
+    private WebElement  roleSuggestions;
 
-    @FindBy(xpath=".//div[@class='row roles-footer']//div[@class='tt-suggestion']")
+   // @FindBy(xpath=".//div[@class='row roles-footer']//div[@class='tt-suggestion']")
+    @FindBy(xpath = "//span[@class='tt-suggestions']/div")
     private WebElement roleSuggestionBox;
 
     @FindBy(xpath=".//div[@id='assignRoles']//button[@class='btn btn-default']")
@@ -57,7 +56,7 @@ public class AssignRolesPopupPage extends BasePage<AssignRolesPopupPage> {
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
-        return ExpectedConditions.visibilityOf(this.assignRolePopupText);
+        return ExpectedConditions.visibilityOf(assignRolePopupText);
     }
 
     @Override
@@ -90,6 +89,7 @@ public class AssignRolesPopupPage extends BasePage<AssignRolesPopupPage> {
         try {
             LOGGER.info("--  Saving assigned roles");
             saveButton.click();
+            new HeaderNav(driver).waitForSpinnerToStop();
         }catch(Exception e) {
             LOGGER.error("-- Failed to save roles.");
         }
@@ -108,13 +108,14 @@ public class AssignRolesPopupPage extends BasePage<AssignRolesPopupPage> {
                 }
                 LOGGER.debug("-- Saving roles deleted");
                 clickButton(saveButton);
+                new HeaderNav(driver).waitForSpinnerToStop();
                 LOGGER.trace("<< deleteAllRoles()");
             } else {
                 LOGGER.debug("-- No roles to unassign.Exiting popup");
                 clickButton(closeButton);
                 LOGGER.trace("<< deleteAllRoles()");
             }
-        } catch (ClickIconNotFoundException | ElementNotFoundException | ClickElementException ex){
+        } catch (ClickIconNotFoundException | ElementNotFoundException | SpinnerNotDisappearException| SpinnerNotFoundException | ClickElementException ex){
             LOGGER.error("Role deletion failed", ex);
         }
         return new UserPage(driver);
