@@ -10,6 +10,17 @@ Feature: KC-1
   Scenario:Learner uploads a pdf file
     Given the user is on "My File" KC page
     Then the user should be able to upload file "pdf_UploadDoc" from "DataStageAndMongoDB.pdf"
-#    When I open "My Activities" page
-#    Then I should be able to see the "uploaded" a "file" document activity
-#    And the user deletes the file "pdf_UploadDoc"
+    When I open "My Activities" page
+    Then I should be able to see the "uploaded" a "file" document activity
+    And the user deletes the file "pdf_UploadDoc"
+
+#  Scenario:Learner uploads a video file
+#    Given the user is on "My File" KC page
+#    Then the user should be able to upload file "Video_File" from "Documents/small.webm"
+#    And the user deletes the file "Video_File"
+#
+#  Scenario:Learner uploads an epub file
+#    Given the user is on "My File" KC page
+#    Then the user should be able to upload file "epub_UploadDoc" from "Documents/Unilever.epub"
+#    Then he should be able to open the "epub" in a new window
+#    And the user deletes the file "epub_UploadDoc"

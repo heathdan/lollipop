@@ -6,22 +6,6 @@ Feature: KC-1
   Background:
     Given that the user "admin_name" logged in as "admin_user" and "password"
 
-  Scenario:Learner uploads a pdf file
-    Given that the user "admin_displayname" logged in as "admin_username" and "admin_password"
-    Then the user should be able to upload file "pdf_UploadDoc" from "Documents/DataStageAndMongoDB.pdf"
-    When I open "My Activities" page
-    Then I should be able to see the "uploaded" a "file" document activity
-    And the user deletes the file "pdf_UploadDoc"
-
-  Scenario:Learner uploads an epub file
-    When the user should be able to upload file "epub_UploadDoc" from "Documents/Unilever.epub"
-    Then he should be able to open the "epub" in a new window
-    And the user deletes the file "epub_UploadDoc"
-
-
-  Scenario:Learner uploads a video file
-    Given the user should be able to upload file "Video_File" from "Documents/small.webm"
-    And the user deletes the file "Video_File"
 
   Scenario:Rate a file
     Given the user should be able to upload file "ppt_UploadDoc" from "Documents/MongoDB_2.ppt"
