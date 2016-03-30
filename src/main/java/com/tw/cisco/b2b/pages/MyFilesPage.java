@@ -111,6 +111,17 @@ public class MyFilesPage extends BasePage<MyFilesPage> {
     @FindBy(xpath = ".//div[@class='no-value' and text()=' No results found']")
     private WebElement noResults;
 
+    @FindBy(xpath=".//div[@id='confirmation']//h4[text()='Delete Files']")
+    private WebElement deletePopupHeader;
+
+    @FindBy(xpath=".//button[@id='confirmButton']")
+    private WebElement confirmDelete;
+
+    @FindBy(xpath=".//div[@id='messageDiv']/p")
+    private WebElement deletionSuccessMessage;
+
+    private static final String DELETE_SUCCESS_MESSAGE = "Selected file has been deleted successfully.";
+
     HeaderNav headerNav;
 
     public MyFilesPage(WebDriver driver) {
@@ -148,6 +159,25 @@ public class MyFilesPage extends BasePage<MyFilesPage> {
         getHeaderNav().waitForSpinnerToStop();
         searchFileName= new MyFilesPage(driver).waitForIndexing(searchfileLink).getText();
         Assert.assertEquals(fileName,searchFileName);
+    }
+
+    public MyFilesPage searchAndDeleteFile(String fileName) throws Exception{
+        LOGGER.info("searchAndDeleteFile() :"+fileName);
+        enterText(searchinputField, fileName);
+        clickIcon(searchIcon, "Searching file");
+        getHeaderNav().waitForSpinnerToStop();
+        Assert.assertEquals(fileName,new MyFilesPage(driver).searchfileLink.getText());
+        clickIcon(deleteIcon,"Deleting file");
+        waitForElement(ExpectedConditions.visibilityOf(deletePopupHeader),deletePopupHeader);
+        clickButton(confirmDelete);
+        getHeaderNav().waitForSpinnerToStop();
+        return new MyFilesPage(driver);
+    }
+
+    public void isDeleteSuccess() {
+        if(isElementPresent(deletionSuccessMessage)) {
+            Assert.assertEquals(DELETE_SUCCESS_MESSAGE,deletionSuccessMessage.getText());
+        }
     }
 
     /***********************GET/SET METHODS*********************/

@@ -1,10 +1,11 @@
 package com.tw.cisco.b2b.steps;
 
 import com.tw.cisco.b2b.helper.CommonMethodsHelper;
-import com.tw.cisco.b2b.navigation.HeaderNav;
 import com.tw.cisco.b2b.navigation.TabbedNav;
 import com.tw.cisco.b2b.pages.LeftNav;
+import com.tw.cisco.b2b.pages.MyActivityPage;
 import com.tw.cisco.b2b.pages.MyFilesPage;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -22,6 +23,7 @@ public class KCStepDef {
     private WebDriver driver;
     private static final Logger LOGGER = LoggerFactory.getLogger(KCStepDef.class);
     private MyFilesPage myFilesPage;
+    private String timeStampedFileName = null;
 
     public KCStepDef(SharedDriver driver) {
         this.driver = driver;
@@ -33,7 +35,7 @@ public class KCStepDef {
     @Then("^the user should be able to upload file \"([^\"]*)\" from \"([^\"]*)\"$")
     public void theUserShouldBeAbleToUploadFileFrom(String fileName, String filePath) throws Throwable {
         String pathToUpload = CommonMethodsHelper.getUploadFilePath(filePath);
-        String timeStampedFileName= CommonMethodsHelper.timeStamp(fileName);
+        timeStampedFileName= CommonMethodsHelper.timeStamp(fileName);
         new MyFilesPage(driver).navToFileUpload().uploadFile(timeStampedFileName,pathToUpload).searchAndRefresh(timeStampedFileName);
     }
 
@@ -44,8 +46,16 @@ public class KCStepDef {
 
     @When("^I open \"([^\"]*)\" page$")
     public void iOpenPage(String arg0) throws Throwable {
-        new HeaderNav(driver).navToMyActivity().navToTab(TabbedNav.TabName.MYACTIVITIES);
+        new MyFilesPage(driver).getHeaderNav().navToMyActivity().navToTab(TabbedNav.TabName.MYACTIVITIES);
+    }
 
+    @Then("^I should be able to see the \"([^\"]*)\" a \"([^\"]*)\" document activity$")
+    public void iShouldBeAbleToSeeTheADocumentActivity(String arg0, String arg1) throws Throwable {
+        new MyActivityPage(driver).searchActivity(timeStampedFileName).isActivityPresent(timeStampedFileName);
+    }
 
+    @And("^the user deletes the file \"([^\"]*)\"$")
+    public void theUserDeletesTheFile(String arg0) throws Throwable {
+       new LeftNav(driver).navToKC().navToMyFiles().searchAndDeleteFile(timeStampedFileName).isDeleteSuccess();
     }
 }

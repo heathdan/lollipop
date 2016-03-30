@@ -54,7 +54,7 @@ public class TabbedNav extends BasePage<TabbedNav> {
     public TabbedNav(WebDriver driver) {
         super(driver);
         instantiatePage(this);
-        waitForPageToLoad(getPageLoadCondition());
+        //waitForPageToLoad(getPageLoadCondition());
     }
 
     @Override
@@ -95,7 +95,7 @@ public class TabbedNav extends BasePage<TabbedNav> {
 
             case DEFINEEXPERTISE:
                 clickIcon(defineExpertiseTab, "DEFINE_EXPERTISE");
-                LOGGER.debug("DefineExpertise");
+                LOGGER.debug("Navigating to DefineExpertise");
                 page = new DefineExpertisePage(driver);
                 break;
 
@@ -127,13 +127,13 @@ public class TabbedNav extends BasePage<TabbedNav> {
                         */
             case PROFILE:
                 clickIcon(myProfile, "MY_PROFILE");
-                LOGGER.debug("My Profile");
+                LOGGER.debug("Navigating to My Profile");
                 page = new ProfilePage(driver);
                 break;
 
             case MYACTIVITIES:
                 clickIcon(myActivities, "MY_ACTIVITIES");
-                LOGGER.debug("My Activity");
+                LOGGER.debug("Navigating to My Activity");
                 page = new MyActivityPage(driver);
                 break;
 

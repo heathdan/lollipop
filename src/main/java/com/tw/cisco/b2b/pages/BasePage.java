@@ -178,7 +178,7 @@ public abstract class BasePage<P extends BasePage> {
             webElement.isDisplayed();
             return true;
         } catch (NoSuchElementException ex) {
-            LOGGER.error("--"+webElement.toString()+ " not displayed");
+            LOGGER.info("--"+webElement.toString()+ " not displayed");
             return false;
         }
     }
