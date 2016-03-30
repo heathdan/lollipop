@@ -200,16 +200,20 @@ public class UserPage extends BasePage<UserPage> {
 
     public UserPage BulkUserUpload(String fileName) throws IOException {
         try{
+            LOGGER.trace(">> CSV bulk upload operation >>");
             clickIcon(bulkCreateUsers, "User Bulk Upload");
             waitForElement(ExpectedConditions.visibilityOf(bulkCreateUsersPopup),bulkCreateUsersPopup);
+            LOGGER.info("bulk user upload pop up appeared");
             enterText(uploadFileButton, fileName);
             clickButton(userUploadSubmit);
+            LOGGER.info("CSV file uploaded");
             Thread.sleep(2000);
+            LOGGER.info("closing the bulk upload pop up");
             clickIcon(bulkUploadClose, "Popup Close");
         } catch(ClickIconNotFoundException | TextElementNotFoundException | ElementNotFoundException | ClickElementException | InterruptedException ex) {
             LOGGER.error("--- CSV upload failed",ex);
         }
-        return this;
+        return new UserPage(driver);
     }
 
     /***********************GET/SET METHODS*********************/
