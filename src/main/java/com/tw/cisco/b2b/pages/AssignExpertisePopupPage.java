@@ -87,8 +87,8 @@ public class AssignExpertisePopupPage extends BasePage<AssignExpertisePopupPage>
             clickButton(expertiseSuggest);
             clickButton(saveExpertiseButton);
             LOGGER.info("waiting for the success message");
-            waitForElement(ExpectedConditions.visibilityOf(sucessMessage),sucessMessage);
-        } catch (TextElementNotFoundException | ClickElementException | ElementNotFoundException ex) {
+            new HeaderNav(driver).waitForSpinnerToStop();
+        } catch (TextElementNotFoundException | ClickElementException | SpinnerNotDisappearException|SpinnerNotFoundException|ElementNotFoundException ex) {
             LOGGER.error("Expertise assignment failed",ex);
         }
         return new UserPage(driver);

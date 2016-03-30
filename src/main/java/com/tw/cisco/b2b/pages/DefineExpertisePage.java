@@ -138,7 +138,7 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
         try {
             headerNav = new HeaderNav(driver);
             LOGGER.info("Deleting the expertise");
-            clickButton(expertiseDeleteButton);
+            clickButton(waitForIndexing(expertiseDeleteButton));
             LOGGER.info("Verify the expertise is deleted");
             headerNav.waitForSpinnerToStop();
             LOGGER.info("searching the expertise \""+Expertise+"\"");

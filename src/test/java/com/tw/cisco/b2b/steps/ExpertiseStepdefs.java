@@ -45,7 +45,7 @@ public class ExpertiseStepdefs {
     public void userShouldBeMarkedExpertInExpertise(String arg0, String arg1) throws Throwable {
         userPage = new UserPage(driver);
         //Thread.sleep(2000);
-        userPage.searchByExpertise("\"" +AREAOFEXPERTISE+ "\"").verifyExpertiseAsignment(new CommonMethodsHelper().getPropValue(arg0));
+        userPage.searchByExpertise("\""+AREAOFEXPERTISE+"\"").verifyExpertiseAsignment(new CommonMethodsHelper().getPropValue(arg0));
     }
 
     @And("^user search for the TimeStamped expertise \"([^\"]*)\"$")
