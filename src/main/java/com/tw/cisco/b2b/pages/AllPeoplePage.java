@@ -88,6 +88,7 @@ public class AllPeoplePage extends BasePage<AllPeoplePage> {
     public ProfilePage selectUser(String emailId) {
         try {
             waitForElement(ExpectedConditions.textToBePresentInElement(emailID, emailId), emailID);
+            LOGGER.info("search and wait : user after wait is :  " +emailID.getText());
             clickIcon(userName, "User profile");
         }catch (ClickIconNotFoundException ex){
             LOGGER.error("-- User not selectable",ex);
