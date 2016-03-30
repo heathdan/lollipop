@@ -6,7 +6,6 @@ import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
 import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
 import com.tw.cisco.b2b.navigation.HeaderNav;
 import org.junit.Assert;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -50,10 +49,12 @@ public class ProfilePage extends BasePage<ProfilePage> {
     private WebElement expertiseSuccessMessage;
 
     HeaderNav headerNav;
+
     public ProfilePage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
         waitForPageToLoad(getPageLoadCondition());
+        headerNav = new HeaderNav(driver);
     }
 
     @Override
@@ -94,31 +95,31 @@ public class ProfilePage extends BasePage<ProfilePage> {
     }
 
     public HomePage selfTagExpertise(String expertise) {
-        LOGGER.trace("<< Self Tagging expertise on Profile page");
+        LOGGER.trace(">> Self Tagging expertise on Profile page");
         try {
             LOGGER.info("Editing the expertise section on profile page");
-            clickIcon(editSaveIcon,"Edit Expertise icon on Profile Page");
+            clickIcon(editSaveIcon, "Edit Expertise icon on Profile Page");
             LOGGER.info("entering the time stamped expertise");
-            enterText(expertiseTextField,expertise);
+            enterText(expertiseTextField, expertise);
             LOGGER.info("waiting for the expertise auto suggest");
-            waitForElement(ExpectedConditions.visibilityOf(expertiseSuggest),expertiseSuggest);
+            waitForElement(ExpectedConditions.visibilityOf(expertiseSuggest), expertiseSuggest);
             clickButton(expertiseSuggest);
             LOGGER.info("waiting for success message");
-            waitForElement(ExpectedConditions.visibilityOf(expertiseSuccessMessage),expertiseSuccessMessage);
-            headerNav = new HeaderNav(driver);
-            headerNav.navToHome();
+            waitForElement(ExpectedConditions.visibilityOf(expertiseSuccessMessage), expertiseSuccessMessage);
+            getHeaderNav().navToHome();
         } catch (ClickIconNotFoundException | TextElementNotFoundException | ElementNotFoundException | ClickElementException ex) {
-            LOGGER.error("--error in self tagging expertise", ex );
+            LOGGER.error("--error in self tagging expertise", ex);
         }
         return new HomePage(driver);
     }
 
-    public boolean isElementPresent(WebElement element) {
-       try {
-           element.isDisplayed();
-           return true;
-       } catch(NoSuchElementException ex) {
-           return false;
-       }
+    /************************GET/SET METHODS******************************/
+
+    public HeaderNav getHeaderNav() {
+        return headerNav;
+    }
+
+    public void setHeaderNav(HeaderNav headerNav) {
+        this.headerNav = headerNav;
     }
 }

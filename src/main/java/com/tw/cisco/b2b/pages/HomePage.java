@@ -30,7 +30,7 @@ public class HomePage extends BasePage<HomePage> {
         instantiatePage(this);
         waitForPageToLoad(getPageLoadCondition());
        // headerNav = new HeaderNav(driver);
-       // leftNav = new LeftNav(driver);
+        //leftNav = new LeftNav(driver);
     }
 
     @Override

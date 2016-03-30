@@ -1,8 +1,5 @@
 package com.tw.cisco.b2b.pages;
 
-import com.tw.cisco.b2b.exceptions.ClickElementException;
-import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
-import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -53,15 +50,10 @@ public class CredentialsPage extends BasePage<CredentialsPage> {
         }
     }
 
-    public HomePage enterCredentials(String passwrd) {
-        try {
-            enterText(password,passwrd);
-            clickButton(signIn);
-            implicitWaitMethod();
-        }
-        catch (TextElementNotFoundException | ClickElementException | ElementNotFoundException ex) {
-            LOGGER.error("Sign in not clickable",ex);
-        }
+    public HomePage enterCredentials(String passwrd) throws Exception {
+        enterText(password,passwrd);
+        clickButton(signIn);
+        implicitWaitMethod();
         return new HomePage(driver);
     }
 

@@ -23,7 +23,10 @@ public class TabbedNav extends BasePage<TabbedNav> {
     public enum TabName {
         USERS,
         ROLESPERMISSIONS,
-        DEFINEEXPERTISE;
+        DEFINEEXPERTISE,
+        PROFILE,
+        MYACTIVITIES;
+
     }
     static final Logger LOGGER = LoggerFactory.getLogger(TabbedNav.class);
 
@@ -42,10 +45,16 @@ public class TabbedNav extends BasePage<TabbedNav> {
     @FindBys(@FindBy(xpath=".//div[@class='tabbable toggle_view admin-tabs']/ul[@id='adminTab']/li"))
     private List<WebElement> adminTabs;
 
+    @FindBy(xpath=".//div[@id='user-profile']//a[contains(text(),'Profile')]")
+    private WebElement myProfile;
+
+    @FindBy(xpath =".//div[@id='user-profile']//a[contains(text(),'My Activities')]")
+    private WebElement myActivities;
+
     public TabbedNav(WebDriver driver) {
         super(driver);
         instantiatePage(this);
-        waitForPageToLoad(getPageLoadCondition());
+        //waitForPageToLoad(getPageLoadCondition());
     }
 
     @Override
@@ -63,33 +72,32 @@ public class TabbedNav extends BasePage<TabbedNav> {
         }
     }
 
-    public BasePage navToTab(TabName tabName) {
+    public BasePage navToTab(TabName tabName) throws ClickIconNotFoundException {
         LOGGER.trace(">>navToTab() "+tabName);
         BasePage page = null;
-        try {
-            switch (tabName) {
-                case USERS:
-                    clickIcon(userTab, "USER_TAB");
-                    LOGGER.debug("Clicked userTab");
-                    page = new UserPage(driver);
-                    break;
+        switch (tabName) {
+            case USERS:
+                clickIcon(userTab, "USER_TAB");
+                LOGGER.debug("Clicked userTab");
+                page = new UserPage(driver);
+                break;
 
                  /*   case "Pending Registrations":
                         pendingRegTab.click();
                         page= new PendingRegPage(driver);
                         break;
                         */
-                case ROLESPERMISSIONS:
-                    clickIcon(rolesNPermissionTab, "ROLES_PERMISSION_TAB");
-                    LOGGER.debug("clicked role and permission");
-                    page = new RolesAndPermissionPage(driver);
-                    break;
+            case ROLESPERMISSIONS:
+                clickIcon(rolesNPermissionTab, "ROLES_PERMISSION_TAB");
+                LOGGER.debug("clicked role and permission");
+                page = new RolesAndPermissionPage(driver);
+                break;
 
-                case DEFINEEXPERTISE:
-                    clickIcon(defineExpertiseTab, "DEFINE_EXPERTISE");
-                    LOGGER.debug("DefineExpertise");
-                    page = new DefineExpertisePage(driver);
-                    break;
+            case DEFINEEXPERTISE:
+                clickIcon(defineExpertiseTab, "DEFINE_EXPERTISE");
+                LOGGER.debug("Navigating to DefineExpertise");
+                page = new DefineExpertisePage(driver);
+                break;
 
             /*case PENDINGREGISTRATIONS:
                 pendingRegTab.click();
@@ -117,13 +125,22 @@ public class TabbedNav extends BasePage<TabbedNav> {
                         status = page.getPeople().isDisplayed();
                         break;
                         */
-                default:
-                    LOGGER.error("--- "+tabName+" not found");
-                    break;
+            case PROFILE:
+                clickIcon(myProfile, "MY_PROFILE");
+                LOGGER.debug("Navigating to My Profile");
+                page = new ProfilePage(driver);
+                break;
+
+            case MYACTIVITIES:
+                clickIcon(myActivities, "MY_ACTIVITIES");
+                LOGGER.debug("Navigating to My Activity");
+                page = new MyActivityPage(driver);
+                break;
+
+            default:
+                LOGGER.error("--- "+tabName+" not found");
+                break;
             }
-        } catch(ClickIconNotFoundException ex) {
-            LOGGER.error(tabName + " not clickable" + ex);
-        }
         return page;
     }
 

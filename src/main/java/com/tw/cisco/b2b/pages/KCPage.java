@@ -48,7 +48,7 @@ public class KCPage extends BasePage<KCPage> {
 
     @Override
     protected ExpectedCondition getPageLoadCondition() {
-        LOGGER.trace(">> waiting for KC dropdown to appear >>");
+        LOGGER.trace(">> waiting for KC dropdown to appear");
         return ExpectedConditions.visibilityOf(kcWait);
     }
 
