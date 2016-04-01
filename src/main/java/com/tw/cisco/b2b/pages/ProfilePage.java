@@ -85,7 +85,7 @@ public class ProfilePage extends BasePage<ProfilePage> {
     }
 
     public void verifyManager(boolean value) {
-        if (true) {
+        if(value) {
             Assert.assertTrue(isElementPresent(manager));
         } else {
             Assert.assertFalse(isElementPresent(manager));

@@ -116,7 +116,7 @@ public class CommonMethodsHelper {
         return result;
     }
 
-    public List<String> getUserList() {
+    public static List<String> getUserList() {
 
         List<String> Users = null;
         try {
@@ -125,12 +125,12 @@ public class CommonMethodsHelper {
             Users = Arrays.asList(items);
 
         } catch (IOException e) {
-            LOGGER.error("Error reeading user credentials for env",e);
+            LOGGER.error("Error reading user credentials for env",e);
         }
         return Users;
     }
 
-    public List<Map<String, String>> users() throws IOException {
+    public  List<Map<String, String>> getUsersDetails() throws IOException {
         List<Map<String,String>> users = new ArrayList<Map<String,String>>();
         for(String user : getUserList() ) {
             HashMap<String, String> userInfo = new HashMap<String, String>();

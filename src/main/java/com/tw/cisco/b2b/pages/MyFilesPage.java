@@ -120,7 +120,29 @@ public class MyFilesPage extends BasePage<MyFilesPage> {
     @FindBy(xpath=".//div[@id='messageDiv']/p")
     private WebElement deletionSuccessMessage;
 
+    @FindBy(xpath=".//div[@id='editFileSharing']//h4[text()=' Share Files']")
+    private WebElement shareFileHeader;
+
+    @FindBy(xpath=".//div[@class='bootstrap-tagsinput']//input[@placeholder='Enter user/community name']")
+    private WebElement shareFileText;
+
+    @FindBy(xpath=".//div[@class='bootstrap-tagsinput']//div[@class='tt-suggestion']")
+    private WebElement userSuggestionBox;
+
+    @FindBy(xpath=".//div[@class='bootstrap-tagsinput']//span[@class='tt-suggestions']//p")
+    private WebElement userSuggestionSelect;
+
+    @FindBy(xpath=".//div[@class='modal-footer']//button[contains(text(),'Save')]")
+    private WebElement shareFileSave;
+
+    @FindBy(xpath=".//div[@class='alert alert-success']")
+    private WebElement shareFileSuccess;
+
+    @FindBy(xpath=".//div[@id='editFileSharing']//i[@class='icon-remove white']")
+    private WebElement shareFilePopupClose;
+
     private static final String DELETE_SUCCESS_MESSAGE = "Selected file has been deleted successfully.";
+    private static final String SHARE_FILE_SUCCESS_MESSAGE="The changes made to sharing have been updated successfully";
 
     HeaderNav headerNav;
 
@@ -146,8 +168,9 @@ public class MyFilesPage extends BasePage<MyFilesPage> {
         return ExpectedConditions.visibilityOf(myFilesWait);
     }
 
-    public UploadFilePopupPage navToFileUpload() {
-        uploadFile.click();
+    public UploadFilePopupPage navToFileUpload() throws Exception {
+        LOGGER.info(">> navToFileUpload()");
+        clickButton(uploadFile);
         return new UploadFilePopupPage(driver);
     }
 
@@ -157,7 +180,13 @@ public class MyFilesPage extends BasePage<MyFilesPage> {
         enterText(searchinputField, fileName);
         clickIcon(searchIcon, "Searching file");
         getHeaderNav().waitForSpinnerToStop();
-        searchFileName= new MyFilesPage(driver).waitForIndexing(searchfileLink).getText();
+        new MyFilesPage(driver);
+
+        if(isElementPresent(noResults)) {
+            searchFileName = waitForIndexing(searchfileLink).getText();
+        } else {
+            searchFileName = searchfileLink.getText();
+        }
         Assert.assertEquals(fileName,searchFileName);
     }
 
@@ -171,13 +200,31 @@ public class MyFilesPage extends BasePage<MyFilesPage> {
         waitForElement(ExpectedConditions.visibilityOf(deletePopupHeader),deletePopupHeader);
         clickButton(confirmDelete);
         getHeaderNav().waitForSpinnerToStop();
-        return new MyFilesPage(driver);
+        return this;
     }
 
     public void isDeleteSuccess() {
         if(isElementPresent(deletionSuccessMessage)) {
             Assert.assertEquals(DELETE_SUCCESS_MESSAGE,deletionSuccessMessage.getText());
         }
+    }
+
+    public MyFilesPage shareFile(String userName) throws Exception{
+        clickIcon(shareIcon,"Share File");
+        waitForElement(ExpectedConditions.visibilityOf(shareFileHeader),shareFileHeader);
+        enterText(shareFileText,userName);
+        waitForElement(ExpectedConditions.visibilityOf(userSuggestionBox),userSuggestionBox);
+        clickButton(userSuggestionSelect);
+        clickButton(shareFileSave);
+        waitForElement(ExpectedConditions.visibilityOf(shareFileSuccess),shareFileSuccess);
+        Assert.assertEquals(SHARE_FILE_SUCCESS_MESSAGE,shareFileSuccess.getText());
+        clickIcon(shareFilePopupClose,"Closing share file popup");
+        return this;
+    }
+
+    public KCPropertiesPage navToFileProperties()throws ClickIconNotFoundException {
+        clickIcon(propertiesIcon,"Properties Page");
+        return new KCPropertiesPage(driver);
     }
 
     /***********************GET/SET METHODS*********************/

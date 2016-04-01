@@ -56,6 +56,9 @@ public class HeaderNav extends BasePage<HeaderNav> {
     @FindBy(xpath=".//i[@class='icon-spin icon-spinner-dots loading-icon bigger-230']")
     private WebElement spinner;
 
+    @FindBy(xpath=".//div[@class='navbar-brand']")
+    private WebElement logo;
+
     By spinnerLocator = By.xpath(".//i[@class='icon-spin icon-spinner-dots loading-icon bigger-230']");
 
     static final Logger LOGGER = LoggerFactory.getLogger(HeaderNav.class);
@@ -81,15 +84,10 @@ public class HeaderNav extends BasePage<HeaderNav> {
         return ExpectedConditions.visibilityOf(topNavSearch);
     }
 
-    public LoginPage CKlogout()  {
-        LOGGER.trace(">> CKlogout()");
-        try {
-            LOGGER.info("Logging out of CK...");
-            clickButton(userName);
-            clickButton(logOut);
-        } catch (ClickElementException | ElementNotFoundException ex) {
-            LOGGER.error("--Error in logging out", ex);
-        }
+    public LoginPage CKlogout() throws ClickElementException, ElementNotFoundException {
+        LOGGER.info("Logging out of CK...");
+        clickButton(userName);
+        clickButton(logOut);
         return new LoginPage(driver);
     }
 
@@ -129,13 +127,9 @@ public class HeaderNav extends BasePage<HeaderNav> {
         return new ProfilePage(driver);
     }
 
-    public HomePage navToHome(){
-        try{
-            LOGGER.info("navigating to home page via home Icon");
-            clickIcon(homeIcon,"Favicon");
-        }catch(ClickIconNotFoundException ex){
-            LOGGER.error("-- error in clicking favicon to navigate to homepage");
-        }
+    public HomePage navToHome() throws ClickIconNotFoundException {
+        LOGGER.info("navigating to home page via home Icon");
+        clickIcon(logo,"Favicon");
         return new HomePage(driver);
     }
 

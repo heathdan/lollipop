@@ -5,7 +5,7 @@ Feature: Experts
   So that I can look up all experts
 
   Background:
-    Given that the user "admin_name" logged in as "admin_user" and "password"
+    Given that the user logged in as "admin_user" and "password"
 
   Scenario: User is able to delete the self tagged expertise for himself
     Given user navigates to Define Expertise Tab

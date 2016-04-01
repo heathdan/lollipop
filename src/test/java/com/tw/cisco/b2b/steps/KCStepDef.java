@@ -2,6 +2,7 @@ package com.tw.cisco.b2b.steps;
 
 import com.tw.cisco.b2b.helper.CommonMethodsHelper;
 import com.tw.cisco.b2b.navigation.TabbedNav;
+import com.tw.cisco.b2b.pages.HomePage;
 import com.tw.cisco.b2b.pages.LeftNav;
 import com.tw.cisco.b2b.pages.MyActivityPage;
 import com.tw.cisco.b2b.pages.MyFilesPage;
@@ -24,6 +25,7 @@ public class KCStepDef {
     private static final Logger LOGGER = LoggerFactory.getLogger(KCStepDef.class);
     private MyFilesPage myFilesPage;
     private String timeStampedFileName = null;
+    HomePage homePage;
 
     public KCStepDef(SharedDriver driver) {
         this.driver = driver;
@@ -57,5 +59,22 @@ public class KCStepDef {
     @And("^the user deletes the file \"([^\"]*)\"$")
     public void theUserDeletesTheFile(String arg0) throws Throwable {
        new LeftNav(driver).navToKC().navToMyFiles().searchAndDeleteFile(timeStampedFileName).isDeleteSuccess();
+    }
+
+    @Then("^the user \"([^\"]*)\" should be able to view sharedFile$")
+    public void theUserShouldBeAbleToViewSharedFile(String arg0) throws Throwable {
+       new LeftNav(driver).navToKC().navToSharedFiles().isFileSharedPresent(timeStampedFileName);
+    }
+
+    @When("^he shares it with \"([^\"]*)\"$")
+    public void heSharesItWith(String arg0) throws Throwable {
+        String userName = CommonMethodsHelper.getPropValue(arg0);
+        new MyFilesPage(driver).shareFile(userName);
+    }
+
+    @Then("^the user should be able to edit document with \"([^\"]*)\" and \"([^\"]*)\" tags$")
+    public void theUserShouldBeAbleToEditDocumentWithAndTags(String arg0, String arg1) throws Throwable {
+        new MyFilesPage(driver).
+
     }
 }

@@ -100,8 +100,5 @@ public class ExpertiseStepdefs {
         assignExpertisePopupPage = new AssignExpertisePopupPage(driver);
         assignExpertisePopupPage.deelteSelfTaggedExpertise(AREAOFEXPERTISE);
     }
-
-
-
 }
 

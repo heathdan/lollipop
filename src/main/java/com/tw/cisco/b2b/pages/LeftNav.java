@@ -45,7 +45,7 @@ public class LeftNav extends BasePage<LeftNav> {
     @FindBy(xpath = ".//span[text()='Learning Plans']")
     private WebElement learningPlans;
 
-    @FindBy(xpath = ".//button[@id='knowledgeCenterLeftNavButton']")
+    @FindBy(xpath = ".//span[text()='Knowledge Center']")
     private WebElement knowledgeCenter;
 
     @FindBy(xpath = ".//li[@class='active']//span[text()='Collaborate']/parent::button/parent::li")
@@ -125,12 +125,9 @@ public class LeftNav extends BasePage<LeftNav> {
         return new AdminPage(driver);
     }
 
-    public KCPage navToKC() {
-        try {
-            clickIcon(knowledgeCenter,"KC");
-        } catch ( ClickIconNotFoundException ex) {
-            LOGGER.error(" KC is missing",ex);
-        }
+    public KCPage navToKC() throws ClickIconNotFoundException{
+        LOGGER.info(">>navToKC()");
+        clickIcon(knowledgeCenter,"KC");
         return new KCPage(driver);
     }
 

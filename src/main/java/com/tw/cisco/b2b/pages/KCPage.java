@@ -63,15 +63,16 @@ public class KCPage extends BasePage<KCPage> {
         return new KnowledgeLibraryPage(driver);
     }
 
-    public MyFilesPage navToMyFiles() {
-        LOGGER.trace(">> navToKnowledgeLibrary");
-        try {
-            LOGGER.info("Navigating to MyFiles");
-            clickButton(myFiles);
-        } catch(ClickElementException | ElementNotFoundException ex) {
-            LOGGER.error("--- MyFiles not found",ex);
-        }
+    public MyFilesPage navToMyFiles() throws Exception {
+        LOGGER.info("Navigating to MyFiles");
+        clickButton(myFiles);
         return new MyFilesPage(driver);
+    }
+
+    public SharedFilesPage navToSharedFiles() throws Exception {
+        LOGGER.trace(">> navToSharedFiles()");
+        clickButton(sharedFiles);
+        return new SharedFilesPage(driver);
     }
 
 }

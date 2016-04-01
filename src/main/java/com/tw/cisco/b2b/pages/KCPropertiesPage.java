@@ -1,5 +1,6 @@
 package com.tw.cisco.b2b.pages;
 
+import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,8 +21,6 @@ public class KCPropertiesPage extends BasePage<KCPropertiesPage> {
     @FindBy(id = "profile-layout")
     private WebElement kcPageWait;
 
-
-
     @FindBy(xpath = ".//span[@class='file-type-icon']/div")
     private WebElement fileExtension;
 
@@ -34,10 +33,10 @@ public class KCPropertiesPage extends BasePage<KCPropertiesPage> {
     @FindBys(@FindBy (xpath = ".//div[@class='rating_container']/i"))
     private List<WebElement> ratingIconList;
 
-    @FindBys(@FindBy(xpath = ".//div[@class='rating_container']/i[@class='glyphicon glyphicon-star']"))
+    @FindBy(xpath = ".//div[@class='rating_container']/i[@class='glyphicon glyphicon-star']")
     private List<WebElement> starredRatingList;
 
-    @FindBys(@FindBy(xpath = ".//div[@class='rating_container']/i[@class='glyphicon glyphicon-star-empty']"))
+    @FindBy(xpath = ".//div[@class='rating_container']/i[@class='glyphicon glyphicon-star-empty']")
     private List<WebElement> emptyRatingList;
 
     @FindBy(id = "__thumbs_count")
@@ -59,16 +58,13 @@ public class KCPropertiesPage extends BasePage<KCPropertiesPage> {
     private WebElement downloadFile;
 
     @FindBy(xpath = ".//li[@class='editing-enabled']//i")
-    private WebElement EditFile;
+    private WebElement editFile;
 
     @FindBy(xpath = ".//li//i[@class='icon-arrow-share']")
     private WebElement shareFile;
 
     @FindBy(xpath = "//label[@class='tc-course-title']/div")
     private WebElement fileName;
-
-
-
 
     public KCPropertiesPage(WebDriver driver) {
         super(driver);
@@ -91,6 +87,11 @@ public class KCPropertiesPage extends BasePage<KCPropertiesPage> {
     @Override
     protected ExpectedCondition getPageLoadCondition() {
         return ExpectedConditions.visibilityOf(kcPageWait);
+    }
+
+    public EditFilePage navToEditFile() throws ClickIconNotFoundException{
+        clickIcon(editFile,"Edit File");
+        return new EditFilePage(driver);
     }
 
 
