@@ -28,7 +28,8 @@ Feature: KC-1
 #    And User "admin_user" logout
 
 #  Scenario:Rate a file
-#    Given the user should be able to upload file "ppt_UploadDoc" from "MongoDB_2.ppt"
+#    Given the user is on "My File" KC page
+#    Then the user should be able to upload file "ppt_UploadDoc" from "MongoDB_2.ppt"
 #    When the user gives a rating for document
 #    Then should be able to see the updated rating in document page
 #    And the user deletes the file "ppt_UploadDoc"
@@ -42,14 +43,15 @@ Feature: KC-1
 #    Given that the learner_user logged in as "learner_user" and "password"
 #    Then the user "learner_username" should be able to view sharedFile
 #    And User "learner_username" logout
-#    And login with username "admin_username" and "password"
+#    Given that the user logged in as "admin_user" and "password"
 #    And the user deletes the file "pdf_UploadDoc"
 #    And User "admin_user" logout
-##
-#  Scenario:Edit the file metadata
-#    Given the user is on "My File" KC page
-#    Then the user should be able to upload file "Edit_metadata" from "Intro to MongoDB.ppt"
-#    Then the user should be able to edit document with "Test Document" and "sample" tags
-#    When I open "My Activities" page
-#    Then I should be able to see the "edited" a "file" document activity
-#    And the user deletes the file "Test Document"
+
+  Scenario:Edit the file metadata
+    Given the user is on "My File" KC page
+    Then the user should be able to upload file "Edit_metadata" from "Intro_to_MongoDB.ppt"
+    Then the user should be able to edit document with "Test_Document" and "sample" tags
+    When I open "My Activities" page
+    Then I should be able to see the "uploaded" a "file" document activity
+    And the user deletes the file "Test_Document"
+    And User "admin_user" logout

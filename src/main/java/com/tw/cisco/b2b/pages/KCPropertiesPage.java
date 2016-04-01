@@ -94,5 +94,8 @@ public class KCPropertiesPage extends BasePage<KCPropertiesPage> {
         return new EditFilePage(driver);
     }
 
+    public void editFileRating() {
+
+    }
 
 }

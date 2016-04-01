@@ -35,7 +35,7 @@ public class MyActivityPage extends BasePage<MyActivityPage> {
     public MyActivityPage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
-       // waitForPageToLoad(getPageLoadCondition());
+        waitForPageToLoad(getPageLoadCondition());
     }
 
     @Override
@@ -62,7 +62,7 @@ public class MyActivityPage extends BasePage<MyActivityPage> {
 
     public void isActivityPresent(String fileName) throws NoSuchElementException{
         if(isElementPresent(activityDescription)) {
-            LOGGER.debug("-- File upload activity for "+fileName+" captured");
+            LOGGER.debug("-- capturing file upload activity for "+fileName+" ");
             Assert.assertTrue(activityDescription.getText().contains(fileName));
         }else {
             throw new NoSuchElementException("Activity not found");

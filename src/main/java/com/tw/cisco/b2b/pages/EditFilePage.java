@@ -69,53 +69,39 @@ public class EditFilePage extends BasePage<EditFilePage> {
     }
 
 
-    private boolean verifyFileName(String fileName) {
-        if(fileName.equals(currentFileName.getText())) {
-            return true;
-        } else {
-            return false;
-        }
+    public EditFilePage verifyFileName(String titleName) {
+        LOGGER.info("Verifying title:");
+        Assert.assertEquals(titleName,title.getAttribute("value"));
+        return this;
     }
 
-    private void enterFileTitle(String fileTitle) {
-        try {
-            enterText(title,fileTitle);
-        } catch(TextElementNotFoundException ex) {
-            LOGGER.error("-- Error in locating :"+title.toString());
-        }
+    private void enterFileTitle(String fileTitle) throws TextElementNotFoundException {
+        enterText(title,fileTitle);
     }
 
-    private void enterFileDesc(String content) {
-        try {
-            LOGGER.info("Switching to iframe");
-            switchToiFrame(iframeClass);
-            LOGGER.info("Passing file description");
-            enterTextBy(iframeDescription, content);
-            LOGGER.info("switching back from iframe");
-            switchBackFromiFrame();
-        } catch (IframeNotFoundException ex) {
-            LOGGER.error("Switching to iframe failed", ex);
-        }
+    private void enterFileDesc(String content) throws IframeNotFoundException {
+        LOGGER.info("Switching to iframe");
+        switchToiFrame(iframeClass);
+        LOGGER.info("Passing file description");
+        enterTextBy(iframeDescription, content);
+        LOGGER.info("switching back from iframe");
+        switchBackFromiFrame();
     }
 
-    private void assignTags(String tagName) {
+    private void assignTags(String tagName) throws TextElementNotFoundException, ClickElementException , ElementNotFoundException {
         LOGGER.trace(">> assignTags(): ", tagName);
-        try {
-            enterText(tags, tagName);
-            waitForElement(ExpectedConditions.visibilityOf(tagSuggestionBox),tagSuggestionBox);
-            clickButton(tagSuggestions);
-        } catch(TextElementNotFoundException| ClickElementException | ElementNotFoundException e) {
-            LOGGER.error("-- Failed to click tag name from suggestions", e);
-        }
-        LOGGER.trace("<< assignTags()");
+        enterText(tags, tagName);
+        waitForElement(ExpectedConditions.visibilityOf(tagSuggestionBox),tagSuggestionBox);
+        clickButton(tagSuggestions);
     }
 
-    public void modifyFileDetails(String fileName, String fileTitle, String tagName) {
+    public KCPropertiesPage modifyFileDetails(String fileTitle, String tagName) throws Exception {
         LOGGER.info("-- Editing file metadata");
-        Assert.assertTrue(verifyFileName(fileName));
         enterFileTitle(fileTitle);
-        enterFileDesc(fileTitle);
+       // enterFileDesc(fileTitle);
         assignTags(tagName);
+        clickButton(saveButton);
+        return new KCPropertiesPage(driver);
     }
 
 }

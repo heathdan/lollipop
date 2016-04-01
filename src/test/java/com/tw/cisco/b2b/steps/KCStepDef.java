@@ -1,11 +1,9 @@
 package com.tw.cisco.b2b.steps;
 
 import com.tw.cisco.b2b.helper.CommonMethodsHelper;
+import com.tw.cisco.b2b.navigation.HeaderNav;
 import com.tw.cisco.b2b.navigation.TabbedNav;
-import com.tw.cisco.b2b.pages.HomePage;
-import com.tw.cisco.b2b.pages.LeftNav;
-import com.tw.cisco.b2b.pages.MyActivityPage;
-import com.tw.cisco.b2b.pages.MyFilesPage;
+import com.tw.cisco.b2b.pages.*;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -25,6 +23,7 @@ public class KCStepDef {
     private static final Logger LOGGER = LoggerFactory.getLogger(KCStepDef.class);
     private MyFilesPage myFilesPage;
     private String timeStampedFileName = null;
+    private String editMetaDataFileName=null;
     HomePage homePage;
 
     public KCStepDef(SharedDriver driver) {
@@ -48,7 +47,7 @@ public class KCStepDef {
 
     @When("^I open \"([^\"]*)\" page$")
     public void iOpenPage(String arg0) throws Throwable {
-        new MyFilesPage(driver).getHeaderNav().navToMyActivity().navToTab(TabbedNav.TabName.MYACTIVITIES);
+        new HeaderNav(driver).navToMyActivity().navToTab(TabbedNav.TabName.MYACTIVITIES);
     }
 
     @Then("^I should be able to see the \"([^\"]*)\" a \"([^\"]*)\" document activity$")
@@ -74,6 +73,14 @@ public class KCStepDef {
 
     @Then("^the user should be able to edit document with \"([^\"]*)\" and \"([^\"]*)\" tags$")
     public void theUserShouldBeAbleToEditDocumentWithAndTags(String arg0, String arg1) throws Throwable {
-
+        EditFilePage editFilePage = new MyFilesPage(driver).navToFileProperties().navToEditFile().verifyFileName(timeStampedFileName);
+        timeStampedFileName = CommonMethodsHelper.timeStamp(arg0);
+        editFilePage.modifyFileDetails(timeStampedFileName,arg1);
     }
+
+
+//    @When("^the user gives a rating for document$")
+//    public void theUserGivesARatingForDocument() throws Throwable {
+//        new MyFilesPage(driver).navToFileProperties().
+//    }
 }
