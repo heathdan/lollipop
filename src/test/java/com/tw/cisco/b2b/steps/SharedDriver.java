@@ -129,6 +129,8 @@ public class SharedDriver extends EventFiringWebDriver {
             } catch (IOException ex) {
                 System.err.println(ex.getMessage());
             }
+        } else {
+            manage().deleteAllCookies();
         }
     }
 }
