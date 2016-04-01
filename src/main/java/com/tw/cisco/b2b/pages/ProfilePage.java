@@ -75,8 +75,10 @@ public class ProfilePage extends BasePage<ProfilePage> {
     public void verifyUserTitleAndOrg(String orgID, String userTitle) {
         LOGGER.info("userTitle:" + title.getText());
         LOGGER.info("orgid:" + org.getText());
-        Assert.assertEquals(orgID, org.getText());
-        Assert.assertEquals(userTitle, title.getText());
+       // Assert.assertEquals(orgID, org.getText());
+       // Assert.assertEquals(userTitle, title.getText());
+        Assert.assertTrue("Organization displayed in profile contains text",org.getText().contains(orgID));
+        Assert.assertTrue("Title displayed in profile contains text",title.getText().contains(userTitle));
     }
 
     public void verifyEmailID(String emailID) {

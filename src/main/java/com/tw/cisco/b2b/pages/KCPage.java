@@ -25,7 +25,7 @@ public class KCPage extends BasePage<KCPage> {
     @FindBy(xpath = ".//span[text()='Shared Files']")
     private WebElement sharedFiles;
 
-    @FindBy(xpath = "//span[text()=' Knowledge Center']/parent::button[@data-icon2-after='triangle-open']")
+    @FindBy(xpath = "//span[text()='Knowledge Center']/parent::button[@data-icon2-after='triangle-open']")
     private WebElement kcWait;
 
     static final Logger LOGGER = LoggerFactory.getLogger(KCPage.class);

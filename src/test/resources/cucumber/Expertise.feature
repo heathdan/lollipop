@@ -21,15 +21,15 @@ Feature: Experts
     Given user navigates to Define Expertise Tab
     When user define a new TimeStamped expertise "SME"
     And user navigates to the Users tab
-    And assign the TimeStamped expertise "SME" to the user "learner_username"
-    Then user "learner_username" should be marked expert in expertise "SME"
+    And assign the TimeStamped expertise "SME" to the user "learner_user"
+    Then user "learner_user" should be marked expert in expertise "SME"
     And User "admin_user" logout
 
   Scenario: User can not delete an expertise once assigned to a user
     Given user navigates to Define Expertise Tab
     When user define a new TimeStamped expertise "ASIGN_EXP"
     And user navigates to the Users tab
-    And assign the TimeStamped expertise "ASIGN_EXP" to the user "learner_username"
+    And assign the TimeStamped expertise "ASIGN_EXP" to the user "learner_user"
     Then user navigates to Define Expertise Tab
     And user verifies that expertise "ASIGN_EXP" is assigned successfully
     Then user should not find an option to delete the assigned expertise "ASIGN_EXP"

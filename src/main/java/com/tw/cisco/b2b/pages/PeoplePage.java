@@ -20,7 +20,7 @@ public class PeoplePage extends BasePage<PeoplePage> {
     @FindBy(xpath = ".//span[text()='Experts']")
     private WebElement experts;
 
-    @FindBy(xpath = ".//span[text()=' Knowledge Center']/parent::button[@data-icon2-after='triangle-open']")
+        @FindBy(xpath = ".//span[text()='People']/parent::button[@data-icon2-after='triangle-open']")
     private WebElement peopleWait;
 
     public PeoplePage(WebDriver driver) {
