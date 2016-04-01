@@ -74,7 +74,6 @@ public class KCStepDef {
 
     @Then("^the user should be able to edit document with \"([^\"]*)\" and \"([^\"]*)\" tags$")
     public void theUserShouldBeAbleToEditDocumentWithAndTags(String arg0, String arg1) throws Throwable {
-        new MyFilesPage(driver).
 
     }
 }
