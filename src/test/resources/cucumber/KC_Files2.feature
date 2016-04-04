@@ -35,17 +35,17 @@ Feature: KC-1
 #    And the user deletes the file "ppt_UploadDoc"
 #    And User "admin_user" logout
 
-#  Scenario: Share a file with other user
-#    Given the user is on "My File" KC page
-#    Then the user should be able to upload file "pdf_UploadDoc" from "DataStageAndMongoDB.pdf"
-#    When he shares it with "learner_displayname"
-#    And User "admin_user" logout
-#    Given that the learner_user logged in as "learner_user" and "password"
-#    Then the user "learner_username" should be able to view sharedFile
-#    And User "learner_username" logout
-#    Given that the user logged in as "admin_user" and "password"
-#    And the user deletes the file "pdf_UploadDoc"
-#    And User "admin_user" logout
+  Scenario: Share a file with other user
+    Given the user is on "My File" KC page
+    Then the user should be able to upload file "pdf_UploadDoc" from "DataStageAndMongoDB.pdf"
+    When he shares it with "learner_displayname"
+    And User "admin_user" logout
+    Given that the learner_user logged in as "learner_user" and "password"
+    Then the user "learner_username" should be able to view sharedFile
+    And User "learner_username" logout
+    Given that the user logged in as "admin_user" and "password"
+    And the user deletes the file "pdf_UploadDoc"
+    And User "admin_user" logout
 
   Scenario:Edit the file metadata
     Given the user is on "My File" KC page

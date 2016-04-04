@@ -129,7 +129,7 @@ public class MyFilesPage extends BasePage<MyFilesPage> {
     @FindBy(xpath=".//div[@class='bootstrap-tagsinput']//div[@class='tt-suggestion']")
     private WebElement userSuggestionBox;
 
-    @FindBy(xpath=".//div[@class='bootstrap-tagsinput']//span[@class='tt-suggestions']//p")
+    @FindBy(xpath=(".//div[@class='bootstrap-tagsinput']//span[@class='tt-suggestions']//p[1]"))
     private WebElement userSuggestionSelect;
 
     @FindBy(xpath=".//div[@class='modal-footer']//button[contains(text(),'Save')]")
@@ -214,6 +214,7 @@ public class MyFilesPage extends BasePage<MyFilesPage> {
         waitForElement(ExpectedConditions.visibilityOf(shareFileHeader),shareFileHeader);
         enterText(shareFileText,userName);
         waitForElement(ExpectedConditions.visibilityOf(userSuggestionBox),userSuggestionBox);
+        LOGGER.info("Sharing with user: "+userSuggestionSelect.getText());
         clickButton(userSuggestionSelect);
         clickButton(shareFileSave);
         waitForElement(ExpectedConditions.visibilityOf(shareFileSuccess),shareFileSuccess);
