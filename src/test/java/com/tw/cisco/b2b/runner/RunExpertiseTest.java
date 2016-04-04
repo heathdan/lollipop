@@ -14,6 +14,6 @@ import org.junit.runner.RunWith;
         glue= {"com/tw/cisco/b2b/steps/"},
         tags = "@Expertise",
         monochrome = true,
-        plugin= {"json:target/cucumber-report.json", "html:target/cucumber-html-report"})
+        plugin= {"com.cucumber.listener.ExtentCucumberFormatter:target/output/Expertise_report.html"})
 public class RunExpertiseTest {
 }

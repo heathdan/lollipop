@@ -14,6 +14,6 @@ import org.junit.runner.RunWith;
         glue= {"com/tw/cisco/b2b/steps/"},
         tags = "@KC",
         monochrome = true,
-        plugin= {"json:target/cucumber-report.json", "html:target/cucumber-html-report"})
+        plugin= {"com.cucumber.listener.ExtentCucumberFormatter:target/output/KC_report.html"})
 public class RunKCTest {
 }
