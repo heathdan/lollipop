@@ -168,7 +168,7 @@ public class UserPage extends BasePage<UserPage> {
             LOGGER.info("after search the value for page fatory for email is   \""+userEmail.getText()+" \" " );
             LOGGER.info("clicking on assign expertise icon");
             clickIcon(assignExpertisePopupicon,"Expertise");
-        } catch (ClickIconNotFoundException ex) {
+        } catch (ClickIconNotFoundException | ElementNotVisibleInUI ex) {
             LOGGER.error("--- Expertise popup failed", ex);
         }
         return new AssignExpertisePopupPage(driver);
@@ -178,14 +178,14 @@ public class UserPage extends BasePage<UserPage> {
         return item.getText();
     }
 
-    public UserPage verifyExpertiseAsignment(String emailId){
+    public UserPage verifyExpertiseAsignment(String emailId) throws ElementNotVisibleInUI{
         waitForElement(ExpectedConditions.textToBePresentInElement(userEmail,emailId),userEmail);
         LOGGER.info("Verifying the search results matches the email of user");
         Assert.assertEquals("assigned expertise is ", getUserDetails(userEmail), emailId);
         return new UserPage(driver);
     }
 
-    public AssignRolesPopupPage clickAssignRole(String email){
+    public AssignRolesPopupPage clickAssignRole(String email) throws ElementNotVisibleInUI{
         LOGGER.trace(">> clickAssignRole()");
         try {
             waitForElement(ExpectedConditions.textToBePresentInElement(userEmail,email),userEmail);
@@ -210,7 +210,7 @@ public class UserPage extends BasePage<UserPage> {
             Thread.sleep(2000);
             LOGGER.info("closing the bulk upload pop up");
             clickIcon(bulkUploadClose, "Popup Close");
-        } catch(ClickIconNotFoundException | TextElementNotFoundException | ElementNotFoundException | ClickElementException | InterruptedException ex) {
+        } catch(ClickIconNotFoundException | TextElementNotFoundException | ElementNotFoundException | ClickElementException | InterruptedException | ElementNotVisibleInUI ex) {
             LOGGER.error("--- CSV upload failed",ex);
         }
         return new UserPage(driver);

@@ -1,9 +1,6 @@
 package com.tw.cisco.b2b.pages;
 
-import com.tw.cisco.b2b.exceptions.ClickElementException;
-import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
-import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
-import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
+import com.tw.cisco.b2b.exceptions.*;
 import com.tw.cisco.b2b.navigation.HeaderNav;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
@@ -107,7 +104,7 @@ public class ProfilePage extends BasePage<ProfilePage> {
             LOGGER.info("waiting for success message");
             waitForElement(ExpectedConditions.visibilityOf(expertiseSuccessMessage), expertiseSuccessMessage);
             getHeaderNav().navToHome();
-        } catch (ClickIconNotFoundException | TextElementNotFoundException | ElementNotFoundException | ClickElementException ex) {
+        } catch (ClickIconNotFoundException | TextElementNotFoundException | ElementNotFoundException | ClickElementException | ElementNotVisibleInUI ex) {
             LOGGER.error("--error in self tagging expertise", ex);
         }
         return new HomePage(driver);

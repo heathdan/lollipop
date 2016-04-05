@@ -95,7 +95,7 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
             clickButton(roleSuccessPopUp);
             new HeaderNav(driver).waitForSpinnerToStop();
         }
-        catch(TextElementNotFoundException | ClickElementException |SpinnerNotFoundException|SpinnerNotDisappearException| ElementNotFoundException ex) {
+        catch(TextElementNotFoundException | ClickElementException |SpinnerNotFoundException|SpinnerNotDisappearException| ElementNotFoundException |ElementNotVisibleInUI ex) {
             LOGGER.error(roleName+" creation failed", ex);
         }
         catch(SelectDropDownNotFoundException ex) {

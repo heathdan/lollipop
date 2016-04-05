@@ -6,6 +6,7 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -25,7 +26,6 @@ import java.util.concurrent.TimeUnit;
 public class SharedDriver extends EventFiringWebDriver {
 
     static final Logger LOGGER = LoggerFactory.getLogger(SharedDriver.class);
-    private static final String URL = "https://t10-qa.xkit.co";
     private static WebDriver REAL_DRIVER;
     CommonMethodsHelper commonMethodsHelper;
 
@@ -35,7 +35,7 @@ public class SharedDriver extends EventFiringWebDriver {
             try {
                 REAL_DRIVER.close();
             } catch (WebDriverException e) {
-                System.out.println("Could not close driver");
+                LOGGER.error("Could not close driver");
             }
         }
     };
@@ -54,7 +54,6 @@ public class SharedDriver extends EventFiringWebDriver {
 
     public SharedDriver() {
         super(getRealDriver());
-        // waitAndMaximize();
         maximizeBrowser();
         try {
             navigateToURL(getURL());
@@ -76,7 +75,7 @@ public class SharedDriver extends EventFiringWebDriver {
     }
 
     public String getURL() throws IOException {
-        commonMethodsHelper = new CommonMethodsHelper();
+
         return commonMethodsHelper.getPropValue("env");
     }
 
@@ -92,7 +91,7 @@ public class SharedDriver extends EventFiringWebDriver {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         int Width = (int) toolkit.getScreenSize().getWidth();
         int Height = (int) toolkit.getScreenSize().getHeight();
-        REAL_DRIVER.manage().window().setSize(new org.openqa.selenium.Dimension(Width, Height));
+        REAL_DRIVER.manage().window().setSize(new Dimension(Width, Height));
     }
 
     private static void waitAndMaximize() {
@@ -110,9 +109,10 @@ public class SharedDriver extends EventFiringWebDriver {
 
     @Before
     public void setUp(Scenario scenario) {
+//        System.out.println(manage().getCookieNamed("qa1.learn.cisco").getValue());
+        manage().deleteAllCookies();
         MDC.put("logFileName", scenario.getSourceTagNames().iterator().next());
         LOGGER.info("SCENARIO ===" + scenario.getName());
-        manage().deleteAllCookies();
     }
 
     @After

@@ -26,6 +26,7 @@ public class KCStepDef {
     private String editMetaDataFileName=null;
     HomePage homePage;
 
+
     public KCStepDef(SharedDriver driver) {
         this.driver = driver;
         long threadId = Thread.currentThread().getId();
@@ -68,7 +69,7 @@ public class KCStepDef {
     @When("^he shares it with \"([^\"]*)\"$")
     public void heSharesItWith(String arg0) throws Throwable {
         String userName = CommonMethodsHelper.getPropValue(arg0);
-        new MyFilesPage(driver).shareFile(userName);
+        myFilesPage = new MyFilesPage(driver).shareFile(userName);
     }
 
     @Then("^the user should be able to edit document with \"([^\"]*)\" and \"([^\"]*)\" tags$")

@@ -70,19 +70,15 @@ public class AssignRolesPopupPage extends BasePage<AssignRolesPopupPage> {
         }
     }
 
-    protected void assignRole(String roleName) {
+    protected void assignRole(String roleName) throws TextElementNotFoundException, ClickElementException ,ElementNotFoundException, ElementNotVisibleInUI {
         LOGGER.trace(">> AssignRole(): ", roleName);
-        try {
-            enterText(rolePlaceholder, roleName);
-            waitForElement(ExpectedConditions.visibilityOf(roleSuggestionBox),roleSuggestionBox);
-            clickButton(roleSuggestions);
-        } catch(TextElementNotFoundException| ClickElementException | ElementNotFoundException e) {
-            LOGGER.error("-- Failed to click role from suggestions", e);
-        }
+        enterText(rolePlaceholder, roleName);
+        waitForElement(ExpectedConditions.visibilityOf(roleSuggestionBox),roleSuggestionBox);
+        clickButton(roleSuggestions);
         LOGGER.trace("<< AssignRole()");
     }
 
-    public UserPage assignAllRoles(String customRoleName) {
+    public UserPage assignAllRoles(String customRoleName) throws Exception {
         LOGGER.trace(">> assignAllRoles()");
         assignRole("Learner");
         assignRole(customRoleName);

@@ -103,13 +103,14 @@ public abstract class BasePage<P extends BasePage> {
     /**
      * Method for waiting for element to be visible
      */
-    protected void waitForElement(ExpectedCondition expectedCondition, WebElement element) {
+    protected void waitForElement(ExpectedCondition expectedCondition, WebElement element) throws ElementNotVisibleInUI {
         try {
             LOGGER.trace(">> waitForElement()");
             waitTime = new WebDriverWait(driver, ELEMENT_WAIT);
             waitTime.until(expectedCondition);
         } catch (Exception e) {
-            LOGGER.error("-- Error in waiting for element", element.toString());
+            LOGGER.error("-- Error in waiting for element");
+            throw new ElementNotVisibleInUI("Element is not visible in UI");
         }
         LOGGER.trace("<< waitForElement()");
     }

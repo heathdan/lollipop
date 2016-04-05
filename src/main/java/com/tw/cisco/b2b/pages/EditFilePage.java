@@ -1,9 +1,6 @@
 package com.tw.cisco.b2b.pages;
 
-import com.tw.cisco.b2b.exceptions.ClickElementException;
-import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
-import com.tw.cisco.b2b.exceptions.IframeNotFoundException;
-import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
+import com.tw.cisco.b2b.exceptions.*;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -88,7 +85,7 @@ public class EditFilePage extends BasePage<EditFilePage> {
         switchBackFromiFrame();
     }
 
-    private void assignTags(String tagName) throws TextElementNotFoundException, ClickElementException , ElementNotFoundException {
+    private void assignTags(String tagName) throws TextElementNotFoundException, ClickElementException , ElementNotFoundException ,ElementNotVisibleInUI{
         LOGGER.trace(">> assignTags(): ", tagName);
         enterText(tags, tagName);
         waitForElement(ExpectedConditions.visibilityOf(tagSuggestionBox),tagSuggestionBox);

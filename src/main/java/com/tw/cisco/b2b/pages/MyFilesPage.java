@@ -213,6 +213,7 @@ public class MyFilesPage extends BasePage<MyFilesPage> {
         clickIcon(shareIcon,"Share File");
         waitForElement(ExpectedConditions.visibilityOf(shareFileHeader),shareFileHeader);
         enterText(shareFileText,userName);
+        getHeaderNav().waitForSpinnerToStop();
         waitForElement(ExpectedConditions.visibilityOf(userSuggestionBox),userSuggestionBox);
         LOGGER.info("Sharing with user: "+userSuggestionSelect.getText());
         clickButton(userSuggestionSelect);
@@ -220,7 +221,7 @@ public class MyFilesPage extends BasePage<MyFilesPage> {
         waitForElement(ExpectedConditions.visibilityOf(shareFileSuccess),shareFileSuccess);
         Assert.assertEquals(SHARE_FILE_SUCCESS_MESSAGE,shareFileSuccess.getText());
         clickIcon(shareFilePopupClose,"Closing share file popup");
-        return this;
+        return new MyFilesPage(driver);
     }
 
     public KCPropertiesPage navToFileProperties()throws ClickIconNotFoundException {

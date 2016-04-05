@@ -111,7 +111,7 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
         return new DefineExpertisePage(driver) ;
     }
 
-    public DefineExpertisePage verfiyExpertiseAsigned(String Expertise){
+    public DefineExpertisePage verfiyExpertiseAsigned(String Expertise) throws ElementNotVisibleInUI{
         searchExpertise(Expertise);
         waitForElement(ExpectedConditions.textToBePresentInElement(expertiseName,Expertise),expertiseName);
         LOGGER.info("expertise text after search is \""+expertiseName.getText()+"\"");

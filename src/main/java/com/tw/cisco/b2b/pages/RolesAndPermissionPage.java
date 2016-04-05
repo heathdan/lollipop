@@ -156,7 +156,7 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
             headerNav.waitForSpinnerToStop();
             new RolesAndPermissionPage(driver).findRoleAndDelete(roleName);
         }
-        } catch (ClickIconNotFoundException | ClickElementException | ElementNotFoundException | SpinnerNotDisappearException | SpinnerNotFoundException ex) {
+        } catch (ClickIconNotFoundException | ClickElementException | ElementNotFoundException | SpinnerNotDisappearException | SpinnerNotFoundException| ElementNotVisibleInUI ex) {
             LOGGER.error("---Role deletion failed", ex);
         }
         return this;

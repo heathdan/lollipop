@@ -1,6 +1,7 @@
 package com.tw.cisco.b2b.pages;
 
 import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
+import com.tw.cisco.b2b.exceptions.ElementNotVisibleInUI;
 import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
@@ -90,7 +91,7 @@ public class AllPeoplePage extends BasePage<AllPeoplePage> {
             waitForElement(ExpectedConditions.textToBePresentInElement(emailID, emailId), emailID);
             LOGGER.info("search and wait : user after wait is :  " +emailID.getText());
             clickIcon(userName, "User profile");
-        }catch (ClickIconNotFoundException ex){
+        }catch (ClickIconNotFoundException | ElementNotVisibleInUI ex){
             LOGGER.error("-- User not selectable",ex);
         }
         return new ProfilePage(driver);
