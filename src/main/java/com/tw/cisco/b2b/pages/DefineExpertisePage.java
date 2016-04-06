@@ -36,6 +36,9 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
     @FindBy(xpath = ".//button[@data-original-title='Bulk Upload']")
     private WebElement bulkUploadExpertiseButton ;
 
+    @FindBy(xpath = "//div[@class='admin-filters-panel']//div[contains(@class,'success fade')]")
+    private WebElement expertiseSuccessMessage;
+
     @FindBy(xpath = ".//div[@id='expertise-topics']//p[contains(@class,'item-topic')]")
     private WebElement expertiseName ;
 
@@ -92,7 +95,10 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
 
             LOGGER.info("Saving the expertise\""+Expertise+"\"");
             clickIcon(addExpertiseButton, "Expertise");
-        } catch ( ClickIconNotFoundException | TextElementNotFoundException ex) {
+
+            waitForElement(ExpectedConditions.visibilityOf(expertiseSuccessMessage),expertiseSuccessMessage);
+
+        } catch ( ClickIconNotFoundException|ElementNotVisibleInUI | TextElementNotFoundException ex) {
             LOGGER.error(" Expertise addition failed", ex);
         }
         return new DefineExpertisePage(driver);
@@ -105,7 +111,7 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
             enterText(searchExpertiseTextField, Expertise);
             clickButton(searchExpertiseIcon);
             LOGGER.info("waiting for search to complete");
-        } catch(TextElementNotFoundException | ElementNotFoundException | ClickElementException ex) {
+        } catch(TextElementNotFoundException | ElementNotFoundException| ClickElementException ex) {
             LOGGER.error("--Error in searching expertise",ex);
         }
         return new DefineExpertisePage(driver) ;
@@ -136,17 +142,16 @@ public class DefineExpertisePage extends BasePage<DefineExpertisePage> {
     public DefineExpertisePage deleteUnusedExpertise(String Expertise){
         LOGGER.trace(">>Delete Unused Expertise()", Expertise);
         try {
+            waitForElement(ExpectedConditions.textToBePresentInElement(expertiseName,Expertise),expertiseName);
+            String exp = waitForIndexing(expertiseName).getText();
+            LOGGER.info("expertise text after search is \""+expertiseName.getText()+"\"");
             headerNav = new HeaderNav(driver);
             LOGGER.info("Deleting the expertise");
-            clickButton(waitForIndexing(expertiseDeleteButton));
+            clickButton((expertiseDeleteButton));
             LOGGER.info("Verify the expertise is deleted");
             headerNav.waitForSpinnerToStop();
-            LOGGER.info("searching the expertise \""+Expertise+"\"");
-            enterText(searchExpertiseTextField,Expertise);
-            clickButton(searchExpertiseIcon);
-            LOGGER.info("waiting for search to complete");
-            Assert.assertEquals("No results found for deleted search", noResultsMsg.getText(),"No results found");
-        } catch (ElementNotFoundException | TextElementNotFoundException | SpinnerNotFoundException | SpinnerNotDisappearException| ClickElementException ex) {
+            Assert.assertEquals("No results found", noResultsMsg.getText(),"No results found");
+        } catch (ElementNotFoundException  | SpinnerNotFoundException | ElementNotVisibleInUI| SpinnerNotDisappearException| ClickElementException ex) {
             LOGGER.error("--Error in deleting expertise",ex);
         }
         return new DefineExpertisePage(driver);

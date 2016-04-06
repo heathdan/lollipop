@@ -7,6 +7,13 @@ Feature: Experts
   Background:
     Given that the user logged in as "admin_user" and "password"
 
+  Scenario: Delete unused expertise
+    Given user navigates to Define Expertise Tab
+    Then user define a new TimeStamped expertise "TobeDeleted"
+    And user search for the TimeStamped expertise "TobeDeleted"
+    Then admin should be able to delete the unused expertise "TobeDeleted"
+    And User "admin_user" logout
+
   Scenario: User is able to delete the self tagged expertise for himself
     Given user navigates to Define Expertise Tab
     When user define a new TimeStamped expertise "UNIFIED"
@@ -35,12 +42,7 @@ Feature: Experts
     Then user should not find an option to delete the assigned expertise "ASIGN_EXP"
     And User "admin_user" logout
 
-  Scenario: Delete unused expertise
-    Given user navigates to Define Expertise Tab
-    Then user define a new TimeStamped expertise "TobeDeleted"
-    And user search for the TimeStamped expertise "TobeDeleted"
-    Then admin should be able to delete the unused expertise "TobeDeleted"
-    And User "admin_user" logout
+
 
 
 
