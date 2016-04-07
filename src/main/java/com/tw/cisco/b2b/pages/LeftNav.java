@@ -116,12 +116,9 @@ public class LeftNav extends BasePage<LeftNav> {
         }
     }
 
-    public AdminPage navToAdmin() {
-        try {
-            clickIcon(admin, "Admin Tab");
-        } catch (ClickIconNotFoundException ex) {
-            LOGGER.error("Admin access is missing", ex);
-        }
+    public AdminPage navToAdmin() throws ClickIconNotFoundException {
+        LOGGER.info(">>navToAdmin()");
+        clickIcon(admin, "Admin Tab");
         return new AdminPage(driver);
     }
 
@@ -131,12 +128,8 @@ public class LeftNav extends BasePage<LeftNav> {
         return new KCPage(driver);
     }
 
-    public PeoplePage navToPeople() {
-        try {
-            clickIcon(people,"People");
-        } catch (ClickIconNotFoundException ex) {
-            LOGGER.error(" People page is missing",ex);
-        }
+    public PeoplePage navToPeople() throws ClickIconNotFoundException {
+        clickIcon(people,"People");
         return new PeoplePage(driver);
     }
 

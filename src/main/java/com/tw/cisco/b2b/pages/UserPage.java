@@ -119,7 +119,7 @@ public class UserPage extends BasePage<UserPage> {
         super(driver);
         instantiatePage(this);
         waitForPageToLoad(getPageLoadCondition());
-      //  headerNav = new HeaderNav(driver);
+        headerNav = new HeaderNav(driver);
     }
 
     @Override

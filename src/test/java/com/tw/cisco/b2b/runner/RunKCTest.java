@@ -16,4 +16,5 @@ import org.junit.runner.RunWith;
         monochrome = true,
         plugin= {"com.cucumber.listener.ExtentCucumberFormatter:target/output/KC_report.html"})
 public class RunKCTest {
+
 }

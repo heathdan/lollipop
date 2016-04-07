@@ -109,8 +109,7 @@ public class SharedDriver extends EventFiringWebDriver {
 
     @Before
     public void setUp(Scenario scenario) {
-//        System.out.println(manage().getCookieNamed("qa1.learn.cisco").getValue());
-        manage().deleteAllCookies();
+        this.manage().deleteAllCookies();
         MDC.put("logFileName", scenario.getSourceTagNames().iterator().next());
         LOGGER.info("SCENARIO ===" + scenario.getName());
     }
@@ -121,7 +120,8 @@ public class SharedDriver extends EventFiringWebDriver {
      */
     public void embedScreenshot(Scenario scenario) {
         if (scenario.isFailed()) {
-            manage().deleteAllCookies();
+            this.manage().deleteAllCookies();
+
             scenario.write("Current page URL is " + getCurrentUrl());
             try {
                 File screenshot = getScreenshotAs(OutputType.FILE);
@@ -130,7 +130,8 @@ public class SharedDriver extends EventFiringWebDriver {
                 System.err.println(ex.getMessage());
             }
         } else {
-            manage().deleteAllCookies();
+            this.manage().deleteAllCookies();
         }
     }
+
 }

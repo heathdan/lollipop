@@ -80,8 +80,4 @@ public class KCStepDef {
     }
 
 
-//    @When("^the user gives a rating for document$")
-//    public void theUserGivesARatingForDocument() throws Throwable {
-//        new MyFilesPage(driver).navToFileProperties().
-//    }
 }
