@@ -104,6 +104,21 @@ public class RoleCreatePopupPage extends BasePage<RoleCreatePopupPage> {
         return new RolesAndPermissionPage(driver);
     }
 
+    public RolesAndPermissionPage createNewRole(String roleName){
+        LOGGER.trace(">> createNewRole():"+roleName);
+        try {
+            enterText(nameTextField, roleName);
+            clickButton(saveRoleCreation);
+            waitForElement(ExpectedConditions.visibilityOf(roleSuccessPopupHeader), roleSuccessPopupHeader);
+            clickButton(roleSuccessPopUp);
+            new HeaderNav(driver).waitForSpinnerToStop();
+        }catch(TextElementNotFoundException | ClickElementException |SpinnerNotFoundException|SpinnerNotDisappearException| ElementNotFoundException |ElementNotVisibleInUI ex) {
+            LOGGER.error(roleName + " creation failed", ex);
+        }
+        return new RolesAndPermissionPage(driver);
+    }
+
+
     /***********************GET/SET METHODS*********************/
     public HeaderNav getHeaderNav() {
         return headerNav;

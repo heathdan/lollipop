@@ -2,10 +2,10 @@ package com.tw.cisco.b2b.navigation;
 
 import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
 import com.tw.cisco.b2b.pages.*;
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -25,7 +25,8 @@ public class TabbedNav extends BasePage<TabbedNav> {
         ROLESPERMISSIONS,
         DEFINEEXPERTISE,
         PROFILE,
-        MYACTIVITIES;
+        MYACTIVITIES,
+        LICENSING;
 
     }
     static final Logger LOGGER = LoggerFactory.getLogger(TabbedNav.class);
@@ -42,7 +43,10 @@ public class TabbedNav extends BasePage<TabbedNav> {
     @FindBy(xpath = ".//ul[@id='adminTab']//a[text()='Define Expertise']")
     private WebElement defineExpertiseTab;
 
-    @FindBys(@FindBy(xpath=".//div[@class='tabbable toggle_view admin-tabs']/ul[@id='adminTab']/li"))
+    @FindBy(xpath = ".//ul[@id='adminTab']//a[text()='Licensing']")
+    private WebElement licensingTab;
+
+    @FindBy(xpath=".//div[@class='tabbable toggle_view admin-tabs']/ul[@id='adminTab']/li")
     private List<WebElement> adminTabs;
 
     @FindBy(xpath=".//div[@id='user-profile']//a[contains(text(),'Profile')]")
@@ -51,10 +55,12 @@ public class TabbedNav extends BasePage<TabbedNav> {
     @FindBy(xpath =".//div[@id='user-profile']//a[contains(text(),'My Activities')]")
     private WebElement myActivities;
 
+    HeaderNav headerNav;
     public TabbedNav(WebDriver driver) {
         super(driver);
         instantiatePage(this);
-        //waitForPageToLoad(getPageLoadCondition());
+        waitForPageToLoad(getPageLoadCondition());
+        headerNav = new HeaderNav(driver);
     }
 
     @Override
@@ -70,6 +76,17 @@ public class TabbedNav extends BasePage<TabbedNav> {
         } catch(Exception e) {
             LOGGER.error("--- Error in instantiating page:",page.getClass().getSimpleName());
         }
+    }
+
+    public void isTabPresent(String tabName) {
+        boolean value= false;
+        for(WebElement tab : adminTabs) {
+            if(tab.getText().equals(tabName)) {
+                value = true;
+                break;
+            }
+        }
+        Assert.assertTrue(value);
     }
 
     public BasePage navToTab(TabName tabName) throws ClickIconNotFoundException {
@@ -103,9 +120,12 @@ public class TabbedNav extends BasePage<TabbedNav> {
                 pendingRegTab.click();
                 page = new DefineExpertisePage(driver);
                 break;
-                case "Licensing":
-                        status = page.getWorkspace().isDisplayed();
-                        break;
+                */
+            case LICENSING:
+                clickIcon(licensingTab,"LICENSING");
+                page = new LicensingPage(driver);
+                break;
+            /*
                     case "Site Management":
                         status = page.getMobileFolder().isDisplayed();
                         break;
@@ -123,8 +143,8 @@ public class TabbedNav extends BasePage<TabbedNav> {
                         break;
                     case "Global Activity Stream":
                         status = page.getPeople().isDisplayed();
-                        break;
-                        */
+                        break; */
+
             case PROFILE:
                 clickIcon(myProfile, "MY_PROFILE");
                 LOGGER.debug("Navigating to My Profile");
@@ -152,5 +172,13 @@ public class TabbedNav extends BasePage<TabbedNav> {
 
     public void setLeftNav(LeftNav leftNav) {
         this.leftNav = leftNav;
+    }
+
+    public HeaderNav getHeaderNav() {
+        return headerNav;
+    }
+
+    public void setHeaderNav(HeaderNav headerNav) {
+        this.headerNav = headerNav;
     }
 }

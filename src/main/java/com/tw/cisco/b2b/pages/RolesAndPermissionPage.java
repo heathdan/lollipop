@@ -81,6 +81,12 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
     @FindBy(xpath = ".//p[text()='CustomSystemAdminRole']/parent::div/parent::div//button[@data-original-title='Delete Role']")
     private WebElement customDeleteRole;
 
+    @FindBy(xpath=".//p[text()='CustomAutomationRole']/parent::div/parent::div//button[@data-original-title='Edit Permissions']")
+    private WebElement customEditPermission;
+
+    @FindBy(xpath=".//h4[@class='modal-title' and text()='Set Permissions']")
+    private WebElement setPermissionsHeader;
+
     @FindBy(xpath = ".//ul[@class='pagination']//a[text()='Next →']")
     private WebElement paginationNext;
 
@@ -125,13 +131,9 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
         return ExpectedConditions.visibilityOf(rolesTable);
     }
 
-    public RoleCreatePopupPage clickRoleCreation() {
+    public RoleCreatePopupPage clickRoleCreation() throws ClickIconNotFoundException {
         LOGGER.trace(">> clickRoleCreation()");
-        try {
-            clickIcon(createRole,"Create Role");
-        }catch(ClickIconNotFoundException ex) {
-            LOGGER.error("Role create popup not found",ex);
-        }
+        clickIcon(createRole,"Create Role");
         return new RoleCreatePopupPage(driver);
     }
 
@@ -161,6 +163,8 @@ public class RolesAndPermissionPage extends BasePage<RolesAndPermissionPage> {
         }
         return this;
     }
+
+
 
     /*********************GET/SET METHODS*********************/
 

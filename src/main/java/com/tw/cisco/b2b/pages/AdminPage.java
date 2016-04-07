@@ -1,6 +1,7 @@
 package com.tw.cisco.b2b.pages;
 
 import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
+import com.tw.cisco.b2b.navigation.HeaderNav;
 import com.tw.cisco.b2b.navigation.TabbedNav;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -40,10 +41,12 @@ public class AdminPage extends BasePage<AdminPage> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AdminPage.class);
 
+    HeaderNav headerNav;
     public AdminPage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
         waitForPageToLoad(getPageLoadCondition());
+        headerNav = new HeaderNav(driver);
     }
 
     @Override
@@ -94,5 +97,15 @@ public class AdminPage extends BasePage<AdminPage> {
         LOGGER.info("Navigating to Reporting");
         reporting.click();
         return new TabbedNav(driver);
+    }
+
+    /***********************GET/SET METHODS*********************/
+
+    public HeaderNav getHeaderNav() {
+        return headerNav;
+    }
+
+    public void setHeaderNav(HeaderNav headerNav) {
+        this.headerNav = headerNav;
     }
 }

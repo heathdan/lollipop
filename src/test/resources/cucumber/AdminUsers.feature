@@ -13,7 +13,25 @@ Feature: Admin
    And user navigates to the Users tab
    When he assigns role "CustomSystemAdminRole" to "learner_user"
    And User "admin_user" logout
-#
+   Given that the learner_user logged in as "learner_user" and "password"
+   Then user should be assigned "Licensing" permission under "System"
+   And user should be assigned "Define Expertise" permission under "User"
+   Then delete "CustomSystemAdminRole" role created
+   And User "learner_user" logout
+
+#  Scenario: Creation of Custom Role and add permissions to role
+#    Given the user is on Roles and Permissions tab on admin page
+#    When he creates a new role named "CustomAutomationRole"
+#    And adds permissions "View License" to "CustomAutomationRole" role
+#    When he assigns role "CustomAutomationRole" to "learner_user"
+#    And User "admin_user" logout
+#    Given that the learner_user logged in as "learner_user" and "password"
+#    Then user should be assigned "View License" permission under "CustomAutomationRole" role
+#    And "learner_username" should not be assigned "Add/Delete/Upload Expertise" permission on "User" page
+#    And User "learner_user" logout
+#    Given that the learner_user logged in as "learner_user" and "password"
+#    Then delete "CustomAutomationRole" role created
+
   Scenario: Bulk user CSV upload by Admin
     Given the user is on Users tab on admin page
     When he uploads a csv file "upload_users" to on board user "Z"

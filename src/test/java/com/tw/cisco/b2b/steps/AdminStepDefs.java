@@ -28,6 +28,9 @@ public class AdminStepDefs  {
     HeaderNav headerNav;
     AssignRolesPopupPage assignRolesPopupPage;
     ProfilePage profilePage;
+    AdminPage adminPage;
+    TabbedNav tabbedNav;
+
 
     public AdminStepDefs(SharedDriver driver){
         this.driver=driver;
@@ -119,6 +122,22 @@ public class AdminStepDefs  {
         profilePage.verifyManager(true);
     }
 
+    @Then("^user should be assigned \"([^\"]*)\" permission under \"([^\"]*)\"$")
+    public void userShouldBeAssignedPermissionUnder(String arg0, String arg1) throws Throwable {
+        adminPage = new LeftNav(driver).navToAdmin();
+        if(arg1.equals("User")) {
+            tabbedNav = adminPage.navToUser();
+            tabbedNav.getHeaderNav().waitForSpinnerToStop();
+        } else if(arg1.equals("System")) {
+            tabbedNav = adminPage.navToSystem();
+        }
+       tabbedNav.isTabPresent(arg0);
+    }
 
+    @Then("^delete \"([^\"]*)\" role created$")
+    public void deleteRoleCreated(String arg0) throws Throwable {
+        userNavigatesToRolesPermissionTab();
+        roleNpermission = new RolesAndPermissionPage(driver).findRoleAndDelete(arg0);
+    }
 }
 
