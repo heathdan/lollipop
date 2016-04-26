@@ -4,6 +4,8 @@ import com.tw.cisco.b2b.navigation.HeaderNav;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by aswathyn on 07/04/16.
@@ -11,12 +13,15 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 public class LicensingPage extends BasePage<LicensingPage> {
 
     HeaderNav headerNav;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(LicensingPage.class);
     public LicensingPage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
         //waitForPageToLoad(getPageLoadCondition());
         headerNav = new HeaderNav(driver);
     }
+
 
     @Override
     protected void instantiatePage(LicensingPage page) {

@@ -1,7 +1,11 @@
-package com.tw.cisco.b2b.pages;
+package com.tw.cisco.b2b.pages.leftNav;
 
 import com.tw.cisco.b2b.exceptions.ClickElementException;
 import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
+import com.tw.cisco.b2b.pages.BasePage;
+import com.tw.cisco.b2b.pages.knowledgeCenter.KnowledgeLibraryPage;
+import com.tw.cisco.b2b.pages.knowledgeCenter.MyFilesPage;
+import com.tw.cisco.b2b.pages.knowledgeCenter.SharedFilesPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

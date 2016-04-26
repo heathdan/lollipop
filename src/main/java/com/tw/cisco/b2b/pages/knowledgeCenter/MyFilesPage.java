@@ -1,10 +1,11 @@
-package com.tw.cisco.b2b.pages;
+package com.tw.cisco.b2b.pages.knowledgeCenter;
 
 import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
 import com.tw.cisco.b2b.exceptions.SpinnerNotDisappearException;
 import com.tw.cisco.b2b.exceptions.SpinnerNotFoundException;
 import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
 import com.tw.cisco.b2b.navigation.HeaderNav;
+import com.tw.cisco.b2b.pages.BasePage;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,6 +13,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by aswathyn on 13/03/16.
@@ -144,6 +147,7 @@ public class MyFilesPage extends BasePage<MyFilesPage> {
     private static final String DELETE_SUCCESS_MESSAGE = "Selected file has been deleted successfully.";
     private static final String SHARE_FILE_SUCCESS_MESSAGE="The changes made to sharing have been updated successfully";
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MyFilesPage.class);
     HeaderNav headerNav;
 
     public MyFilesPage(WebDriver driver) {

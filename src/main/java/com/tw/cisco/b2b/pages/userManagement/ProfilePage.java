@@ -1,7 +1,9 @@
-package com.tw.cisco.b2b.pages;
+package com.tw.cisco.b2b.pages.userManagement;
 
 import com.tw.cisco.b2b.exceptions.*;
 import com.tw.cisco.b2b.navigation.HeaderNav;
+import com.tw.cisco.b2b.pages.BasePage;
+import com.tw.cisco.b2b.pages.leftNav.HomePage;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,6 +11,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by aswathyn on 15/03/16.
@@ -44,6 +48,8 @@ public class ProfilePage extends BasePage<ProfilePage> {
 
     @FindBy(xpath = ".//div[@class='success' and text()='Area of Expertise added successfully.']")
     private WebElement expertiseSuccessMessage;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProfilePage.class);
 
     HeaderNav headerNav;
 

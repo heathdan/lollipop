@@ -3,9 +3,9 @@ package com.tw.cisco.b2b.navigation;
 
 import com.tw.cisco.b2b.exceptions.*;
 import com.tw.cisco.b2b.pages.BasePage;
-import com.tw.cisco.b2b.pages.HomePage;
-import com.tw.cisco.b2b.pages.LoginPage;
-import com.tw.cisco.b2b.pages.ProfilePage;
+import com.tw.cisco.b2b.pages.leftNav.HomePage;
+import com.tw.cisco.b2b.pages.login.LoginPage;
+import com.tw.cisco.b2b.pages.userManagement.ProfilePage;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;

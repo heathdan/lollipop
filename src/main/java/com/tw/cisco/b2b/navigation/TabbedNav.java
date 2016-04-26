@@ -2,6 +2,11 @@ package com.tw.cisco.b2b.navigation;
 
 import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
 import com.tw.cisco.b2b.pages.*;
+import com.tw.cisco.b2b.pages.activityStream.MyActivityPage;
+import com.tw.cisco.b2b.pages.userManagement.ProfilePage;
+import com.tw.cisco.b2b.pages.userManagement.UserPage;
+import com.tw.cisco.b2b.pages.userManagement.expertise.DefineExpertisePage;
+import com.tw.cisco.b2b.pages.userManagement.roleAssignment.RolesAndPermissionPage;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

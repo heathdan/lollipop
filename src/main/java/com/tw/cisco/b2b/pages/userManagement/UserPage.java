@@ -1,7 +1,10 @@
-package com.tw.cisco.b2b.pages;
+package com.tw.cisco.b2b.pages.userManagement;
 
 import com.tw.cisco.b2b.exceptions.*;
 import com.tw.cisco.b2b.navigation.HeaderNav;
+import com.tw.cisco.b2b.pages.BasePage;
+import com.tw.cisco.b2b.pages.userManagement.expertise.AssignExpertisePopupPage;
+import com.tw.cisco.b2b.pages.userManagement.roleAssignment.AssignRolesPopupPage;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

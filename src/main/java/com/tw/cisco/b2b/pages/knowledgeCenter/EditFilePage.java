@@ -1,6 +1,7 @@
-package com.tw.cisco.b2b.pages;
+package com.tw.cisco.b2b.pages.knowledgeCenter;
 
 import com.tw.cisco.b2b.exceptions.*;
+import com.tw.cisco.b2b.pages.BasePage;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,6 +10,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by aswathyn on 17/03/16.
@@ -43,6 +46,8 @@ public class EditFilePage extends BasePage<EditFilePage> {
     private WebElement cancelButton;
 
     By iframeDescription = By.className("cke_editable cke_editable_themed cke_contents_ltr cke_show_borders");
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(EditFilePage.class);
 
     public EditFilePage(WebDriver driver) {
         super(driver);

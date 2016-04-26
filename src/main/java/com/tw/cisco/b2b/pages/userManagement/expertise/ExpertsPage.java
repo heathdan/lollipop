@@ -1,35 +1,32 @@
-package com.tw.cisco.b2b.pages;
+package com.tw.cisco.b2b.pages.userManagement.expertise;
 
+import com.tw.cisco.b2b.pages.BasePage;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by aswathyn on 13/03/16.
  */
-public class KnowledgeLibraryPage extends BasePage<KnowledgeLibraryPage> {
+public class ExpertsPage extends BasePage<ExpertsPage> {
 
-    @FindBy(xpath=".//h1[@title='Knowledge Library']")
-    private WebElement title;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExpertsPage.class);
 
-    @FindBy(xpath=".//div[@class='form-search']//input[@id='documentCatalogSearchBox']")
-    private WebElement searchBox;
-
-    public KnowledgeLibraryPage(WebDriver driver) {
+    public ExpertsPage(WebDriver driver) {
         super(driver);
         instantiatePage(this);
         //waitForPageToLoad(getPageLoadCondition());
     }
 
     @Override
-    protected void instantiatePage(KnowledgeLibraryPage page) {
+    protected void instantiatePage(ExpertsPage page) {
         try {
             LOGGER.info("** instantiatePage(): "+ page.getClass().getSimpleName());
             PageFactory.initElements(driver, page);
         } catch (Exception e) {
-            LOGGER.error("--- Error in instantiating page: "+page);
+            LOGGER.error("--- Error instantiating :"+page.toString());
         }
     }
 
@@ -37,5 +34,4 @@ public class KnowledgeLibraryPage extends BasePage<KnowledgeLibraryPage> {
     protected ExpectedCondition getPageLoadCondition() {
         return null;
     }
-
 }

@@ -1,10 +1,10 @@
 package com.tw.cisco.b2b.steps;
 
 import com.tw.cisco.b2b.helper.CommonMethodsHelper;
-import com.tw.cisco.b2b.pages.AssignExpertisePopupPage;
-import com.tw.cisco.b2b.pages.DefineExpertisePage;
-import com.tw.cisco.b2b.pages.ProfilePage;
-import com.tw.cisco.b2b.pages.UserPage;
+import com.tw.cisco.b2b.pages.userManagement.expertise.AssignExpertisePopupPage;
+import com.tw.cisco.b2b.pages.userManagement.expertise.DefineExpertisePage;
+import com.tw.cisco.b2b.pages.userManagement.ProfilePage;
+import com.tw.cisco.b2b.pages.userManagement.UserPage;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import org.openqa.selenium.WebDriver;

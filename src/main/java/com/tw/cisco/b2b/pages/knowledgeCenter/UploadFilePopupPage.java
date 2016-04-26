@@ -1,7 +1,8 @@
-package com.tw.cisco.b2b.pages;
+package com.tw.cisco.b2b.pages.knowledgeCenter;
 
 import com.tw.cisco.b2b.exceptions.*;
 import com.tw.cisco.b2b.navigation.HeaderNav;
+import com.tw.cisco.b2b.pages.BasePage;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -11,6 +12,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by aswathyn on 17/03/16.
@@ -53,6 +56,8 @@ public class UploadFilePopupPage extends BasePage<UploadFilePopupPage> {
 
     By fileInput = By.xpath(".//input[@type='file']");
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(UploadFilePopupPage.class);
+
     HeaderNav headerNav;
 
     public UploadFilePopupPage(WebDriver driver) {
@@ -77,7 +82,7 @@ public class UploadFilePopupPage extends BasePage<UploadFilePopupPage> {
         return ExpectedConditions.visibilityOf(popupHeader);
     }
 
-    public MyFilesPage uploadFile(String fileName,String filePath) throws TextElementNotFoundException, ElementNotFoundException, ClickElementException, SpinnerNotDisappearException, SpinnerNotFoundException {
+    public MyFilesPage uploadFile(String fileName, String filePath) throws TextElementNotFoundException, ElementNotFoundException, ClickElementException, SpinnerNotDisappearException, SpinnerNotFoundException {
         LOGGER.trace(">> uploadFile() :"+fileName +","+filePath);
 
         String jsScript = "document.getElementById('kc-files').style.display = 'block';";

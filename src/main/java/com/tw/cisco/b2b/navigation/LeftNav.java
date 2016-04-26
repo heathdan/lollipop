@@ -1,6 +1,10 @@
-package com.tw.cisco.b2b.pages;
+package com.tw.cisco.b2b.navigation;
 
 import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
+import com.tw.cisco.b2b.pages.BasePage;
+import com.tw.cisco.b2b.pages.leftNav.PeoplePage;
+import com.tw.cisco.b2b.pages.leftNav.KCPage;
+import com.tw.cisco.b2b.pages.leftNav.AdminPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

@@ -1,13 +1,18 @@
-package com.tw.cisco.b2b.pages;
+package com.tw.cisco.b2b.pages.leftNav;
 
 import com.tw.cisco.b2b.exceptions.ClickElementException;
 import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
+import com.tw.cisco.b2b.pages.people.AllPeoplePage;
+import com.tw.cisco.b2b.pages.BasePage;
+import com.tw.cisco.b2b.pages.userManagement.expertise.ExpertsPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by aswathyn on 13/03/16.
@@ -20,9 +25,10 @@ public class PeoplePage extends BasePage<PeoplePage> {
     @FindBy(xpath = ".//span[text()='Experts']")
     private WebElement experts;
 
-        @FindBy(xpath = ".//span[text()='People']/parent::button[@data-icon2-after='triangle-open']")
+    @FindBy(xpath = ".//span[text()='People']/parent::button[@data-icon2-after='triangle-open']")
     private WebElement peopleWait;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(PeoplePage.class);
     public PeoplePage(WebDriver driver) {
         super(driver);
         instantiatePage(this);

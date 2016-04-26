@@ -1,5 +1,6 @@
-package com.tw.cisco.b2b.pages;
+package com.tw.cisco.b2b.pages.userManagement.roleAssignment;
 
+import com.tw.cisco.b2b.pages.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

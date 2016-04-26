@@ -1,8 +1,10 @@
-package com.tw.cisco.b2b.pages;
+package com.tw.cisco.b2b.pages.people;
 
 import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
 import com.tw.cisco.b2b.exceptions.ElementNotVisibleInUI;
 import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
+import com.tw.cisco.b2b.pages.BasePage;
+import com.tw.cisco.b2b.pages.userManagement.ProfilePage;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

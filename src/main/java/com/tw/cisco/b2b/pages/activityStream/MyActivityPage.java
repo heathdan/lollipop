@@ -1,6 +1,7 @@
-package com.tw.cisco.b2b.pages;
+package com.tw.cisco.b2b.pages.activityStream;
 
 
+import com.tw.cisco.b2b.pages.BasePage;
 import org.junit.Assert;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;

@@ -1,5 +1,7 @@
-package com.tw.cisco.b2b.pages;
+package com.tw.cisco.b2b.pages.login;
 
+import com.tw.cisco.b2b.pages.BasePage;
+import com.tw.cisco.b2b.pages.leftNav.HomePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

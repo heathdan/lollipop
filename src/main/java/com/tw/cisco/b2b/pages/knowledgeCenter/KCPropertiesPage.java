@@ -1,6 +1,7 @@
-package com.tw.cisco.b2b.pages;
+package com.tw.cisco.b2b.pages.knowledgeCenter;
 
 import com.tw.cisco.b2b.exceptions.ClickIconNotFoundException;
+import com.tw.cisco.b2b.pages.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -72,7 +73,7 @@ public class KCPropertiesPage extends BasePage<KCPropertiesPage> {
         waitForPageToLoad(getPageLoadCondition());
     }
 
-    static final Logger LOGGER = LoggerFactory.getLogger(LeftNav.class);
+    static final Logger LOGGER = LoggerFactory.getLogger(KCPropertiesPage.class);
 
     @Override
     protected void instantiatePage(KCPropertiesPage page) {

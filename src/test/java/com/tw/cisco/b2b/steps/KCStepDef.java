@@ -2,8 +2,12 @@ package com.tw.cisco.b2b.steps;
 
 import com.tw.cisco.b2b.helper.CommonMethodsHelper;
 import com.tw.cisco.b2b.navigation.HeaderNav;
+import com.tw.cisco.b2b.navigation.LeftNav;
 import com.tw.cisco.b2b.navigation.TabbedNav;
-import com.tw.cisco.b2b.pages.*;
+import com.tw.cisco.b2b.pages.activityStream.MyActivityPage;
+import com.tw.cisco.b2b.pages.knowledgeCenter.EditFilePage;
+import com.tw.cisco.b2b.pages.knowledgeCenter.MyFilesPage;
+import com.tw.cisco.b2b.pages.leftNav.HomePage;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;

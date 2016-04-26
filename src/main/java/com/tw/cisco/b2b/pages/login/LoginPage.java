@@ -1,8 +1,9 @@
-package com.tw.cisco.b2b.pages;
+package com.tw.cisco.b2b.pages.login;
 
 import com.tw.cisco.b2b.exceptions.ClickElementException;
 import com.tw.cisco.b2b.exceptions.ElementNotFoundException;
 import com.tw.cisco.b2b.exceptions.TextElementNotFoundException;
+import com.tw.cisco.b2b.pages.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

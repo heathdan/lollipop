@@ -2,7 +2,7 @@ package com.tw.cisco.b2b.steps;
 
 import com.tw.cisco.b2b.helper.CommonMethodsHelper;
 import com.tw.cisco.b2b.navigation.HeaderNav;
-import com.tw.cisco.b2b.pages.LoginPage;
+import com.tw.cisco.b2b.pages.login.LoginPage;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import org.openqa.selenium.WebDriver;
