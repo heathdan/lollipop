@@ -91,7 +91,7 @@ public class LeftNav extends BasePage<LeftNav> {
     @FindBy(xpath = ".//span[text()='External Data']")
     private WebElement externalData;
 
-    @FindBy(xpath = ".//li[@class='active']//span[text()='Admin']/parent::button/parent::li")
+    @FindBy(xpath = ".//li[@class='active']//span[text()='Admin']")
     private WebElement admin;
 
     @FindBy(xpath = ".//span[contains(text(),'My Team')]")

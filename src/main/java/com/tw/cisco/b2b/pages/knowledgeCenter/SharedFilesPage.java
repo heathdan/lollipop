@@ -10,6 +10,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by aswathyn on 13/03/16.
@@ -32,6 +34,7 @@ public class SharedFilesPage extends BasePage<SharedFilesPage> {
     private WebElement sharedFileLink;
 
     HeaderNav headerNav;
+    private static final Logger LOGGER = LoggerFactory.getLogger(SharedFilesPage.class);
 
     public SharedFilesPage(WebDriver driver) {
         super(driver);

@@ -106,7 +106,7 @@ public class UserPage extends BasePage<UserPage> {
     @FindBy(xpath = ".//button[@data-original-title='Assign Expertise']")
     private WebElement assignExpertisePopupicon;
 
-    @FindBy(xpath=".//button[@data-original-title='Assign Roles']")
+    @FindBy(xpath=".//button[@data-original-title='Assign roles']")
     private WebElement assignRolesPopupicon;
 
     @FindBy(xpath = ".//ul[@class='pagination']/li/a[text()='← Previous']")
